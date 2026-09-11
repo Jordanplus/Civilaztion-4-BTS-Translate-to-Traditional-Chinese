@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Sid Meier's Civilization 4 Beyond the Sword -->
+<!-- Traditional Chinese Localization Supplement -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_UNHAPPY_VASSAL</Tag>
+		<English>+%d1_Change[ICON_UNHAPPY]&#65306;&#12300;&#38477;&#20302;&#22806;&#22283;&#21218;&#21147;&#30340;&#24433;&#38911;&#65281;&#12301;</English>
+		<French>+%d1_Change[ICON_UNHAPPY]&#65306;&#12300;&#38477;&#20302;&#22806;&#22283;&#21218;&#21147;&#30340;&#24433;&#38911;&#65281;&#12301;</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>+%d1_Change[ICON_UNHAPPY]&#65306;&#12300;&#38477;&#20302;&#22806;&#22283;&#21218;&#21147;&#30340;&#24433;&#38911;&#65281;&#12301;</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_FF_MAP_NUM_STAR_SYSTEMS</Tag>
+		<English>&#26143;&#31995;&#25976;&#37327;</English>
+		<French>&#26143;&#31995;&#25976;&#37327;</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#26143;&#31995;&#25976;&#37327;</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_FF_MAP_NUM_FEATURES</Tag>
+		<English>&#22320;&#24418;&#29305;&#24501;&#23494;&#24230;</English>
+		<French>&#22320;&#24418;&#29305;&#24501;&#23494;&#24230;</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#22320;&#24418;&#29305;&#24501;&#23494;&#24230;</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_FF_MAP_NUM_HOSTILE_FEATURES</Tag>
+		<English>&#25973;&#23565;&#29305;&#24501;</English>
+		<French>&#25973;&#23565;&#29305;&#24501;</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#25973;&#23565;&#29305;&#24501;</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_FF_MAP_NUM_VERY_DENSE</Tag>
+		<English>&#38750;&#24120;&#23494;&#38598;</English>
+		<French>&#38750;&#24120;&#23494;&#38598;</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#38750;&#24120;&#23494;&#38598;</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_FF_MAP_NUM_MANY</Tag>
+		<English>&#23494;&#38598;</English>
+		<French>&#23494;&#38598;</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#23494;&#38598;</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_FF_MAP_NUM_NORMAL</Tag>
+		<English>&#26222;&#36890;</English>
+		<French>&#26222;&#36890;</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#26222;&#36890;</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_FF_MAP_NUM_FEW</Tag>
+		<English>&#31232;&#30095;</English>
+		<French>&#31232;&#30095;</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#31232;&#30095;</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_FF_MAP_NUM_SPARSE</Tag>
+		<English>&#31232;&#30095;</English>
+		<French>&#31232;&#30095;</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#31232;&#30095;</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_FF_MAP_NUM_EMPTY</Tag>
+		<English>&#28961;</English>
+		<French>&#28961;</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#28961;</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNITAI_MISSILE_CARRIER_SEA_DESC</Tag>
+		<English>&#28023;&#36557;&#39131;&#24392;&#36939;&#36664; AI</English>
+		<French>&#28023;&#36557;&#39131;&#24392;&#36939;&#36664; AI</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#28023;&#36557;&#39131;&#24392;&#36939;&#36664; AI</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNITAI_PIRATE_SEA_DESC</Tag>
+		<English>&#28023;&#30428;&#25504;&#22890; AI</English>
+		<French>&#28023;&#30428;&#25504;&#22890; AI</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#28023;&#30428;&#25504;&#22890; AI</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNITAI_MISSILE_AIR_DESC</Tag>
+		<English>&#24033;&#24331;&#39131;&#24392; AI</English>
+		<French>&#24033;&#24331;&#39131;&#24392; AI</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#24033;&#24331;&#39131;&#24392; AI</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNITAI_PARADROP_DESC</Tag>
+		<English>&#31354;&#25237; AI</English>
+		<French>&#31354;&#25237; AI</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#31354;&#25237; AI</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNITAI_ATTACK_CITY_LEMMING_DESC</Tag>
+		<English>&#22478;&#24066;&#24375;&#25915;&#33258;&#29190; AI</English>
+		<French>&#22478;&#24066;&#24375;&#25915;&#33258;&#29190; AI</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#22478;&#24066;&#24375;&#25915;&#33258;&#29190; AI</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_NAME_SEOUL</Tag>
+		<English>&#39318;&#29246;</English>
+		<French>&#39318;&#29246;</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#39318;&#29246;</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_NO_GOODY_HUTS</Tag>
+		<English>&#28961;&#37096;&#33853;&#26449;&#33674;</English>
+		<French>&#28961;&#37096;&#33853;&#26449;&#33674;</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#28961;&#37096;&#33853;&#26449;&#33674;</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_NO_GOODY_HUTS_HELP</Tag>
+		<English>&#38568;&#27231;&#22320;&#22294;&#29983;&#25104;&#22120;&#19981;&#26371;&#22312;&#22320;&#22294;&#19978;&#25918;&#32622;&#20219;&#20309;&#37096;&#33853;&#26449;&#33674;&#65288;&#23567;&#23627;&#65289;</English>
+		<French>&#38568;&#27231;&#22320;&#22294;&#29983;&#25104;&#22120;&#19981;&#26371;&#22312;&#22320;&#22294;&#19978;&#25918;&#32622;&#20219;&#20309;&#37096;&#33853;&#26449;&#33674;&#65288;&#23567;&#23627;&#65289;</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#38568;&#27231;&#22320;&#22294;&#29983;&#25104;&#22120;&#19981;&#26371;&#22312;&#22320;&#22294;&#19978;&#25918;&#32622;&#20219;&#20309;&#37096;&#33853;&#26449;&#33674;&#65288;&#23567;&#23627;&#65289;</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_FIRST_CONTACT_LEADER_SHAKA_1</Tag>
+		<English>&#21839;&#20505;&#20320;&#65292;[CT_NAME]&#65281;[OUR_CIV_ADJ]&#20154;&#27665;&#32317;&#26159;&#27138;&#26044;&#36935;&#35211;&#33030;&#24369;&#19988;&#27627;&#28961;&#38450;&#20633;&#30340;&#26032;&#25991;&#26126;&#65281;</English>
+		<French>&#21839;&#20505;&#20320;&#65292;[CT_NAME]&#65281;[OUR_CIV_ADJ]&#20154;&#27665;&#32317;&#26159;&#27138;&#26044;&#36935;&#35211;&#33030;&#24369;&#19988;&#27627;&#28961;&#38450;&#20633;&#30340;&#26032;&#25991;&#26126;&#65281;</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#21839;&#20505;&#20320;&#65292;[CT_NAME]&#65281;[OUR_CIV_ADJ]&#20154;&#27665;&#32317;&#26159;&#27138;&#26044;&#36935;&#35211;&#33030;&#24369;&#19988;&#27627;&#28961;&#38450;&#20633;&#30340;&#26032;&#25991;&#26126;&#65281;</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_NO_PEACE_LEADER_HANNIBAL_1</Tag>
+		<English>&#30070;&#24375;&#22823;&#30340;[OUR_CIV_SHORT]&#27491;&#35201;&#25226;&#20320;&#24494;&#19981;&#36275;&#36947;&#30340;&#25991;&#26126;&#24478;&#26143;&#29699;&#19978;&#25273;&#21435;&#26178;&#65292;&#25105;&#21040;&#24213;&#28858;&#20309;&#35201;&#21644;&#20320;&#35527;&#21644;&#24179;&#65311;</English>
+		<French>&#30070;&#24375;&#22823;&#30340;[OUR_CIV_SHORT]&#27491;&#35201;&#25226;&#20320;&#24494;&#19981;&#36275;&#36947;&#30340;&#25991;&#26126;&#24478;&#26143;&#29699;&#19978;&#25273;&#21435;&#26178;&#65292;&#25105;&#21040;&#24213;&#28858;&#20309;&#35201;&#21644;&#20320;&#35527;&#21644;&#24179;&#65311;</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#30070;&#24375;&#22823;&#30340;[OUR_CIV_SHORT]&#27491;&#35201;&#25226;&#20320;&#24494;&#19981;&#36275;&#36947;&#30340;&#25991;&#26126;&#24478;&#26143;&#29699;&#19978;&#25273;&#21435;&#26178;&#65292;&#25105;&#21040;&#24213;&#28858;&#20309;&#35201;&#21644;&#20320;&#35527;&#21644;&#24179;&#65311;</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_DEMAND_TRIBUTE_POWER_WEAKER_MEHMED_1</Tag>
+		<English>&#36865;&#40670;&#23567;&#34180;&#31150;&#20358;&#34920;&#36948;&#20320;&#30340;&#24863;&#28608;&#20043;&#24773;&#22914;&#20309;&#65292;[CT_NAME]&#65311;</English>
+		<French>&#36865;&#40670;&#23567;&#34180;&#31150;&#20358;&#34920;&#36948;&#20320;&#30340;&#24863;&#28608;&#20043;&#24773;&#22914;&#20309;&#65292;[CT_NAME]&#65311;</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#36865;&#40670;&#23567;&#34180;&#31150;&#20358;&#34920;&#36948;&#20320;&#30340;&#24863;&#28608;&#20043;&#24773;&#22914;&#20309;&#65292;[CT_NAME]&#65311;</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNITAI_GENERAL_DESC</Tag>
+		<English>&#22823;&#23559;&#36557; AI</English>
+		<French>&#22823;&#23559;&#36557; AI</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#22823;&#23559;&#36557; AI</Chinese>
+	</TEXT>
+</Civ4GameText>
