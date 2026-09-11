@@ -4746,6 +4746,10 @@
 					<UnitClassType>UNITCLASS_TRANSPORT</UnitClassType>
 					<UnitType>UNIT_TAIWAN_YUSHAN_LPD</UnitType>
 				</Unit>
+				<Unit>
+					<UnitClassType>UNITCLASS_STEALTH_DESTROYER</UnitClassType>
+					<UnitType>UNIT_TAIWAN_MOGAMI</UnitType>
+				</Unit>
 			</Units>
 			<FreeUnitClasses>
 				<FreeUnitClass>
