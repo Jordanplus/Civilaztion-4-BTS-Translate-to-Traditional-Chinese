@@ -4711,8 +4711,28 @@
 			</Buildings>
 			<Units>
 				<Unit>
+					<UnitClassType>UNITCLASS_WORKER</UnitClassType>
+					<UnitType>UNIT_TAIWAN_WORKER</UnitType>
+				</Unit>
+				<Unit>
 					<UnitClassType>UNITCLASS_CROSSBOWMAN</UnitClassType>
 					<UnitType>UNIT_CHINA_CHOKONU</UnitType>
+				</Unit>
+				<Unit>
+					<UnitClassType>UNITCLASS_MOBILE_SAM</UnitClassType>
+					<UnitType>UNIT_TAIWAN_TIEN_KUNG</UnitType>
+				</Unit>
+				<Unit>
+					<UnitClassType>UNITCLASS_MODERN_ARMOR</UnitClassType>
+					<UnitType>UNIT_TAIWAN_M1A2T</UnitType>
+				</Unit>
+				<Unit>
+					<UnitClassType>UNITCLASS_MECHANIZED_INFANTRY</UnitClassType>
+					<UnitType>UNIT_TAIWAN_CM32_YUNPOW</UnitType>
+				</Unit>
+				<Unit>
+					<UnitClassType>UNITCLASS_JET_FIGHTER</UnitClassType>
+					<UnitType>UNIT_TAIWAN_IDF_CHING_KUO</UnitType>
 				</Unit>
 			</Units>
 			<FreeUnitClasses>
