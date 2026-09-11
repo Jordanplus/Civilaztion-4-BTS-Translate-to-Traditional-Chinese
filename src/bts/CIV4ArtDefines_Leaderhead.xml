@@ -433,10 +433,10 @@
 			<LeaderheadArtInfo>
 			<Type>ART_DEF_LEADER_CHIANG_CHING_KUO</Type>
 			<Button>Art/Interface/Buttons/LeaderHeads/chiang_ching_kuo.dds</Button>
-			<NIF>art/Leaderheads/ChiangChingKuo/chiang2.nif</NIF>
-			<KFM>art/Leaderheads/ChiangChingKuo/wang_kon.kfm</KFM>
-			<NoShaderNIF>art/Leaderheads/ChiangChingKuo/chiang2.nif</NoShaderNIF>
-			<BackgroundKFM>art/Leaderheads/ChiangChingKuo/Wang_Kon_BG.kfm</BackgroundKFM>
+			<NIF>Art/Leaderheads/ChiangChingKuo/chiang_ching_kuo.dds</NIF>
+			<KFM/>
+			<NoShaderNIF>Art/Leaderheads/ChiangChingKuo/chiang_ching_kuo.dds</NoShaderNIF>
+			<BackgroundKFM/>
 		</LeaderheadArtInfo>
 		<LeaderheadArtInfo>
 			<Type>ART_DEF_LEADER_TSAI_ING_WEN</Type>
