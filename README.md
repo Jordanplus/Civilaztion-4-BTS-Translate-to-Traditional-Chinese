@@ -102,3 +102,5 @@ Civilaztion-4-BTS-Translate-to-Traditional-Chinese/
 ## 📜 授權協議 (License)
 本專案代碼與轉換工具採用 [MIT License](LICENSE) 授權開源。
 遊戲本身之一切版權歸 2K Games 與 Firaxis Games 所有。
+
+<!-- verified: author updated to Jordanplus -->
