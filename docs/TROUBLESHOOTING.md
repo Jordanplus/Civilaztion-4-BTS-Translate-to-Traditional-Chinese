@@ -12,9 +12,10 @@
 * **原因**：Steam 目錄位於 `C:\Program Files (x86)`，受到 Windows UAC 權限保護。
 * **解法**：請務必對 `install.bat` 點擊滑鼠右鍵，選擇「以系統管理員身分執行」。
 
-## 4. 如何完全還原至英文原版？
+## 4. 進入遊戲時跳出「Python Exception (UnicodeEncodeError: 'latin-1' codec...)」
+* **原因**：Civ4 原版 Python 腳本（`CvUtil.py`）中的 `convertToStr` 函式預設使用 `latin_1` 編碼，且早期日文補丁殘留邏輯只針對日語 (Language=1) 且僅支援日文 Shift-JIS (cp932)。當讀取中文物件說明（如「金幣」、「產能」等含繁體中文之字元）時，因超出編碼範圍而崩潰。
+* **解法**：本專案已對 `CvUtil.py`、`CvOptionsScreenCallbackInterface.py` 與 `CvWBDesc.py` 進行了全面的 CJK 安全編碼重構，支援 UTF-8 / Big5 自動降級與雙向鍵值映射，重新執行 `install.bat` 即可徹底修復。
+
+## 5. 如何完全還原至英文原版？
 * 執行 `patch/uninstall.bat` 即可無痛還原備份之原始檔案。
-* 或於 Steam 遊戲庫對遊戲右鍵 $
-ightarrow$「內容」$
-ightarrow$「已安裝檔案」$
-ightarrow$「驗證遊戲檔案完整性」。
+* 或於 Steam 遊戲庫對遊戲右鍵 →「內容」→「已安裝檔案」→「驗證遊戲檔案完整性」。

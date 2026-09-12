@@ -103,6 +103,13 @@ if ((Test-Path $btsText) -and -not (Test-Path $btsTextBak)) {
     Write-Host "  [✓] 原版文本目錄已備份為：Text.original_backup" -ForegroundColor Green
 }
 
+$btsPy = Join-Path $btsRoot "Assets\Python"
+$btsPyBak = Join-Path $btsRoot "Assets\Python.original_backup"
+if ((Test-Path $btsPy) -and -not (Test-Path $btsPyBak)) {
+    Copy-Item $btsPy $btsPyBak -Recurse -Force
+    Write-Host "  [✓] 原版 Python 目錄已備份為：Python.original_backup" -ForegroundColor Green
+}
+
 # 3. 清理舊版日文安裝器殘留的檔案與重複子目錄
 Write-Host "`n[3/5] 正在檢查並清理日文殘留項目與異常巢狀資料夾..." -ForegroundColor Cyan
 $redundantItems = @(
@@ -201,11 +208,24 @@ if (Test-Path (Join-Path $GameRoot "Warlords\Assets\XML\Text")) {
 # 5. 設定 CivilizationIV.ini 語系與桌面捷徑
 Write-Host "`n[5/5] 正在更新設定檔與桌面捷徑..." -ForegroundColor Cyan
 
-$docsPath = [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::MyDocuments)
-$iniCandidates = @(
-    "$docsPath\My Games\beyond the sword\CivilizationIV.ini",
-    "$docsPath\My Games\Sid Meier's Civilization IV Beyond the Sword\CivilizationIV.ini"
+$docsCandidates = @(
+    [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::MyDocuments),
+    (Join-Path $env:USERPROFILE "Documents"),
+    (Join-Path $env:USERPROFILE "OneDrive\Documents"),
+    (Join-Path $env:USERPROFILE "OneDrive\文件")
 )
+try {
+    $regPersonal = (Get-ItemProperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders' -ErrorAction SilentlyContinue).Personal
+    if ($regPersonal) { $docsCandidates += $regPersonal }
+} catch {}
+
+$iniCandidates = @()
+foreach ($doc in ($docsCandidates | Select-Object -Unique)) {
+    if ($doc -and (Test-Path $doc)) {
+        $iniCandidates += (Join-Path $doc "My Games\beyond the sword\CivilizationIV.ini")
+        $iniCandidates += (Join-Path $doc "My Games\Sid Meier's Civilization IV Beyond the Sword\CivilizationIV.ini")
+    }
+}
 foreach ($ini in $iniCandidates) {
     if (Test-Path $ini) {
         $content = Get-Content -Path $ini -Raw -ErrorAction SilentlyContinue

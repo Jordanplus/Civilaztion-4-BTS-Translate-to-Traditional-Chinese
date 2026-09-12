@@ -1,4 +1,4 @@
-﻿# 文明帝國 IV：超越刀鋒 還原英文原版腳本
+﻿﻿# 文明帝國 IV：超越刀鋒 還原英文原版腳本
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $Host.UI.RawUI.WindowTitle = "文明帝國 IV：超越刀鋒 還原英文原版"
 
@@ -91,6 +91,15 @@ if (Test-Path $btsTextBak) {
     Remove-Item -Path $btsText -Recurse -Force -ErrorAction SilentlyContinue
     Copy-Item $btsTextBak $btsText -Recurse -Force
     Write-Host "  [✓] 文本目錄已還原為原版英文" -ForegroundColor Green
+}
+
+# 3.1 還原 Python
+$btsPy = Join-Path $btsRoot "Assets\Python"
+$btsPyBak = Join-Path $btsRoot "Assets\Python.original_backup"
+if (Test-Path $btsPyBak) {
+    Remove-Item -Path $btsPy -Recurse -Force -ErrorAction SilentlyContinue
+    Copy-Item $btsPyBak $btsPy -Recurse -Force
+    Write-Host "  [✓] Python 目錄已還原為原版" -ForegroundColor Green
 }
 
 # 4. 移除桌面捷徑
