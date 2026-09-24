@@ -200,4 +200,40 @@
 		<Spanish/>
 		<Chinese>&#22823;&#23559;&#36557; AI</Chinese>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CIV_KOREA_DESC</Tag>
+		<English>&#38867;&#22283;&#25991;&#26126;</English>
+		<French>&#38867;&#22283;&#25991;&#26126;</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#38867;&#22283;&#25991;&#26126;</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CIV_KOREA_SHORT_DESC</Tag>
+		<English>&#38867;&#22283;</English>
+		<French>&#38867;&#22283;</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#38867;&#22283;</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CIV_KOREA_ADJECTIVE</Tag>
+		<English>&#38867;&#22283;</English>
+		<French>&#38867;&#22283;</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#38867;&#22283;</Chinese>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_KOREA_UNIVERSITY</Tag>
+		<English>&#38867;&#22283;&#22823;&#23416;</English>
+		<French>&#38867;&#22283;&#22823;&#23416;</French>
+		<German/>
+		<Italian/>
+		<Spanish/>
+		<Chinese>&#38867;&#22283;&#22823;&#23416;</Chinese>
+	</TEXT>
 </Civ4GameText>

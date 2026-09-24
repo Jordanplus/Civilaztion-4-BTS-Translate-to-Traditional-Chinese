@@ -14,6 +14,8 @@ tags_to_check = {
     'TXT_KEY_MAP_SCRIPT_LOGICAL': '合乎常理',
     'TXT_KEY_MAP_SCRIPT_IRRATIONAL': '反常分佈',
     'TXT_KEY_MAP_SCRIPT_CRAZY': '狂亂模式',
+    'TXT_KEY_CIV_KOREA_DESC': '韓國文明',
+    'TXT_KEY_CIV_KOREA_SHORT_DESC': '韓國',
 }
 
 def main():

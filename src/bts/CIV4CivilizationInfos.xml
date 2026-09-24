@@ -4708,6 +4708,10 @@
 					<BuildingClassType>BUILDINGCLASS_LABORATORY</BuildingClassType>
 					<BuildingType>BUILDING_TAIWAN_SCIENCE_PARK</BuildingType>
 				</Building>
+				<Building>
+					<BuildingClassType>BUILDINGCLASS_THEATRE</BuildingClassType>
+					<BuildingType>BUILDING_TAIWAN_GEZAIXI</BuildingType>
+				</Building>
 			</Buildings>
 			<Units>
 				<Unit>
@@ -4754,15 +4758,27 @@
 			<FreeUnitClasses>
 				<FreeUnitClass>
 					<UnitClassType>UNITCLASS_SETTLER</UnitClassType>
-					<iFreeUnits>2</iFreeUnits>
+					<iFreeUnits>4</iFreeUnits>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_ARCHER</UnitClassType>
+					<iFreeUnits>4</iFreeUnits>
 				</FreeUnitClass>
 				<FreeUnitClass>
 					<UnitClassType>UNITCLASS_MERCHANT</UnitClassType>
-					<iFreeUnits>2</iFreeUnits>
+					<iFreeUnits>4</iFreeUnits>
 				</FreeUnitClass>
 				<FreeUnitClass>
 					<UnitClassType>UNITCLASS_PROPHET</UnitClassType>
+					<iFreeUnits>4</iFreeUnits>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_EXPLORER</UnitClassType>
 					<iFreeUnits>2</iFreeUnits>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_WORKER</UnitClassType>
+					<iFreeUnits>1</iFreeUnits>
 				</FreeUnitClass>
 			</FreeUnitClasses>
 			<FreeBuildingClasses>
