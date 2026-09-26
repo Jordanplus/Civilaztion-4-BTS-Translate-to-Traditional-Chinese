@@ -16,6 +16,7 @@ tags_to_check = {
     'TXT_KEY_MAP_SCRIPT_CRAZY': '狂亂模式',
     'TXT_KEY_CIV_KOREA_DESC': '韓國文明',
     'TXT_KEY_CIV_KOREA_SHORT_DESC': '韓國',
+    'TXT_KEY_UNIT_TAIWAN_INDIGENOUS_HUNTER': '原住民獵人',
 }
 
 def main():

@@ -4715,6 +4715,10 @@
 			</Buildings>
 			<Units>
 				<Unit>
+					<UnitClassType>UNITCLASS_ARCHER</UnitClassType>
+					<UnitType>UNIT_TAIWAN_INDIGENOUS_HUNTER</UnitType>
+				</Unit>
+				<Unit>
 					<UnitClassType>UNITCLASS_WORKER</UnitClassType>
 					<UnitType>UNIT_TAIWAN_WORKER</UnitType>
 				</Unit>
