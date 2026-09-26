@@ -1,3 +1,4 @@
+import csv
 import os
 import shutil
 import sys
@@ -19,13 +20,33 @@ def main():
     count = 0
     for root, dirs, files in os.walk(PATCH_FILES):
         for f in files:
-            if f in ['install.ps1', 'uninstall.ps1']:
+            if f in ['install.ps1', 'uninstall.ps1', 'game_art_sources.csv']:
                 continue
             src_file = os.path.join(root, f)
             rel_path = os.path.relpath(src_file, PATCH_FILES)
             dst_file = os.path.join(steam_path, rel_path)
             os.makedirs(os.path.dirname(dst_file), exist_ok=True)
             shutil.copy2(src_file, dst_file)
+            count += 1
+
+    # CJK-capable exe is not in git; use the private copy if the developer has one
+    private_exe = os.path.join(ROOT, 'patch', 'private', 'Civ4BeyondSword.exe')
+    if os.path.exists(private_exe):
+        shutil.copy2(private_exe, os.path.join(steam_path, 'Beyond the Sword', 'Civ4BeyondSword.exe'))
+        count += 1
+    else:
+        print("Warning: patch/private/Civ4BeyondSword.exe not found; exe not replaced")
+
+    # Leader/flag art is identical to files in the game install; copy from there
+    with open(os.path.join(PATCH_FILES, 'game_art_sources.csv'), encoding='utf-8') as fh:
+        for row in csv.DictReader(fh):
+            src = os.path.join(steam_path, *row['Source'].split('\\'))
+            dst = os.path.join(steam_path, *row['Destination'].split('\\'))
+            if not os.path.exists(src):
+                print(f"Warning: art source missing in game: {row['Source']}")
+                continue
+            os.makedirs(os.path.dirname(dst), exist_ok=True)
+            shutil.copy2(src, dst)
             count += 1
 
     print(f"Deployed {count} files to game directory successfully!")

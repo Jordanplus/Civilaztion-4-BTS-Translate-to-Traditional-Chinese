@@ -72,7 +72,7 @@ ightarrow$ **狂亂模式**（極端少數資源狂暴生成，修正原先的�
 ### 安裝步驟
 1. 前往本專案 [Releases](https://github.com/Jordanplus/Civilaztion-4-BTS-Translate-to-Traditional-Chinese/releases) 下載最新的發布壓縮檔（`Civilaztion-4-BTS-Traditional-Chinese-Patch-v1.0.0.zip`）。
 2. 解壓縮後進入資料夾。
-3. **前置步驟**：若初次安裝，請先執行 `prerequisites/Civ4Bts_steam_japan.exe` 完成 CJK 支援環境安裝。
+3. **前置步驟**：本補丁不附原版主程式與日文 CJK 支援包。請自行準備可顯示雙位元組文字（中文）的主程式，放到與 `install.bat` 同一層的 `private\Civ4BeyondSword.exe`（在 repo 裡就是 `patch/private/`），安裝程式會自動套用。臺灣文明的旗幟圖示會在安裝時從你自己遊戲附帶的 Road to War mod 複製（Steam 版 BtS 內建）。
 4. **安裝補丁**：滑鼠點擊 `install.bat`（或點右鍵選擇「以系統管理員身分執行」）。
 5. 視窗顯示「安裝成功完成！」後，直接從 Steam 啟動遊戲即可！
 
@@ -101,7 +101,7 @@ Civilaztion-4-BTS-Translate-to-Traditional-Chinese/
 ├── patch/                          # 玩家發布包主體
 │   ├── install.bat                 # 一鍵安裝啟動檔
 │   ├── uninstall.bat               # 一鍵還原啟動檔
-│   ├── prerequisites/              # CJK 雙位元組核心支援包
+│   ├── private/                    # （不進 git）自行準備的雙位元組主程式放這裡
 │   └── PatchFiles/                 # 補丁實際檔案與 PowerShell 引擎
 └── dist/                           # 打包發布的 Release ZIP
 ```

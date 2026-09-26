@@ -6,7 +6,7 @@
 
 ## 2. 遊戲文字顯示為問號「???」或方框「□□□」
 * **原因**：未安裝雙字元 CJK 支援包，遊戲引擎缺少支援中文的字型設定與執行檔補丁。
-* **解法**：執行 `patch/prerequisites/Civ4Bts_steam_japan.exe` 完成前置修補，然後重新執行 `patch/install.bat`。
+* **解法**：本補丁不附原版主程式與日文 CJK 支援包。請自行準備可顯示雙位元組文字（中文）的主程式，放到與 `install.bat` 同一層的 `private\Civ4BeyondSword.exe`（在 repo 裡就是 `patch/private/`），安裝程式會自動套用。然後重新執行 `patch/install.bat`。
 
 ## 3. 安裝時出現「存取被拒 (Access Denied)」
 * **原因**：Steam 目錄位於 `C:\Program Files (x86)`，受到 Windows UAC 權限保護。
@@ -14,4 +14,7 @@
 
 ## 4. 如何完全還原至英文原版？
 * 執行 `patch/uninstall.bat` 即可無痛還原備份之原始檔案。
-* 或於 Steam 遊戲庫對遊戲右鍵 $ightarrow$「內容」$ightarrow$「已安裝檔案」$ightarrow$「驗證遊戲檔案完整性」。
+* 或於 Steam 遊戲庫對遊戲右鍵 $
+ightarrow$「內容」$
+ightarrow$「已安裝檔案」$
+ightarrow$「驗證遊戲檔案完整性」。

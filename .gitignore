@@ -28,3 +28,13 @@ $RECYCLE.BIN/
 *.bak
 *_backup/
 PatchFiles/Backup/
+
+# Player-supplied original files (never commit or package)
+patch/private/
+
+# Local credentials
+steam.env
+*.env
+
+# Tool output
+.playwright-mcp/

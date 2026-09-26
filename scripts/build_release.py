@@ -40,6 +40,9 @@ def package_release():
                 # Skip backup folder if exists
                 if 'Backup' in root:
                     continue
+                # Never package the player's own private files (e.g. the CJK exe)
+                if 'private' in os.path.relpath(root, PATCH_DIR).split(os.sep):
+                    continue
                 file_path = os.path.join(root, file)
                 rel_path = os.path.relpath(file_path, PATCH_DIR)
                 # Prefix inside zip

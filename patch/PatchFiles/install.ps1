@@ -1,4 +1,4 @@
-# 文明帝國 IV：超越刀鋒 繁體中文一鍵安裝核心腳本
+﻿# 文明帝國 IV：超越刀鋒 繁體中文一鍵安裝核心腳本
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $Host.UI.RawUI.WindowTitle = "文明帝國 IV：超越刀鋒 繁體中文化補丁"
 
@@ -124,9 +124,64 @@ Write-Host "`n[4/5] 正在部署繁體中文化核心與文本檔案..." -Foregr
 
 # Beyond the Sword
 Copy-Item -Path (Join-Path $PatchFilesDir "Beyond the Sword\*") -Destination $btsRoot -Recurse -Force
-Write-Host "  [✓] 已部署 BtS 核心雙位元組主程式 (Civ4BeyondSword.exe)" -ForegroundColor Green
 Write-Host "  [✓] 已部署微軟正黑體主題設定 (Civ4Theme_Common.thm)" -ForegroundColor Green
 Write-Host "  [✓] 已部署 27 個 BtS 繁體中文全量文本 (已轉台灣用語 + NCR 防閃退)" -ForegroundColor Green
+
+# 雙位元組主程式：本補丁不附原版主程式，請自行放到與 install.bat 同一層的 private\Civ4BeyondSword.exe
+$privateExe = Join-Path $PatchRoot "private\Civ4BeyondSword.exe"
+$exeDeployed = $false
+if (Test-Path -LiteralPath $privateExe) {
+    try {
+        Copy-Item -LiteralPath $privateExe -Destination $btsExe -Force -ErrorAction Stop
+        $exeDeployed = $true
+        Write-Host "  [✓] 已部署雙位元組主程式：$privateExe" -ForegroundColor Green
+    } catch {
+        Write-Host "  [✗] 複製雙位元組主程式失敗（遊戲是否還開著？）：$($_.Exception.Message)" -ForegroundColor Red
+    }
+} else {
+    Write-Host "  [!] 找不到 $privateExe ：未更換主程式。" -ForegroundColor Yellow
+    Write-Host "      原版英文主程式無法顯示中文；請自行準備可顯示雙位元組文字的主程式放到上述位置後重新安裝。" -ForegroundColor Yellow
+}
+
+# 臺灣文明旗幟圖示：和遊戲附帶的 Road to War mod 裡的檔案相同，從玩家自己的遊戲目錄複製，不隨補丁散布
+$artList = Join-Path $PatchFilesDir "game_art_sources.csv"
+if (Test-Path -LiteralPath $artList) {
+    $artOk = 0
+    $artFailed = 0
+    foreach ($row in (Import-Csv -LiteralPath $artList -Encoding UTF8)) {
+        $src = Join-Path $GameRoot $row.Source
+        $dst = Join-Path $GameRoot $row.Destination
+        if (-not (Test-Path -LiteralPath $src)) {
+            Write-Host "  [!] 遊戲裡找不到美術來源檔：$($row.Source)" -ForegroundColor Yellow
+            $artFailed++
+            continue
+        }
+        try {
+            $dstDir = Split-Path -Parent $dst
+            if (-not (Test-Path -LiteralPath $dstDir)) {
+                New-Item -ItemType Directory -Path $dstDir -Force -ErrorAction Stop | Out-Null
+            }
+            Copy-Item -LiteralPath $src -Destination $dst -Force -ErrorAction Stop
+        } catch {
+            Write-Host "  [✗] 複製美術檔失敗：$($row.Destination)" -ForegroundColor Red
+            $artFailed++
+            continue
+        }
+        $h = Get-FileHash -LiteralPath $dst -Algorithm SHA1 -ErrorAction SilentlyContinue
+        if (-not $h -or $h.Hash -ne $row.SHA1) {
+            Write-Host "  [!] 美術檔內容和預期不同（遊戲版本可能不同）：$($row.Destination)" -ForegroundColor Yellow
+        }
+        $artOk++
+    }
+    if ($artOk -gt 0) {
+        Write-Host "  [✓] 已從遊戲目錄複製 $artOk 個臺灣文明旗幟圖示" -ForegroundColor Green
+    }
+    if ($artFailed -gt 0) {
+        Write-Host "  [!] 有 $artFailed 個美術檔沒有裝好，臺灣文明的旗幟圖示可能無法顯示" -ForegroundColor Yellow
+    }
+} else {
+    Write-Host "  [!] 找不到 game_art_sources.csv，臺灣文明旗幟圖示不會安裝" -ForegroundColor Yellow
+}
 
 # Base game
 if (Test-Path (Join-Path $GameRoot "Assets\XML\Text")) {
@@ -178,9 +233,16 @@ try {
 }
 
 Write-Host ""
+if (-not $exeDeployed) {
+    Write-Host "============================================================" -ForegroundColor Yellow
+    Write-Host "  安裝未完成：文字與美術已套用，但尚未更換雙位元組主程式，   " -ForegroundColor Yellow
+    Write-Host "  遊戲不會顯示中文。請把主程式放到 $privateExe 後重新安裝。" -ForegroundColor Yellow
+    Write-Host "============================================================" -ForegroundColor Yellow
+} else {
 Write-Host "============================================================" -ForegroundColor Green
 Write-Host "      恭喜！《文明帝國 IV：超越刀鋒》繁體中文補丁安裝成功！  " -ForegroundColor Green
 Write-Host "============================================================" -ForegroundColor Green
+}
 Write-Host ""
 Write-Host "【如何開始遊戲】" -ForegroundColor Cyan
 Write-Host "  方式一：雙擊桌面捷徑「文明帝國 IV：超越刀鋒 (繁體中文版)」" -ForegroundColor White

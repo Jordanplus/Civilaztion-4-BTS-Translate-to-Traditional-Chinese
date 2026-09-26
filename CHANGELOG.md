@@ -1,5 +1,13 @@
 # 版本更新紀錄 (Changelog)
 
+## [Unreleased] - 2026-09-26
+### 🔒 不再散布原版檔案
+* 從 repo 與整個 git 歷史移除原版主程式（`Civ4BeyondSword.exe`）、日文 CJK 支援包（`Civ4Bts_steam_japan.exe`），以及 26 個和遊戲安裝內容相同的美術檔。
+* 雙位元組主程式改由玩家自行準備（`private\` 資料夾不進 git，也不會被打包進 Release）。
+* 那 26 個美術檔中，目前的 XML 只用到 2 個臺灣旗幟圖示，改成安裝時從遊戲附帶的 Road to War mod 複製（清單見 `patch/PatchFiles/game_art_sources.csv`，含 SHA-1 檢查）；其餘 24 個自 03181f8 改用自製 2D 肖像後已不再被引用，直接移除。
+* 雙位元組主程式放到與 `install.bat` 同一層的 `private\` 資料夾；安裝程式在複製失敗或缺檔時會如實顯示「安裝未完成」。
+* `install.ps1` 改存成含 BOM 的 UTF-8：Windows PowerShell 5.1 讀取沒有 BOM 的腳本時會用系統的 ANSI 編碼，中文字串可能讓整支腳本無法執行。
+
 ## [v1.0.0] - 2026-09-11
 ### 💥 重大技術修復 (Major Fixes)
 * **全面 NCR 編碼化**：將所有 XML 文本轉換為 ISO-8859-1 十進制 Numeric Character References，徹底解決 Windows 10/11 上 MSXML 3.0 解析錯誤導致啟動閃退問題。
