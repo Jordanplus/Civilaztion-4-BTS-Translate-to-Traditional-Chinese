@@ -6071,7 +6071,7 @@
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
 			<NIF>Art/Units/Taiwan_HaiKun/Submarine.nif</NIF>
-			<KFM>Art/Units/Submarine/Submarine.kfm</KFM>
+			<KFM>Art/Units/Taiwan_HaiKun/submarine.kfm</KFM>
 			<SHADERNIF>Art/Units/Taiwan_HaiKun/Submarine_FX.nif</SHADERNIF>
 			<ShadowDef>
 				<ShadowNIF>Art/Units/01_UnitShadows/BattleshipShadow.nif</ShadowNIF>
