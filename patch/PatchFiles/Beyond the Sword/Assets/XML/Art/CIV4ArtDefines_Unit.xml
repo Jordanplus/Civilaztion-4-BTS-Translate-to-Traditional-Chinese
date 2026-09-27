@@ -6096,15 +6096,15 @@
 <UnitArtInfo>
 			<Type>ART_DEF_UNIT_TAIWAN_YUSHAN_LPD</Type>
 			<Button>Art/Interface/Buttons/Units/yushan_transport.dds</Button>
-			<fScale>0.82</fScale>
-			<fInterfaceScale>1.2</fInterfaceScale>
+			<fScale>1.1</fScale>
+			<fInterfaceScale>1.1</fInterfaceScale>
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
-			<NIF>Art/Units/Taiwan_Yushan/Missile_Cruiser.nif</NIF>
-			<KFM>Art/Units/Missile_Cruiser/Missile_Cruiser.kfm</KFM>
-			<SHADERNIF>Art/Units/Taiwan_Yushan/Missile_Cruiser_FX.nif</SHADERNIF>
+			<NIF>Art/Units/Taiwan_Yushan/SanAntonio.nif</NIF>
+			<KFM>Art/Units/Transport/Transport.kfm</KFM>
+			<SHADERNIF>Art/Units/Taiwan_Yushan/SanAntonio_FX.nif</SHADERNIF>
 			<ShadowDef>
-				<ShadowNIF>Art/Units/01_UnitShadows/BattleshipShadow.nif</ShadowNIF>
+				<ShadowNIF>Art/Units/01_UnitShadows/TransportShadow.nif</ShadowNIF>
 				<ShadowAttachNode>BIP Pelvis</ShadowAttachNode>
 				<fShadowScale>1.0</fShadowScale>
 			</ShadowDef>
@@ -6126,11 +6126,11 @@
 			<bActAsRanged>0</bActAsRanged>
 			<TrainSound>AS2D_UNIT_BUILD_UNIT</TrainSound>
 			<AudioRunSounds>
-				<AudioRunTypeLoop>LOOPSTEP_DESTOYER</AudioRunTypeLoop>
-				<AudioRunTypeEnd>ENDSTEP_DESTROYER</AudioRunTypeEnd>
+				<AudioRunTypeLoop>LOOPSTEP_TRANSPORT</AudioRunTypeLoop>
+				<AudioRunTypeEnd>ENDSTEP_TRANSPORT</AudioRunTypeEnd>
 			</AudioRunSounds>
-			<SelectionSound>AS3D_UN_DESTROYER_FORT</SelectionSound>
-			<ActionSound>AS3D_UN_DESTROYER_FORT</ActionSound>
+			<SelectionSound>AS3D_UN_TRANSPORT_FORT</SelectionSound>
+			<ActionSound>AS3D_UN_TRANSPORT_FORT</ActionSound>
 		</UnitArtInfo>
 <UnitArtInfo>
 			<Type>ART_DEF_UNIT_TAIWAN_AIRBORNE_SF</Type>
