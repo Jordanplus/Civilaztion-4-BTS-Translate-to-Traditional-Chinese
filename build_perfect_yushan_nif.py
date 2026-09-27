@@ -12,10 +12,32 @@ STEAM_VANILLA_DIR = r"C:\Program Files (x86)\Steam\steamapps\common\Sid Meier's 
 YUSHAN_DIR = r'patch\PatchFiles\Beyond the Sword\Assets\Art\Units\Taiwan_Yushan'
 STEAM_YUSHAN_DIR = r"C:\Program Files (x86)\Steam\steamapps\common\Sid Meier's Civilization IV Beyond the Sword\Beyond the Sword\Assets\Art\Units\Taiwan_Yushan"
 
-print('=== 1. Loading GLB & Splitting into Contiguous UV Islands ===')
+print('=== 1. Generating Authentic Balanced 1024x1024 Naval Camouflage Texture ===')
 scene = trimesh.load(GLB_PATH)
 geom = list(scene.geometry.values())[0]
+raw_tex = geom.visual.material.baseColorTexture.convert('RGB')
+arr_raw = np.array(raw_tex, dtype=np.float32)
 
+# Smooth tone mapping: gentle gamma with zero blown-out clipping
+gamma = 0.82
+boosted = 255.0 * np.power(arr_raw / 255.0, gamma)
+boosted = np.clip(boosted * 1.08, 0, 215) # Cap at 215 so NO pixels blow out to white!
+
+# Add opaque alpha channel
+h, w, _ = boosted.shape
+tex_rgba = np.zeros((h, w, 4), dtype=np.uint8)
+tex_rgba[:, :, :3] = boosted.astype(np.uint8)
+tex_rgba[:, :, 3] = 255
+
+dds_img = Image.fromarray(tex_rgba, 'RGBA')
+repo_dds_path = os.path.join(YUSHAN_DIR, 'Missle_Cruiser_256.dds')
+steam_dds_path = os.path.join(STEAM_YUSHAN_DIR, 'Missle_Cruiser_256.dds')
+
+dds_img.save(repo_dds_path)
+dds_img.save(steam_dds_path)
+print(f'Saved balanced naval texture to Repo and Steam: {repo_dds_path} (0% clipped white!)')
+
+print('\n=== 2. Loading GLB & Splitting into Contiguous UV Islands ===')
 components = geom.split(only_watertight=False)
 print(f'Original mesh: {len(geom.vertices)} vertices, {len(geom.faces)} faces across {len(components)} UV islands')
 
@@ -24,18 +46,12 @@ for idx, comp in enumerate(components):
     cv = comp.vertices
     cf = comp.faces
     cuv = comp.visual.uv
-    cnorm = comp.vertex_normals
     nf = len(cf)
     
     if nf <= 14:
         # Small thin details (antennas, railings, masts, fittings):
-        # Keep 100% intact and add reverse faces so they are visible from both front and back
-        back_cf = np.zeros_like(cf)
-        back_cf[:, 0] = cf[:, 0]
-        back_cf[:, 1] = cf[:, 2]
-        back_cf[:, 2] = cf[:, 1]
-        all_cf = np.vstack([cf, back_cf])
-        simplified_pieces.append((cv, all_cf, cuv, cnorm))
+        # Keep 100% intact, DO NOT duplicate geometry to prevent Z-fighting and inverted normals!
+        simplified_pieces.append((cv, cf, cuv))
         continue
         
     # Main hull and superstructure surfaces:
@@ -66,48 +82,28 @@ for idx, comp in enumerate(components):
     
     tri_uvs = cuv[cf[tri_id]]
     uv_s = u[:, None] * tri_uvs[:, 0] + v[:, None] * tri_uvs[:, 1] + w[:, None] * tri_uvs[:, 2]
-    
-    tri_norms = cnorm[cf[tri_id]]
-    norm_s = u[:, None] * tri_norms[:, 0] + v[:, None] * tri_norms[:, 1] + w[:, None] * tri_norms[:, 2]
-    l = np.linalg.norm(norm_s, axis=1, keepdims=True)
-    l[l == 0] = 1.0
-    norm_s = norm_s / l
-    
-    simplified_pieces.append((pts_s, tris_s, uv_s, norm_s))
+    simplified_pieces.append((pts_s, tris_s, uv_s))
 
 all_v = []
 all_f = []
 all_uv = []
-all_norm = []
 v_offset = 0
 
-for pts, tris, uvs, norms in simplified_pieces:
+for pts, tris, uvs in simplified_pieces:
     all_v.append(pts)
     all_f.append(tris + v_offset)
     all_uv.append(uvs)
-    all_norm.append(norms)
     v_offset += len(pts)
 
 all_v = np.vstack(all_v)
 all_f = np.vstack(all_f)
 all_uv = np.vstack(all_uv)
-all_norm = np.vstack(all_norm)
 
 N = len(all_v)
 M = len(all_f)
-print(f'Combined optimized mesh: {N} vertices, {M} triangles')
+print(f'Combined clean mesh: {N} vertices, {M} triangles')
 
-# Check UV integrity
-uv_edges = np.zeros((M, 3))
-for i, (v0, v1) in enumerate([(0,1), (1,2), (2,0)]):
-    d_uv = np.abs(all_uv[all_f[:, v0]] - all_uv[all_f[:, v1]])
-    uv_edges[:, i] = np.linalg.norm(d_uv, axis=1)
-
-max_edge = np.max(uv_edges, axis=1)
-print(f'UV Seam Check: Max UV edge = {np.max(max_edge):.4f}')
-print(f'Triangles spanning across UV seams (>0.3 UV distance): {np.sum(max_edge > 0.3)} (Should be 0!)')
-
-print('=== 2. Transforming Coordinates & Normals to Civ4 Standard ===')
+print('\n=== 3. Transforming Coordinates & Aligning Outward Normals ===')
 scale_beam, scale_length, scale_height = 115.0, 190.0, 185.0
 waterline = -0.155
 
@@ -116,19 +112,47 @@ civ4_verts[:, 0] = -all_v[:, 2] * scale_beam
 civ4_verts[:, 1] = -all_v[:, 0] * scale_length
 civ4_verts[:, 2] = (all_v[:, 1] - waterline) * scale_height
 
-civ4_norms = np.zeros_like(all_norm)
-civ4_norms[:, 0] = -all_norm[:, 2] / scale_beam
-civ4_norms[:, 1] = -all_norm[:, 0] / scale_length
-civ4_norms[:, 2] = all_norm[:, 1] / scale_height
-l = np.linalg.norm(civ4_norms, axis=1, keepdims=True)
+# Area-weighted vertex normal computation
+v0 = civ4_verts[all_f[:, 0]]
+v1 = civ4_verts[all_f[:, 1]]
+v2 = civ4_verts[all_f[:, 2]]
+fn = np.cross(v1 - v0, v2 - v0)
+vert_norms = np.zeros_like(civ4_verts)
+for i in range(3):
+    np.add.at(vert_norms, all_f[:, i], fn)
+l = np.linalg.norm(vert_norms, axis=1, keepdims=True)
 l[l == 0] = 1.0
-civ4_norms = civ4_norms / l
+vert_norms /= l
 
-print(f'Civ4 Bounds: X=[{civ4_verts[:,0].min():.1f}, {civ4_verts[:,0].max():.1f}], '
-      f'Y=[{civ4_verts[:,1].min():.1f}, {civ4_verts[:,1].max():.1f}], '
-      f'Z=[{civ4_verts[:,2].min():.1f}, {civ4_verts[:,2].max():.1f}]')
+# Fix any face whose normal opposes vertex normals (winding consistency)
+fn_len = np.linalg.norm(fn, axis=1, keepdims=True)
+fn_len[fn_len == 0] = 1.0
+fn_unit = fn / fn_len
+dots = np.sum(fn_unit * (vert_norms[all_f[:, 0]] + vert_norms[all_f[:, 1]] + vert_norms[all_f[:, 2]]) / 3.0, axis=1)
+neg_idx = np.where(dots < 0)[0]
+if len(neg_idx) > 0:
+    all_f[neg_idx, 1], all_f[neg_idx, 2] = all_f[neg_idx, 2], all_f[neg_idx, 1].copy()
+    print(f'Flipped {len(neg_idx)} inverted triangles to 100% outward winding!')
 
-print('=== 3. Partitioning Mesh into Safe Hardware Skin Blocks (<=750 verts/block) ===')
+# Recompute final smooth vertex normals with corrected winding
+v0 = civ4_verts[all_f[:, 0]]
+v1 = civ4_verts[all_f[:, 1]]
+v2 = civ4_verts[all_f[:, 2]]
+fn = np.cross(v1 - v0, v2 - v0)
+vert_norms = np.zeros_like(civ4_verts)
+for i in range(3):
+    np.add.at(vert_norms, all_f[:, i], fn)
+l = np.linalg.norm(vert_norms, axis=1, keepdims=True)
+l[l == 0] = 1.0
+vert_norms /= l
+
+fn_len = np.linalg.norm(fn, axis=1, keepdims=True)
+fn_len[fn_len == 0] = 1.0
+fn_unit = fn / fn_len
+final_dots = np.sum(fn_unit * (vert_norms[all_f[:, 0]] + vert_norms[all_f[:, 1]] + vert_norms[all_f[:, 2]]) / 3.0, axis=1)
+print(f'Normal Quality: Mean dot = {np.mean(final_dots):.4f}, Min dot = {np.min(final_dots):.4f}, Inverted faces = {np.sum(final_dots < 0)}')
+
+print('\n=== 4. Partitioning Mesh into Safe Hardware Skin Blocks (<=750 verts/block) ===')
 blocks = []
 current_faces = []
 current_verts = set()
@@ -156,7 +180,7 @@ for i, blk_faces in enumerate(blocks):
     partition_data.append((local_to_global, local_tris))
     print(f'  Block {i}: {len(local_to_global)} vertices, {len(local_tris)} triangles')
 
-print('=== 4. Constructing Gamebryo 20.0 NIF with Multi-Partition Skinning ===')
+print('\n=== 5. Constructing Gamebryo 20.0 NIF with Matte Naval Steel Shading ===')
 def build_nif(template_path, out_path):
     d = NifFormat.Data()
     with open(template_path, 'rb') as f:
@@ -172,7 +196,30 @@ def build_nif(template_path, out_path):
     shape.translation.y = 0.0
     shape.translation.z = 0.0
     
-    # Ensure double-sided stencil property
+    # 1. NiMaterialProperty: Matte warship steel (no blinding specular glare, no pitch-black shadows)
+    for p in shape.properties:
+        if type(p).__name__ == 'NiMaterialProperty':
+            p.ambient_color.r = 0.65
+            p.ambient_color.g = 0.65
+            p.ambient_color.b = 0.65
+            p.diffuse_color.r = 0.85
+            p.diffuse_color.g = 0.85
+            p.diffuse_color.b = 0.85
+            p.specular_color.r = 0.22 # Reduced from 1.0 to eliminate harsh white glare!
+            p.specular_color.g = 0.22
+            p.specular_color.b = 0.22
+            p.emissive_color.r = 0.0
+            p.emissive_color.g = 0.0
+            p.emissive_color.b = 0.0
+            p.glossiness = 20.0 # Tighter subtle metallic sheen
+            p.alpha = 1.0
+            
+        elif type(p).__name__ == 'NiTexturingProperty':
+            # Disable glow (removes 64x64 metal streak noise) and decal_0 (removes random burn decals)
+            p.has_glow_texture = False
+            p.has_decal_0_texture = False
+            
+    # Hardware double-sided stencil property
     has_stencil = any(type(p).__name__ == 'NiStencilProperty' for p in shape.properties)
     if not has_stencil:
         stencil = NifFormat.NiStencilProperty()
@@ -181,7 +228,7 @@ def build_nif(template_path, out_path):
         stencil.draw_mode = 3 # DRAW_BOTH
         shape.add_property(stencil)
         
-    # 1. NiTriShapeData
+    # 2. NiTriShapeData
     data = shape.data
     data.num_vertices = N
     data.has_vertices = True
@@ -196,16 +243,16 @@ def build_nif(template_path, out_path):
         data.vertices[i].x = float(civ4_verts[i, 0])
         data.vertices[i].y = float(civ4_verts[i, 1])
         data.vertices[i].z = float(civ4_verts[i, 2])
-        data.normals[i].x = float(civ4_norms[i, 0])
-        data.normals[i].y = float(civ4_norms[i, 1])
-        data.normals[i].z = float(civ4_norms[i, 2])
+        data.normals[i].x = float(vert_norms[i, 0])
+        data.normals[i].y = float(vert_norms[i, 1])
+        data.normals[i].z = float(vert_norms[i, 2])
         data.uv_sets[0][i].u = float(all_uv[i, 0])
         data.uv_sets[0][i].v = float(all_uv[i, 1])
         
     data.set_triangles([tuple(f) for f in all_f])
     data.update_center_radius()
     
-    # 2. NiSkinData
+    # 3. NiSkinData
     si = shape.skin_instance
     sd = si.data
     sd.skin_transform.scale = 1.0
@@ -232,7 +279,7 @@ def build_nif(template_path, out_path):
         sd.bone_list[i].num_vertices = 0
         sd.bone_list[i].vertex_weights.update_size()
         
-    # 3. NiSkinPartition
+    # 4. NiSkinPartition
     sp = si.skin_partition
     sp.num_skin_partition_blocks = num_blocks
     sp.skin_partition_blocks.update_size()
@@ -301,4 +348,4 @@ print('\nBuilding Steam Installation NIFs...')
 build_nif(steam_nif, steam_target_nif)
 build_nif(steam_fx_nif, steam_target_fx_nif)
 
-print('\n=== All NIFs Successfully Built & Deployed! ===')
+print('\n=== All NIFs & Textures Successfully Built & Deployed! ===')
