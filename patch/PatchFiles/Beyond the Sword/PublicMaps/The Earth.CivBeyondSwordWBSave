@@ -10231,6 +10231,7 @@ BeginPlot
 	x=27,y=45
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
+	BonusType=BONUS_COW
 EndPlot
 BeginPlot
 	x=27,y=46
@@ -10538,6 +10539,7 @@ BeginPlot
 	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=1
+	BonusType=BONUS_GEMS
 EndPlot
 BeginPlot
 	x=28,y=33
@@ -10608,6 +10610,8 @@ BeginPlot
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
 	StartingPlot
+	isNOfRiver
+	RiverWEDirection=1
 EndPlot
 BeginPlot
 	x=28,y=46
@@ -20013,6 +20017,7 @@ BeginPlot
 	x=54,y=32
 	TerrainType=TERRAIN_PLAINS
 	PlotType=2
+	BonusType=BONUS_GOLD
 EndPlot
 BeginPlot
 	x=54,y=33
@@ -20764,6 +20769,7 @@ BeginPlot
 	FeatureType=FEATURE_FLOOD_PLAINS, FeatureVariety=0
 	TerrainType=TERRAIN_DESERT
 	PlotType=2
+	BonusType=BONUS_WHEAT
 EndPlot
 BeginPlot
 	x=56,y=34
@@ -23097,6 +23103,7 @@ BeginPlot
 	RiverWEDirection=1
 	TerrainType=TERRAIN_GRASS
 	PlotType=1
+	BonusType=BONUS_SILVER
 EndPlot
 BeginPlot
 	x=62,y=51
@@ -24673,6 +24680,7 @@ BeginPlot
 	FeatureType=FEATURE_FOREST, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
+	BonusType=BONUS_GOLD
 EndPlot
 BeginPlot
 	x=66,y=49
@@ -25070,6 +25078,7 @@ BeginPlot
 	RiverWEDirection=1
 	TerrainType=TERRAIN_PLAINS
 	PlotType=1
+	BonusType=BONUS_OIL
 EndPlot
 BeginPlot
 	x=67,y=48
@@ -27031,6 +27040,7 @@ BeginPlot
 	x=72,y=53
 	TerrainType=TERRAIN_GRASS
 	PlotType=1
+	BonusType=BONUS_WHEAT
 EndPlot
 BeginPlot
 	x=72,y=54
@@ -29192,6 +29202,7 @@ BeginPlot
 	x=78,y=33
 	TerrainType=TERRAIN_DESERT
 	PlotType=1
+	BonusType=BONUS_COPPER
 EndPlot
 BeginPlot
 	x=78,y=34
@@ -34008,6 +34019,7 @@ BeginPlot
 	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
+	BonusType=BONUS_GEMS
 EndPlot
 BeginPlot
 	x=91,y=36
@@ -39281,6 +39293,7 @@ BeginPlot
 	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
+	BonusType=BONUS_OIL
 EndPlot
 BeginPlot
 	x=105,y=28
@@ -41124,6 +41137,7 @@ BeginPlot
 	x=110,y=16
 	TerrainType=TERRAIN_DESERT
 	PlotType=2
+	BonusType=BONUS_OIL
 EndPlot
 BeginPlot
 	x=110,y=17
@@ -41482,6 +41496,7 @@ BeginPlot
 	x=111,y=14
 	TerrainType=TERRAIN_DESERT
 	PlotType=2
+	BonusType=BONUS_GEMS
 EndPlot
 BeginPlot
 	x=111,y=15
@@ -42540,6 +42555,7 @@ BeginPlot
 	x=114,y=9
 	TerrainType=TERRAIN_COAST
 	PlotType=3
+	BonusType=BONUS_OIL
 EndPlot
 BeginPlot
 	x=114,y=10
@@ -43332,6 +43348,7 @@ BeginPlot
 	RiverWEDirection=3
 	TerrainType=TERRAIN_PLAINS
 	PlotType=1
+	BonusType=BONUS_IRON
 EndPlot
 BeginPlot
 	x=116,y=15

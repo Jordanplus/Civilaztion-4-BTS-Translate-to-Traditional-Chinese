@@ -186,6 +186,87 @@ def build_wbsave():
             lines = [l for l in lines if not l.strip().startswith("BonusType=")]
             lines.insert(-1, "\tBonusType=BONUS_FISH")
 
+        # (116, 14): Australia Blue Mountains / Lithgow Iron
+        elif x == 116 and y == 14:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_IRON")
+
+        # (110, 16): Australia Cooper Basin Desert Land Oil
+        elif x == 110 and y == 16:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_OIL")
+
+        # (114, 9): Australia Bass Strait / Gippsland Offshore Oil
+        elif x == 114 and y == 9:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_OIL")
+
+        # (111, 14): Australia Coober Pedy Opals (Gems)
+        elif x == 111 and y == 14:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_GEMS")
+
+        # (54, 32): Mali Bambuk / Bure Gold Field (Mansa Musa)
+        elif x == 54 and y == 32:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_GOLD")
+
+        # (56, 33): Mali Niger River Flood Plains Wheat
+        elif x == 56 and y == 33:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_WHEAT")
+
+        # (72, 53): Russia Volga / Chernozem Black Earth Wheat
+        elif x == 72 and y == 53:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_WHEAT")
+
+        # (28, 45): America Washington Potomac River freshwater
+        elif x == 28 and y == 45:
+            if not any("isNOfRiver" in l for l in lines):
+                lines.insert(-1, "\tisNOfRiver")
+                lines.insert(-1, "\tRiverWEDirection=1")
+
+        # (27, 45): America Virginia Pasture Cattle
+        elif x == 27 and y == 45:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_COW")
+
+        # (67, 47): Europe Romania Ploiești Land Oil Field
+        elif x == 67 and y == 47:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_OIL")
+
+        # (105, 27): Southeast Asia Sumatra Palembang Land Oil Field
+        elif x == 105 and y == 27:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_OIL")
+
+        # (78, 33): Arabia Oman Ancient Magan Copper Mine
+        elif x == 78 and y == 33:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_COPPER")
+
+        # (91, 35): India Deccan / Golconda Diamonds (Gems)
+        elif x == 91 and y == 35:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_GEMS")
+
+        # (28, 32): South America Colombia Muzo Emeralds (Gems)
+        elif x == 28 and y == 32:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_GEMS")
+
+        # (62, 50): Central Europe Bohemia / Saxony Erzgebirge Silver
+        elif x == 62 and y == 50:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_SILVER")
+
+        # (66, 48): Eastern Europe Transylvania Roșia Montană Gold Mine
+        elif x == 66 and y == 48:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_GOLD")
+
         modified_plots.append("\n".join(lines))
 
     final_wbsave = header_part + "\n".join(modified_plots) + "\n"
