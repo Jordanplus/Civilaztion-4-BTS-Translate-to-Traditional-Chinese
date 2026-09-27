@@ -293,40 +293,50 @@ def build_wbsave():
     return final_wbsave, modified_plots
 
 def build_py_script(plots):
-    print("Compressing plot data for Python map script...")
-    terrain_map = {name: i for i, name in enumerate(TERRAIN_LIST)}
-    feature_map = {name: i for i, name in enumerate(FEATURE_LIST)}
-    bonus_map = {name: i for i, name in enumerate(BONUS_LIST)}
+    print("Formatting plot data for Python map script (zero-import architecture)...")
+    terrain_map = dict((name, i) for i, name in enumerate(TERRAIN_LIST))
+    feature_map = dict((name, i) for i, name in enumerate(FEATURE_LIST))
+    bonus_map = dict((name, i) for i, name in enumerate(BONUS_LIST))
 
-    packed = []
+    MAP_WIDTH = 124
+    MAP_HEIGHT = 68
+
+    plot_dict = {}
     for p in plots:
         lines = [l.strip() for l in p.split("\n")]
+        coords_line = [l for l in lines if l.startswith("x=")][0]
+        parts = coords_line.split(",")
+        x = int(parts[0].split("=")[1])
+        y = int(parts[1].split("=")[1])
         pt = int([l for l in lines if l.startswith("PlotType=")][0].split("=")[1])
         tt = [l for l in lines if l.startswith("TerrainType=")][0].split("=")[1]
+        plot_dict[(x, y)] = (pt, tt, lines)
+
+    # Row-major strings for instant O(1) list comprehension in generatePlotTypes & generateTerrainTypes
+    plot_types_str = "".join([str(plot_dict[(x, y)][0]) for y in range(MAP_HEIGHT) for x in range(MAP_WIDTH)])
+    terrain_types_str = "".join([str(terrain_map[plot_dict[(x, y)][1]]) for y in range(MAP_HEIGHT) for x in range(MAP_WIDTH)])
+
+    rivers = []
+    features = []
+    bonuses = []
+    for (x, y), (pt, tt, lines) in plot_dict.items():
+        rn = any("isNOfRiver" in l for l in lines)
+        rw = any("isWOfRiver" in l for l in lines)
+        rwe = [int(l.split("=")[1]) for l in lines if l.startswith("RiverWEDirection=")]
+        rns = [int(l.split("=")[1]) for l in lines if l.startswith("RiverNSDirection=")]
+        if rn or rw:
+            rivers.append((x, y, 1 if rn else 0, 1 if rw else 0, rwe[0] if rwe else 0, rns[0] if rns else 0))
 
         feat = [l for l in lines if l.startswith("FeatureType=")]
         if feat:
             f_name = feat[0].split(",")[0].split("=")[1]
             f_var = int(feat[0].split("FeatureVariety=")[1]) if "FeatureVariety=" in feat[0] else 0
-            f_code = (feature_map[f_name] << 2) | (f_var & 3)
-        else:
-            f_code = 0
+            features.append((x, y, feature_map[f_name], f_var))
 
         bonus = [l for l in lines if l.startswith("BonusType=")]
-        b_code = bonus_map[bonus[0].split("=")[1]] if bonus else 0
-
-        rn = any("isNOfRiver" in l for l in lines)
-        rw = any("isWOfRiver" in l for l in lines)
-        rwe = [int(l.split("=")[1]) for l in lines if l.startswith("RiverWEDirection=")]
-        rns = [int(l.split("=")[1]) for l in lines if l.startswith("RiverNSDirection=")]
-        river_byte = (1 if rn else 0) | ((1 if rw else 0) << 1) | ((rwe[0] if rwe else 0) << 2) | ((rns[0] if rns else 0) << 5)
-
-        b0 = (pt & 3) | ((terrain_map[tt] & 63) << 2)
-        packed.append(struct.pack("BBBB", b0, f_code, b_code, river_byte))
-
-    raw = b"".join(packed)
-    comp = zlib.compress(raw, 9)
-    b64_str = base64.b64encode(comp).decode("ascii")
+        if bonus:
+            b_name = bonus[0].split("=")[1]
+            bonuses.append((x, y, bonus_map[b_name]))
 
     py_content = f'''#
 #   FILE:    The_Earth.py
@@ -335,8 +345,6 @@ def build_py_script(plots):
 #
 from CvPythonExtensions import *
 import CvUtil
-import zlib
-import base64
 
 MAP_WIDTH = 124
 MAP_HEIGHT = 68
@@ -346,29 +354,28 @@ TERRAIN_LIST = {repr(TERRAIN_LIST)}
 FEATURE_LIST = {repr(FEATURE_LIST)}
 BONUS_LIST = {repr(BONUS_LIST)}
 
-MAP_DATA_B64 = """{b64_str}"""
-
-_cached_decomp = None
-
-def _byte(val):
-    if type(val) is int:
-        return val
-    return ord(val)
-
-def get_decompressed_data():
-    global _cached_decomp
-    if _cached_decomp is None:
-        if hasattr(base64, 'b64decode'):
-            raw_comp = base64.b64decode(MAP_DATA_B64)
-        else:
-            raw_comp = base64.decodestring(MAP_DATA_B64)
-        _cached_decomp = zlib.decompress(raw_comp)
-    return _cached_decomp
+PLOT_TYPES_DATA = "{plot_types_str}"
+TERRAIN_TYPES_DATA = "{terrain_types_str}"
+RIVERS_DATA = {repr(rivers)}
+FEATURES_DATA = {repr(features)}
+BONUSES_DATA = {repr(bonuses)}
 
 def getDescription():
     return "TXT_KEY_MAP_SCRIPT_THE_EARTH_DESCR"
 
 def isAdvancedMap():
+    return 0
+
+def getNumCustomMapOptions():
+    return 0
+
+def getNumHiddenCustomMapOptions():
+    return 0
+
+def isClimateMap():
+    return 0
+
+def isSeaLevelMap():
     return 0
 
 def getGridSize(argsList):
@@ -389,101 +396,56 @@ def getBottomLatitude():
 def isBonusIgnoreLatitude():
     return True
 
-def isClimateMap():
-    return 0
-
-def isSeaLevelMap():
-    return 0
-
 def generatePlotTypes():
-    data = get_decompressed_data()
-    plot_types = [PlotTypes.PLOT_OCEAN] * NUM_PLOTS
-    for x in range(MAP_WIDTH):
-        for y in range(MAP_HEIGHT):
-            wb_idx = x * MAP_HEIGHT + y
-            map_idx = y * MAP_WIDTH + x
-            b0 = _byte(data[wb_idx * 4])
-            pt = b0 & 3
-            if pt == 0:
-                plot_types[map_idx] = PlotTypes.PLOT_PEAK
-            elif pt == 1:
-                plot_types[map_idx] = PlotTypes.PLOT_HILLS
-            elif pt == 2:
-                plot_types[map_idx] = PlotTypes.PLOT_LAND
-            else:
-                plot_types[map_idx] = PlotTypes.PLOT_OCEAN
-    return plot_types
+    plot_map = [PlotTypes.PLOT_PEAK, PlotTypes.PLOT_HILLS, PlotTypes.PLOT_LAND, PlotTypes.PLOT_OCEAN]
+    return [plot_map[int(c)] for c in PLOT_TYPES_DATA]
 
 def generateTerrainTypes():
     gc = CyGlobalContext()
-    data = get_decompressed_data()
-    terrain_types = [0] * NUM_PLOTS
-    for x in range(MAP_WIDTH):
-        for y in range(MAP_HEIGHT):
-            wb_idx = x * MAP_HEIGHT + y
-            map_idx = y * MAP_WIDTH + x
-            b0 = _byte(data[wb_idx * 4])
-            t_idx = (b0 >> 2) & 63
-            t_name = TERRAIN_LIST[t_idx]
-            terrain_types[map_idx] = gc.getInfoTypeForString(t_name)
-    return terrain_types
+    terrain_ids = [gc.getInfoTypeForString(name) for name in TERRAIN_LIST]
+    return [terrain_ids[int(c)] for c in TERRAIN_TYPES_DATA]
 
 def addRivers():
-    data = get_decompressed_data()
     cy_map = CyMap()
-    for x in range(MAP_WIDTH):
-        for y in range(MAP_HEIGHT):
-            wb_idx = x * MAP_HEIGHT + y
-            offset = wb_idx * 4
-            river_byte = _byte(data[offset + 3])
-            rn = bool(river_byte & 1)
-            rw = bool(river_byte & 2)
-            rwe = (river_byte >> 2) & 7
-            rns = (river_byte >> 5) & 7
-            pPlot = cy_map.plot(x, y)
-            if rn:
-                eCard = CardinalDirectionTypes(rwe)
-                pPlot.setNOfRiver(True, eCard)
-            if rw:
-                eCard = CardinalDirectionTypes(rns)
-                pPlot.setWOfRiver(True, eCard)
+    for x, y, rn, rw, rwe, rns in RIVERS_DATA:
+        pPlot = cy_map.plot(x, y)
+        if rn:
+            pPlot.setNOfRiver(True, CardinalDirectionTypes(rwe))
+        if rw:
+            pPlot.setWOfRiver(True, CardinalDirectionTypes(rns))
 
 def addLakes():
     return None
 
 def addFeatures():
     gc = CyGlobalContext()
-    data = get_decompressed_data()
     cy_map = CyMap()
-    for x in range(MAP_WIDTH):
-        for y in range(MAP_HEIGHT):
-            wb_idx = x * MAP_HEIGHT + y
-            offset = wb_idx * 4
-            f_code = _byte(data[offset + 1])
-            if f_code > 0:
-                f_idx = f_code >> 2
-                f_var = f_code & 3
-                f_name = FEATURE_LIST[f_idx]
-                if f_name:
-                    iFeat = gc.getInfoTypeForString(f_name)
-                    pPlot = cy_map.plot(x, y)
-                    pPlot.setFeatureType(iFeat, f_var)
+    feature_ids = []
+    for name in FEATURE_LIST:
+        if name:
+            feature_ids.append(gc.getInfoTypeForString(name))
+        else:
+            feature_ids.append(-1)
+    for x, y, f_idx, f_var in FEATURES_DATA:
+        iFeat = feature_ids[f_idx]
+        if iFeat != -1:
+            pPlot = cy_map.plot(x, y)
+            pPlot.setFeatureType(iFeat, f_var)
 
 def addBonuses():
     gc = CyGlobalContext()
-    data = get_decompressed_data()
     cy_map = CyMap()
-    for x in range(MAP_WIDTH):
-        for y in range(MAP_HEIGHT):
-            wb_idx = x * MAP_HEIGHT + y
-            offset = wb_idx * 4
-            b_code = _byte(data[offset + 2])
-            if b_code > 0:
-                b_name = BONUS_LIST[b_code]
-                if b_name:
-                    iBonus = gc.getInfoTypeForString(b_name)
-                    pPlot = cy_map.plot(x, y)
-                    pPlot.setBonusType(iBonus)
+    bonus_ids = []
+    for name in BONUS_LIST:
+        if name:
+            bonus_ids.append(gc.getInfoTypeForString(name))
+        else:
+            bonus_ids.append(-1)
+    for x, y, b_idx in BONUSES_DATA:
+        iBonus = bonus_ids[b_idx]
+        if iBonus != -1:
+            pPlot = cy_map.plot(x, y)
+            pPlot.setBonusType(iBonus)
 
 def addGoodies():
     return None
