@@ -107,6 +107,20 @@ def build_wbsave():
         x = int(parts[0].split("=")[1])
         y = int(parts[1].split("=")[1])
 
+        # Australia terrain tuning: lower peaks to hills around Sydney basin for open movement
+        if (x, y) in [(117, 16), (116, 17), (116, 18), (118, 14), (117, 13), (116, 12)]:
+            lines = [("\tPlotType=1" if l.strip().startswith("PlotType=") else l) for l in lines]
+
+        # Australia river network expansion (Sydney / Hawkesbury / Murray-Darling basin)
+        if (x, y) in [(117, 16), (116, 16)]:
+            if not any("isNOfRiver" in l for l in lines):
+                lines.insert(-1, "\tisNOfRiver")
+                lines.insert(-1, "\tRiverWEDirection=1")
+        if (x, y) in [(116, 16), (116, 15), (118, 17)]:
+            if not any("isWOfRiver" in l for l in lines):
+                lines.insert(-1, "\tisWOfRiver")
+                lines.insert(-1, "\tRiverNSDirection=0")
+
         # (67, 43): Greece old start - remove StartingPlot
         if x == 67 and y == 43:
             lines = [l for l in lines if l.strip() != "StartingPlot"]
