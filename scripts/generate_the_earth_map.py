@@ -9,7 +9,7 @@ STEAM_PATH = r"C:\Program Files (x86)\Steam\steamapps\common\Sid Meier's Civiliz
 SOURCE_MAP = os.path.join(STEAM_PATH, "PublicMaps", "Earth18Civs.Civ4WorldBuilderSave")
 
 OUTPUT_WBSAVE_PATCH = os.path.join(ROOT, "patch", "PatchFiles", "Beyond the Sword", "PublicMaps", "The Earth.CivBeyondSwordWBSave")
-OUTPUT_PY_PATCH = os.path.join(ROOT, "patch", "PatchFiles", "Beyond the Sword", "PublicMaps", "The Earth.py")
+OUTPUT_PY_PATCH = os.path.join(ROOT, "patch", "PatchFiles", "Beyond the Sword", "PublicMaps", "The_Earth.py")
 
 USER_MY_GAMES_MAPS = os.path.expanduser(r"~\OneDrive\文件\My Games\beyond the sword\PublicMaps")
 STEAM_BTS_MAPS = os.path.join(STEAM_PATH, "Beyond the Sword", "PublicMaps")
@@ -329,13 +329,12 @@ def build_py_script(plots):
     b64_str = base64.b64encode(comp).decode("ascii")
 
     py_content = f'''#
-#   FILE:    The Earth.py
+#   FILE:    The_Earth.py
 #   PURPOSE: Historically Researched 124x68 Earth Map for Civilization IV BTS
 #            Features 18 Real-World Civilizations with Taiwan in Australia and Vikings in Scandinavia
 #
 from CvPythonExtensions import *
 import CvUtil
-import struct
 import zlib
 import base64
 
@@ -351,10 +350,18 @@ MAP_DATA_B64 = """{b64_str}"""
 
 _cached_decomp = None
 
+def _byte(val):
+    if type(val) is int:
+        return val
+    return ord(val)
+
 def get_decompressed_data():
     global _cached_decomp
     if _cached_decomp is None:
-        raw_comp = base64.b64decode(MAP_DATA_B64)
+        if hasattr(base64, 'b64decode'):
+            raw_comp = base64.b64decode(MAP_DATA_B64)
+        else:
+            raw_comp = base64.decodestring(MAP_DATA_B64)
         _cached_decomp = zlib.decompress(raw_comp)
     return _cached_decomp
 
@@ -395,7 +402,7 @@ def generatePlotTypes():
         for y in range(MAP_HEIGHT):
             wb_idx = x * MAP_HEIGHT + y
             map_idx = y * MAP_WIDTH + x
-            b0 = struct.unpack_from("B", data, wb_idx * 4)[0]
+            b0 = _byte(data[wb_idx * 4])
             pt = b0 & 3
             if pt == 0:
                 plot_types[map_idx] = PlotTypes.PLOT_PEAK
@@ -415,7 +422,7 @@ def generateTerrainTypes():
         for y in range(MAP_HEIGHT):
             wb_idx = x * MAP_HEIGHT + y
             map_idx = y * MAP_WIDTH + x
-            b0 = struct.unpack_from("B", data, wb_idx * 4)[0]
+            b0 = _byte(data[wb_idx * 4])
             t_idx = (b0 >> 2) & 63
             t_name = TERRAIN_LIST[t_idx]
             terrain_types[map_idx] = gc.getInfoTypeForString(t_name)
@@ -428,7 +435,7 @@ def addRivers():
         for y in range(MAP_HEIGHT):
             wb_idx = x * MAP_HEIGHT + y
             offset = wb_idx * 4
-            river_byte = struct.unpack_from("B", data, offset + 3)[0]
+            river_byte = _byte(data[offset + 3])
             rn = bool(river_byte & 1)
             rw = bool(river_byte & 2)
             rwe = (river_byte >> 2) & 7
@@ -452,7 +459,7 @@ def addFeatures():
         for y in range(MAP_HEIGHT):
             wb_idx = x * MAP_HEIGHT + y
             offset = wb_idx * 4
-            f_code = struct.unpack_from("B", data, offset + 1)[0]
+            f_code = _byte(data[offset + 1])
             if f_code > 0:
                 f_idx = f_code >> 2
                 f_var = f_code & 3
@@ -470,7 +477,7 @@ def addBonuses():
         for y in range(MAP_HEIGHT):
             wb_idx = x * MAP_HEIGHT + y
             offset = wb_idx * 4
-            b_code = struct.unpack_from("B", data, offset + 2)[0]
+            b_code = _byte(data[offset + 2])
             if b_code > 0:
                 b_name = BONUS_LIST[b_code]
                 if b_name:
@@ -521,7 +528,7 @@ def assignStartingPlots():
         "CIVILIZATION_ZULU": (67, 12),
     }}
 
-    assigned_plots = set()
+    assigned_plots = []
     unassigned_players = []
 
     for i in range(gc.getMAX_CIV_PLAYERS()):
@@ -529,12 +536,14 @@ def assignStartingPlots():
         if pPlayer.isAlive():
             iCiv = pPlayer.getCivilizationType()
             civ_info = gc.getCivilizationInfo(iCiv)
-            civ_type = civ_info.getType() if civ_info else ""
+            civ_type = ""
+            if civ_info:
+                civ_type = civ_info.getType()
             if civ_type in civ_coords and civ_coords[civ_type] not in assigned_plots:
                 x, y = civ_coords[civ_type]
                 pPlot = cy_map.plot(x, y)
                 pPlayer.setStartingPlot(pPlot, True)
-                assigned_plots.add((x, y))
+                assigned_plots.append((x, y))
             else:
                 unassigned_players.append(pPlayer)
 
@@ -549,7 +558,7 @@ def assignStartingPlots():
             if (x, y) not in assigned_plots:
                 pPlot = cy_map.plot(x, y)
                 pPlayer.setStartingPlot(pPlot, True)
-                assigned_plots.add((x, y))
+                assigned_plots.append((x, y))
                 break
 
 def findStartingPlot(argsList):
@@ -584,6 +593,12 @@ def normalizeAddExtras():
     return None
 '''
 
+    # Clean up old space-named file in patch if it exists
+    old_patch_py = os.path.join(ROOT, "patch", "PatchFiles", "Beyond the Sword", "PublicMaps", "The Earth.py")
+    if os.path.exists(old_patch_py):
+        os.remove(old_patch_py)
+        print(f"Removed old space-named script: {old_patch_py}")
+
     os.makedirs(os.path.dirname(OUTPUT_PY_PATCH), exist_ok=True)
     with open(OUTPUT_PY_PATCH, "w", encoding="utf-8", newline="\r\n") as f:
         f.write(py_content)
@@ -596,7 +611,11 @@ def normalizeAddExtras():
     ]
     for target_dir in deploy_targets:
         if os.path.exists(target_dir):
-            target_file = os.path.join(target_dir, "The Earth.py")
+            old_file = os.path.join(target_dir, "The Earth.py")
+            if os.path.exists(old_file):
+                os.remove(old_file)
+                print(f"Removed old space-named script: {old_file}")
+            target_file = os.path.join(target_dir, "The_Earth.py")
             with open(target_file, "w", encoding="utf-8", newline="\r\n") as f:
                 f.write(py_content)
             print(f"Deployed Python script to: {target_file}")
@@ -604,3 +623,4 @@ def normalizeAddExtras():
 if __name__ == "__main__":
     final_wbsave, modified_plots = build_wbsave()
     build_py_script(modified_plots)
+
