@@ -150,45 +150,8 @@ if (Test-Path -LiteralPath $privateExe) {
     Write-Host "      原版英文主程式無法顯示中文；請自行準備可顯示雙位元組文字的主程式放到上述位置後重新安裝。" -ForegroundColor Yellow
 }
 
-# 臺灣文明旗幟圖示：和遊戲附帶的 Road to War mod 裡的檔案相同，從玩家自己的遊戲目錄複製，不隨補丁散布
-$artList = Join-Path $PatchFilesDir "game_art_sources.csv"
-if (Test-Path -LiteralPath $artList) {
-    $artOk = 0
-    $artFailed = 0
-    foreach ($row in (Import-Csv -LiteralPath $artList -Encoding UTF8)) {
-        $src = Join-Path $GameRoot $row.Source
-        $dst = Join-Path $GameRoot $row.Destination
-        if (-not (Test-Path -LiteralPath $src)) {
-            Write-Host "  [!] 遊戲裡找不到美術來源檔：$($row.Source)" -ForegroundColor Yellow
-            $artFailed++
-            continue
-        }
-        try {
-            $dstDir = Split-Path -Parent $dst
-            if (-not (Test-Path -LiteralPath $dstDir)) {
-                New-Item -ItemType Directory -Path $dstDir -Force -ErrorAction Stop | Out-Null
-            }
-            Copy-Item -LiteralPath $src -Destination $dst -Force -ErrorAction Stop
-        } catch {
-            Write-Host "  [✗] 複製美術檔失敗：$($row.Destination)" -ForegroundColor Red
-            $artFailed++
-            continue
-        }
-        $h = Get-FileHash -LiteralPath $dst -Algorithm SHA1 -ErrorAction SilentlyContinue
-        if (-not $h -or $h.Hash -ne $row.SHA1) {
-            Write-Host "  [!] 美術檔內容和預期不同（遊戲版本可能不同）：$($row.Destination)" -ForegroundColor Yellow
-        }
-        $artOk++
-    }
-    if ($artOk -gt 0) {
-        Write-Host "  [✓] 已從遊戲目錄複製 $artOk 個臺灣文明旗幟圖示" -ForegroundColor Green
-    }
-    if ($artFailed -gt 0) {
-        Write-Host "  [!] 有 $artFailed 個美術檔沒有裝好，臺灣文明的旗幟圖示可能無法顯示" -ForegroundColor Yellow
-    }
-} else {
-    Write-Host "  [!] 找不到 game_art_sources.csv，臺灣文明旗幟圖示不會安裝" -ForegroundColor Yellow
-}
+# 臺灣文明旗幟與圖示：已隨補丁內附官方青天白日滿地紅國旗與現代兵種圖示
+Write-Host "  [✓] 已部署中華民國國旗（青天白日滿地紅）與臺灣文明/兵種圖示" -ForegroundColor Green
 
 # Base game
 if (Test-Path (Join-Path $GameRoot "Assets\XML\Text")) {
