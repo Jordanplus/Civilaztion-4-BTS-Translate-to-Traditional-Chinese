@@ -93,7 +93,7 @@ ightarrow$ **狂亂模式**（極端少數資源狂暴生成，修正原先的�
 * **遊戲版本**：Steam 版《Sid Meier's Civilization IV: Beyond the Sword》(版本 3.19)
 
 ### 安裝步驟
-1. 前往本專案 [Releases](https://github.com/Jordanplus/Civilaztion-4-BTS-Translate-to-Traditional-Chinese/releases) 下載最新的發布壓縮檔（`Civilaztion-4-BTS-Traditional-Chinese-Patch-v1.0.0.zip`）。
+1. 前往本專案 [Releases](https://github.com/Jordanplus/Civilaztion-4-BTS-Translate-to-Traditional-Chinese/releases) 下載最新的發布壓縮檔（如 `Civilaztion-4-BTS-Traditional-Chinese-Patch-v1.1.0.zip`）。
 2. 解壓縮後進入資料夾。
 3. **前置步驟**：本補丁不附原版主程式與日文 CJK 支援包。請自行準備可顯示雙位元組文字（中文）的主程式，放到與 `install.bat` 同一層的 `private\Civ4BeyondSword.exe`（在 repo 裡就是 `patch/private/`），安裝程式會自動套用。臺灣文明的旗幟圖示會在安裝時從你自己遊戲附帶的 Road to War mod 複製（Steam 版 BtS 內建）。
 4. **安裝補丁**：滑鼠點擊 `install.bat`（或點右鍵選擇「以系統管理員身分執行」）。

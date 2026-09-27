@@ -1,14 +1,31 @@
 import os
 import zipfile
 import sys
+import re
 import xml.etree.ElementTree as ET
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PATCH_DIR = os.path.join(ROOT, 'patch')
 DIST_DIR = os.path.join(ROOT, 'dist')
-VERSION = "v1.0.0"
-ZIP_NAME = f"Civilaztion-4-BTS-Traditional-Chinese-Patch-{VERSION}.zip"
-ZIP_PATH = os.path.join(DIST_DIR, ZIP_NAME)
+CHANGELOG_PATH = os.path.join(ROOT, 'CHANGELOG.md')
+
+def resolve_version():
+    """Resolve release version from CLI arguments, CHANGELOG.md, or default."""
+    # Check CLI argument: e.g. python build_release.py v1.1.0
+    for arg in sys.argv[1:]:
+        if not arg.startswith('-'):
+            return arg if arg.startswith('v') else f"v{arg}"
+    
+    # Read the latest released version from CHANGELOG.md
+    if os.path.exists(CHANGELOG_PATH):
+        with open(CHANGELOG_PATH, 'r', encoding='utf-8') as f:
+            for line in f:
+                # Match e.g. ## [v1.1.0] - 2026-09-28 or ## [1.1.0]
+                m = re.search(r'##\s*\[v?(\d+\.\d+\.\d+)\]', line)
+                if m:
+                    return f"v{m.group(1)}"
+    
+    return "v1.0.0"
 
 def verify_xmls():
     print("Verifying XML files before build...")
@@ -28,17 +45,23 @@ def verify_xmls():
         sys.exit(1)
     print("All XML files passed validation!")
 
-def package_release():
-    os.makedirs(DIST_DIR, exist_ok=True)
-    if os.path.exists(ZIP_PATH):
-        os.remove(ZIP_PATH)
+def package_release(version):
+    zip_name = f"Civilaztion-4-BTS-Traditional-Chinese-Patch-{version}.zip"
+    zip_path = os.path.join(DIST_DIR, zip_name)
 
-    print(f"Creating release package: {ZIP_PATH}")
-    with zipfile.ZipFile(ZIP_PATH, 'w', zipfile.ZIP_DEFLATED) as zipf:
+    os.makedirs(DIST_DIR, exist_ok=True)
+    if os.path.exists(zip_path):
+        os.remove(zip_path)
+
+    print(f"Creating release package ({version}): {zip_path}")
+    with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
         for root, dirs, files in os.walk(PATCH_DIR):
             for file in files:
                 # Skip backup folder if exists
                 if 'Backup' in root:
+                    continue
+                # Skip Python bytecode and cache
+                if '__pycache__' in root or file.endswith(('.pyc', '.pyo')):
                     continue
                 # Never package the player's own private files (e.g. the CJK exe)
                 if 'private' in os.path.relpath(root, PATCH_DIR).split(os.sep):
@@ -49,9 +72,11 @@ def package_release():
                 arc_name = os.path.join('Civilaztion-4-BTS-Traditional-Chinese-Patch', rel_path)
                 zipf.write(file_path, arc_name)
 
-    size_mb = os.path.getsize(ZIP_PATH) / (1024 * 1024)
-    print(f"Package created successfully! Size: {size_mb:.2f} MB")
+    size_mb = os.path.getsize(zip_path) / (1024 * 1024)
+    print(f"Package created successfully! File: {zip_name} ({size_mb:.2f} MB)")
 
 if __name__ == '__main__':
+    version = resolve_version()
+    print(f"Target release version: {version}")
     verify_xmls()
-    package_release()
+    package_release(version)

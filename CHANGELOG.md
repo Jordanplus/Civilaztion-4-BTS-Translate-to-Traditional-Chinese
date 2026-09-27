@@ -1,6 +1,6 @@
 # 版本更新紀錄 (Changelog)
 
-## [Unreleased] - 2026-09-28
+## [v1.1.0] - 2026-09-28
 ### 🌍 新增巨型世界地圖：「The Earth」(124x68 Huge Map)
 * **全模式支援**：同步產出 `The Earth.CivBeyondSwordWBSave` 與 `The Earth.py`，支援「自定義遊戲」(Custom Game) 地圖選單、「進行劇本」(Play A Scenario) 及「自定義劇本」(Custom Scenario)。
 * **官方極限尺寸**：採用遊戲引擎允許之最大官方世界尺寸（`WORLDSIZE_HUGE`，124 x 68，共 8,432 地塊），完整重現各大洲山川水系、海峽關隘與資源分佈。
