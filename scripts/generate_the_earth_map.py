@@ -56,13 +56,13 @@ def build_wbsave():
         new_blocks.append(block)
     content = "".join(new_blocks)
 
-    # 2. Update Player 3 (Replace Alexander/Greece with Chiang Ching-kuo/Taiwan in Australia)
+    # 2. Update Player 3 (Replace Alexander/Greece with Tsai Ing-wen/Taiwan in Australia)
     player_3_orig = re.search(r"BeginPlayer\s+LeaderType=LEADER_ALEXANDER\s+CivType=CIVILIZATION_GREECE.*?EndPlayer", content, re.DOTALL)
     if not player_3_orig:
         raise ValueError("Could not find Player 3 (LEADER_ALEXANDER) in WBSave")
 
     player_3_new = ("BeginPlayer\n"
-                    "\tLeaderType=LEADER_CHIANG_CHING_KUO\n"
+                    "\tLeaderType=LEADER_TSAI_ING_WEN\n"
                     "\tCivType=CIVILIZATION_TAIWAN\n"
                     "\tTeam=3\n"
                     "\tPlayableCiv=1\n"

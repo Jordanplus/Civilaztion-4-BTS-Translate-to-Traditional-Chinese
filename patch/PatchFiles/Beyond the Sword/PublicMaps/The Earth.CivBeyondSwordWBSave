@@ -101,7 +101,7 @@ BeginPlayer
 	Handicap=HANDICAP_NOBLE                         
 EndPlayer
 BeginPlayer
-	LeaderType=LEADER_CHIANG_CHING_KUO
+	LeaderType=LEADER_TSAI_ING_WEN
 	CivType=CIVILIZATION_TAIWAN
 	Team=3
 	PlayableCiv=1

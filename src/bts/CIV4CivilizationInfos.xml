@@ -4811,11 +4811,11 @@
 			</InitialCivics>
 			<Leaders>
 				<Leader>
-					<LeaderName>LEADER_CHIANG_CHING_KUO</LeaderName>
+					<LeaderName>LEADER_TSAI_ING_WEN</LeaderName>
 					<bLeaderAvailability>1</bLeaderAvailability>
 				</Leader>
 				<Leader>
-					<LeaderName>LEADER_TSAI_ING_WEN</LeaderName>
+					<LeaderName>LEADER_CHIANG_CHING_KUO</LeaderName>
 					<bLeaderAvailability>1</bLeaderAvailability>
 				</Leader>
 			</Leaders>
