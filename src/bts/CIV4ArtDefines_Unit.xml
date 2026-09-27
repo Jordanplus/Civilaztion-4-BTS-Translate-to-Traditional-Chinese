@@ -1117,9 +1117,9 @@
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
-			<NIF>Art/Units/Paratrooper/Paratrooper.nif</NIF>
+			<NIF>Art/Units/Taiwan_Airborne/Paratrooper.nif</NIF>
 			<KFM>Art/Units/Paratrooper/Paratrooper.kfm</KFM>
-			<SHADERNIF>Art/Units/Paratrooper/Paratrooper_FX.nif</SHADERNIF>
+			<SHADERNIF>Art/Units/Taiwan_Airborne/Paratrooper_FX.nif</SHADERNIF>
 			<ShadowDef>
 				<ShadowNIF>Art/Units/01_UnitShadows/UnitShadow.nif</ShadowNIF>
 				<ShadowAttachNode>Bip01 Neck</ShadowAttachNode>
@@ -1141,9 +1141,9 @@
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
-			<NIF>Art/Units/MechanizedInfantry/MechanizedInfantry.nif</NIF>
+			<NIF>Art/Units/Taiwan_CM32/MechanizedInfantry.nif</NIF>
 			<KFM>Art/Units/MechanizedInfantry/MechanizedInfantry.kfm</KFM>
-			<SHADERNIF>Art/Units/MechanizedInfantry/MechanizedInfantry_FX.nif</SHADERNIF>
+			<SHADERNIF>Art/Units/Taiwan_CM32/MechanizedInfantry_FX.nif</SHADERNIF>
 			<ShadowDef>
 				<ShadowNIF>Art/Units/01_UnitShadows/MechInfantryShadow.nif</ShadowNIF>
 				<ShadowAttachNode>BIP Pelvis</ShadowAttachNode>
@@ -1738,9 +1738,9 @@
 			<fInterfaceScale>0.9</fInterfaceScale>
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
-			<NIF>Art/Units/ModernArmor/ModernArmor.nif</NIF>
+			<NIF>Art/Units/Taiwan_M1A2T/ModernArmor.nif</NIF>
 			<KFM>Art/Units/ModernArmor/ModernArmor.kfm</KFM>
-			<SHADERNIF>Art/Units/ModernArmor/ModernArmor_FX.nif</SHADERNIF>
+			<SHADERNIF>Art/Units/Taiwan_M1A2T/ModernArmor_FX.nif</SHADERNIF>
 			<ShadowDef>
 				<ShadowNIF>Art/Units/01_UnitShadows/ModernArmorShadow.nif</ShadowNIF>
 				<ShadowAttachNode>BIP Pelvis</ShadowAttachNode>
@@ -2349,9 +2349,9 @@
 			<fInterfaceScale>1.3</fInterfaceScale>
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
-			<NIF>Art/Units/Transport/Transport.nif</NIF>
+			<NIF>Art/Units/Taiwan_Yushan/Transport.nif</NIF>
 			<KFM>Art/Units/Transport/Transport.kfm</KFM>
-			<SHADERNIF>Art/Units/Transport/Transport_FX.nif</SHADERNIF>
+			<SHADERNIF>Art/Units/Taiwan_Yushan/Transport_FX.nif</SHADERNIF>
 			<ShadowDef>
 				<ShadowNIF>Art/Units/01_UnitShadows/TransportShadow.nif</ShadowNIF>
 				<ShadowAttachNode>BIP Pelvis</ShadowAttachNode>
@@ -2427,9 +2427,9 @@
 			<fInterfaceScale>1.1</fInterfaceScale>
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
-			<NIF>Art/Units/Stealth_Destroyer/Stealth_Destroyer.nif</NIF>
+			<NIF>Art/Units/Taiwan_Mogami/Stealth_Destroyer.nif</NIF>
 			<KFM>Art/Units/Stealth_Destroyer/Stealth_Destroyer.kfm</KFM>
-			<SHADERNIF>Art/Units/Stealth_Destroyer/Stealth_Destroyer_FX.nif</SHADERNIF>
+			<SHADERNIF>Art/Units/Taiwan_Mogami/Stealth_Destroyer_FX.nif</SHADERNIF>
 			<ShadowDef>
 				<ShadowNIF>Art/Units/01_UnitShadows/DestroyerShadow.nif</ShadowNIF>
 				<ShadowAttachNode>BIP Pelvis</ShadowAttachNode>
@@ -2505,9 +2505,9 @@
 			<fInterfaceScale>1.3</fInterfaceScale>
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
-			<NIF>Art/Units/Submarine/Submarine.nif</NIF>
+			<NIF>Art/Units/Taiwan_HaiKun/Submarine.nif</NIF>
 			<KFM>Art/Units/Submarine/Submarine.kfm</KFM>
-			<SHADERNIF>Art/Units/Submarine/Submarine_FX.nif</SHADERNIF>
+			<SHADERNIF>Art/Units/Taiwan_HaiKun/Submarine_FX.nif</SHADERNIF>
 			<ShadowDef>
 				<ShadowNIF>Art/Units/01_UnitShadows/BattleshipShadow.nif</ShadowNIF>
 				<ShadowAttachNode>BIP Pelvis</ShadowAttachNode>
@@ -3709,9 +3709,9 @@
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
-			<NIF>Art/Units/MobileSam/MobileSam.nif</NIF>
+			<NIF>Art/Units/Taiwan_TienKung/MobileSam.nif</NIF>
 			<KFM>Art/Units/MobileSam/MobileSam.kfm</KFM>
-			<SHADERNIF>Art/Units/MobileSam/MobileSam_FX.nif</SHADERNIF>
+			<SHADERNIF>Art/Units/Taiwan_TienKung/MobileSam_FX.nif</SHADERNIF>
 			<ShadowDef>
 				<ShadowNIF>Art/Units/01_UnitShadows/MechInfantryShadow.nif</ShadowNIF>
 				<ShadowAttachNode>BIP Pelvis</ShadowAttachNode>
@@ -5915,9 +5915,9 @@
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
-			<NIF>Art/Units/MobileSam/MobileSam.nif</NIF>
+			<NIF>Art/Units/Taiwan_TienKung/MobileSam.nif</NIF>
 			<KFM>Art/Units/MobileSam/MobileSam.kfm</KFM>
-			<SHADERNIF>Art/Units/MobileSam/MobileSam_FX.nif</SHADERNIF>
+			<SHADERNIF>Art/Units/Taiwan_TienKung/MobileSam_FX.nif</SHADERNIF>
 			<ShadowDef>
 				<ShadowNIF>Art/Units/01_UnitShadows/MechInfantryShadow.nif</ShadowNIF>
 				<ShadowAttachNode>BIP Pelvis</ShadowAttachNode>
@@ -5948,9 +5948,9 @@
 			<fInterfaceScale>0.9</fInterfaceScale>
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
-			<NIF>Art/Units/ModernArmor/ModernArmor.nif</NIF>
+			<NIF>Art/Units/Taiwan_M1A2T/ModernArmor.nif</NIF>
 			<KFM>Art/Units/ModernArmor/ModernArmor.kfm</KFM>
-			<SHADERNIF>Art/Units/ModernArmor/ModernArmor_FX.nif</SHADERNIF>
+			<SHADERNIF>Art/Units/Taiwan_M1A2T/ModernArmor_FX.nif</SHADERNIF>
 			<ShadowDef>
 				<ShadowNIF>Art/Units/01_UnitShadows/ModernArmorShadow.nif</ShadowNIF>
 				<ShadowAttachNode>BIP Pelvis</ShadowAttachNode>
@@ -5983,9 +5983,9 @@
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
-			<NIF>Art/Units/MechanizedInfantry/MechanizedInfantry.nif</NIF>
+			<NIF>Art/Units/Taiwan_CM32/MechanizedInfantry.nif</NIF>
 			<KFM>Art/Units/MechanizedInfantry/MechanizedInfantry.kfm</KFM>
-			<SHADERNIF>Art/Units/MechanizedInfantry/MechanizedInfantry_FX.nif</SHADERNIF>
+			<SHADERNIF>Art/Units/Taiwan_CM32/MechanizedInfantry_FX.nif</SHADERNIF>
 			<ShadowDef>
 				<ShadowNIF>Art/Units/01_UnitShadows/MechInfantryShadow.nif</ShadowNIF>
 				<ShadowAttachNode>BIP Pelvis</ShadowAttachNode>
@@ -6016,9 +6016,9 @@
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
-			<NIF>Art/Units/JetFighter/JetFighter.nif</NIF>
+			<NIF>Art/Units/Taiwan_IDF/JetFighter.nif</NIF>
 			<KFM>Art/Units/JetFighter/JetFighter.kfm</KFM>
-			<SHADERNIF>Art/Units/JetFighter/JetFighter_FX.nif</SHADERNIF>
+			<SHADERNIF>Art/Units/Taiwan_IDF/JetFighter_FX.nif</SHADERNIF>
 			<ShadowDef>
 				<ShadowNIF>Art/Units/01_UnitShadows/JetFighterShadow.nif</ShadowNIF>
 				<ShadowAttachNode>BIP Pelvis</ShadowAttachNode>
@@ -6070,9 +6070,9 @@
 			<fInterfaceScale>1.3</fInterfaceScale>
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
-			<NIF>Art/Units/Submarine/Submarine.nif</NIF>
+			<NIF>Art/Units/Taiwan_HaiKun/Submarine.nif</NIF>
 			<KFM>Art/Units/Submarine/Submarine.kfm</KFM>
-			<SHADERNIF>Art/Units/Submarine/Submarine_FX.nif</SHADERNIF>
+			<SHADERNIF>Art/Units/Taiwan_HaiKun/Submarine_FX.nif</SHADERNIF>
 			<ShadowDef>
 				<ShadowNIF>Art/Units/01_UnitShadows/BattleshipShadow.nif</ShadowNIF>
 				<ShadowAttachNode>BIP Pelvis</ShadowAttachNode>
@@ -6100,9 +6100,9 @@
 			<fInterfaceScale>1.3</fInterfaceScale>
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
-			<NIF>Art/Units/Transport/Transport.nif</NIF>
+			<NIF>Art/Units/Taiwan_Yushan/Transport.nif</NIF>
 			<KFM>Art/Units/Transport/Transport.kfm</KFM>
-			<SHADERNIF>Art/Units/Transport/Transport_FX.nif</SHADERNIF>
+			<SHADERNIF>Art/Units/Taiwan_Yushan/Transport_FX.nif</SHADERNIF>
 			<ShadowDef>
 				<ShadowNIF>Art/Units/01_UnitShadows/TransportShadow.nif</ShadowNIF>
 				<ShadowAttachNode>BIP Pelvis</ShadowAttachNode>
@@ -6139,9 +6139,9 @@
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
-			<NIF>Art/Units/Paratrooper/Paratrooper.nif</NIF>
+			<NIF>Art/Units/Taiwan_Airborne/Paratrooper.nif</NIF>
 			<KFM>Art/Units/Paratrooper/Paratrooper.kfm</KFM>
-			<SHADERNIF>Art/Units/Paratrooper/Paratrooper_FX.nif</SHADERNIF>
+			<SHADERNIF>Art/Units/Taiwan_Airborne/Paratrooper_FX.nif</SHADERNIF>
 			<ShadowDef>
 				<ShadowNIF>Art/Units/01_UnitShadows/UnitShadow.nif</ShadowNIF>
 				<ShadowAttachNode>Bip01 Neck</ShadowAttachNode>
@@ -6163,9 +6163,9 @@
 			<fInterfaceScale>1.1</fInterfaceScale>
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
-			<NIF>Art/Units/Stealth_Destroyer/Stealth_Destroyer.nif</NIF>
+			<NIF>Art/Units/Taiwan_Mogami/Stealth_Destroyer.nif</NIF>
 			<KFM>Art/Units/Stealth_Destroyer/Stealth_Destroyer.kfm</KFM>
-			<SHADERNIF>Art/Units/Stealth_Destroyer/Stealth_Destroyer_FX.nif</SHADERNIF>
+			<SHADERNIF>Art/Units/Taiwan_Mogami/Stealth_Destroyer_FX.nif</SHADERNIF>
 			<ShadowDef>
 				<ShadowNIF>Art/Units/01_UnitShadows/DestroyerShadow.nif</ShadowNIF>
 				<ShadowAttachNode>BIP Pelvis</ShadowAttachNode>
