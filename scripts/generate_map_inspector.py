@@ -8,6 +8,7 @@ WBSAVE_PATH = os.path.join(ROOT, "patch", "PatchFiles", "Beyond the Sword", "Pub
 
 PREVIEW_FULL_PNG = os.path.join(ROOT, "the_earth_map_preview.png")
 PREVIEW_AUS_PNG = os.path.join(ROOT, "the_earth_australia_preview.png")
+PREVIEW_SCAN_PNG = os.path.join(ROOT, "the_earth_scandinavia_preview.png")
 HTML_INSPECTOR = os.path.join(ROOT, "inspect_the_earth.html")
 
 FONT_PATH = r"C:\Windows\Fonts\msyh.ttc"
@@ -42,7 +43,7 @@ CIVS_INFO = {
     (62, 52):  {"name": "德國 (腓特烈)", "en": "Germany (Frederick)", "color": (60, 60, 60), "symbol": "DE"},
     (58, 51):  {"name": "法國 (路易十四)", "en": "France (Louis XIV)", "color": (30, 70, 180), "symbol": "FR"},
     (56, 53):  {"name": "英國 (伊莉莎白)", "en": "England (Elizabeth)", "color": (180, 20, 20), "symbol": "GB"},
-    (55, 46):  {"name": "西班牙 (伊莎貝拉)", "en": "Spain (Isabella)", "color": (210, 150, 20), "symbol": "ES"},
+    (62, 58):  {"name": "維京 (朗納爾)", "en": "Viking (Ragnar)", "color": (140, 60, 180), "symbol": "VK"},
     (73, 54):  {"name": "俄羅斯 (凱薩琳)", "en": "Russia (Catherine)", "color": (160, 30, 30), "symbol": "RU"},
     (82, 40):  {"name": "波斯 (居魯士)", "en": "Persia (Cyrus)", "color": (40, 140, 140), "symbol": "IR"},
     (75, 35):  {"name": "阿拉伯 (薩拉丁)", "en": "Arabia (Saladin)", "color": (20, 140, 40), "symbol": "SA"},
@@ -214,7 +215,7 @@ def render_full_map(plots):
 
     # Add Map Title Box
     title_text = "文明帝國 IV：超越刀鋒 —「The Earth」巨型地球地圖 (124x68，18大文明歷史發祥位址)"
-    sub_title = "★ 台灣文明預設領袖：蔡英文（理財＋保國＋魅力）| 首都設立於澳洲大陸雪梨流域 (118, 16)"
+    sub_title = "★ 台灣文明：澳洲大陸 (118, 16) | 維京文明：北歐斯堪地那維亞 (62, 58) | 18大文明歷史發祥位址"
     draw.rounded_rectangle([20, 15, 880, 75], radius=6, fill=(10, 15, 25), outline=(255, 215, 0), width=2)
     draw.text((32, 22), title_text, font=font_title, fill=(255, 215, 0))
     draw.text((32, 50), sub_title, font=font_badge, fill=(200, 235, 255))
@@ -318,6 +319,118 @@ def render_australia_map(plots):
 
     img.save(PREVIEW_AUS_PNG)
     print(f"Saved Australia preview to: {PREVIEW_AUS_PNG}")
+    return img
+
+def render_scandinavia_map(plots):
+    print("Rendering high-res Northern Europe & Viking civilization zoom-in...")
+    # Northern Europe & Scandinavia subgrid: x: 52..74, y: 48..64
+    min_x, max_x = 52, 74
+    min_y, max_y = 48, 64
+    tile_size = 52
+
+    grid_w = max_x - min_x + 1
+    grid_h = max_y - min_y + 1
+    w = grid_w * tile_size
+    h = grid_h * tile_size
+
+    img = Image.new("RGB", (w, h), (15, 45, 89))
+    draw = ImageDraw.Draw(img)
+
+    try:
+        font_lg = ImageFont.truetype(FONT_PATH, 20)
+        font_md = ImageFont.truetype(FONT_PATH, 14)
+        font_res = ImageFont.truetype(FONT_PATH, 12)
+    except:
+        font_lg = font_md = font_res = ImageFont.load_default()
+
+    for x in range(min_x, max_x + 1):
+        for y in range(min_y, max_y + 1):
+            p = plots.get((x, y))
+            if not p: continue
+            sx = (x - min_x) * tile_size
+            sy = (max_y - y) * tile_size
+
+            color = TERRAIN_COLORS.get(p["terrain"], (15, 45, 89))
+            draw.rectangle([sx, sy, sx + tile_size - 1, sy + tile_size - 1], fill=color, outline=(255, 255, 255, 30))
+
+            # Peak / Hill
+            if p["plot_type"] == 0:
+                draw.polygon([
+                    (sx + tile_size // 2, sy + 4),
+                    (sx + 4, sy + tile_size - 4),
+                    (sx + tile_size - 4, sy + tile_size - 4)
+                ], fill=(55, 50, 45), outline=(230, 230, 230), width=2)
+            elif p["plot_type"] == 1:
+                draw.arc([sx + 6, sy + 8, sx + tile_size - 6, sy + tile_size + 4], start=180, end=360, fill=(45, 40, 35), width=3)
+
+            # Features
+            if p["feature"] in FEATURE_COLORS:
+                fc = FEATURE_COLORS[p["feature"]]
+                if p["feature"] in ["FEATURE_FOREST", "FEATURE_JUNGLE"]:
+                    draw.ellipse([sx + 8, sy + 8, sx + tile_size - 8, sy + tile_size - 8], fill=fc)
+
+            # Rivers
+            if p["river_n"]:
+                draw.line([(sx, sy + tile_size), (sx + tile_size, sy + tile_size)], fill=RIVER_COLOR, width=5)
+            if p["river_w"]:
+                draw.line([(sx + tile_size, sy), (sx + tile_size, sy + tile_size)], fill=RIVER_COLOR, width=5)
+
+            # Coordinate text (faint)
+            draw.text((sx + 3, sy + 2), f"{x},{y}", font=font_res, fill=(255, 255, 255, 100))
+
+            # Bonus Resource
+            if p["bonus"] in RESOURCE_LABELS:
+                zh_name, en_name, b_col = RESOURCE_LABELS[p["bonus"]]
+                cx, cy = sx + tile_size // 2, sy + tile_size // 2 + 4
+                r = 13
+                draw.ellipse([cx - r, cy - r, cx + r, cy + r], fill=b_col, outline=(20, 20, 20), width=2)
+                draw.text((cx - 10, cy - 7), zh_name[:2], font=font_res, fill=(10, 10, 10))
+
+    # Mark Civilizations in this viewport
+    vk_x, vk_y = 0, 0
+    for (cx, cy), c_data in CIVS_INFO.items():
+        if min_x <= cx <= max_x and min_y <= cy <= max_y:
+            px = (cx - min_x) * tile_size + tile_size // 2
+            py = (max_y - cy) * tile_size + tile_size // 2
+            is_vk = (cx == 62 and cy == 58)
+            if is_vk:
+                vk_x, vk_y = px, py
+
+            # Star badge
+            star_r = 18 if is_vk else 14
+            star_fill = (255, 215, 0) if is_vk else c_data["color"]
+            star_outline = (180, 20, 30) if is_vk else (255, 255, 255)
+            draw.ellipse([px - star_r, py - star_r, px + star_r, py + star_r], fill=star_fill, outline=star_outline, width=3 if is_vk else 2)
+            sym = c_data["symbol"]
+            draw.text((px - 8, py - 8), sym, font=font_md, fill=(0, 0, 0) if is_vk else (255, 255, 255))
+
+            # Civ Label
+            c_label = c_data["name"]
+            tw = len(c_label) * 12
+            draw.rounded_rectangle([px - tw // 2 - 4, py + 16, px + tw // 2 + 4, py + 34], radius=3, fill=(10, 20, 35, 230), outline=star_outline, width=1)
+            draw.text((px - tw // 2, py + 18), c_label, font=font_res, fill=(255, 255, 255))
+
+    # Viking Banner pointing to capital
+    if vk_x and vk_y:
+        banner_text = "★ 維京首都（斯堪地那維亞 62, 58）"
+        bx1 = vk_x + 60
+        by1 = vk_y - 30
+        bx2 = bx1 + 270
+        by2 = by1 + 36
+        draw.line([(vk_x + 18, vk_y), (bx1, by1 + 18)], fill=(255, 215, 0), width=2)
+        draw.rounded_rectangle([bx1, by1, bx2, by2], radius=5, fill=(110, 30, 160), outline=(255, 215, 0), width=2)
+        draw.text((bx1 + 10, by1 + 8), banner_text, font=font_md, fill=(255, 255, 255))
+
+    # Legend / Title Box
+    title_box_w = 510
+    draw.rounded_rectangle([20, 20, 20 + title_box_w, 140], radius=6, fill=(10, 15, 25, 240), outline=(255, 215, 0), width=2)
+    draw.text((32, 28), "北歐斯堪地那維亞與維京文明開局特寫", font=font_lg, fill=(255, 215, 0))
+    draw.text((32, 60), "• 領袖：朗納爾（理財＋侵略，海上經濟與陸戰雙神級特質）", font=font_md, fill=(255, 255, 255))
+    draw.text((32, 84), "• 首都水陸資源：斯卡格拉克峽灣深海魚 (62,57) ＋ 淡水運河 (62,58)", font=font_md, fill=(100, 220, 255))
+    draw.text((32, 108), "• 斯堪地那維亞物產：法倫銅礦 (60,58)、薩拉銀礦、野鹿、毛皮、生豬", font=font_md, fill=(255, 210, 120))
+
+    img.save(PREVIEW_SCAN_PNG)
+    print(f"Saved Scandinavia preview to: {PREVIEW_SCAN_PNG}")
     return img
 
 def generate_interactive_html(plots):
@@ -640,4 +753,5 @@ if __name__ == "__main__":
     plots = parse_wbsave()
     render_full_map(plots)
     render_australia_map(plots)
+    render_scandinavia_map(plots)
     generate_interactive_html(plots)

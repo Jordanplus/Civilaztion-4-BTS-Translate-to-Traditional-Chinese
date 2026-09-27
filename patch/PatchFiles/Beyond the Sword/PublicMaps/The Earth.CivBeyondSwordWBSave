@@ -48,9 +48,9 @@ BeginTeam
 	Tech=TECH_THE_WHEEL                         
 	Tech=TECH_MYSTICISM                         
 EndTeam
-BeginTeam                         
-	Tech=TECH_FISHING                         
-	Tech=TECH_MYSTICISM                         
+BeginTeam
+	Tech=TECH_FISHING
+	Tech=TECH_HUNTING
 EndTeam
 BeginTeam                         
 	Tech=TECH_FISHING                         
@@ -165,12 +165,12 @@ BeginPlayer
 	Handicap=HANDICAP_NOBLE                         
 EndPlayer
 BeginPlayer
-	LeaderType=LEADER_ISABELLA
-	CivType=CIVILIZATION_SPAIN                         
-	Team=11                         
-	PlayableCiv=1                         
-	StartingX=55, StartingY=46                         
-	Handicap=HANDICAP_NOBLE                         
+	LeaderType=LEADER_RAGNAR
+	CivType=CIVILIZATION_VIKING
+	Team=11
+	PlayableCiv=1
+	StartingX=62, StartingY=58
+	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	LeaderType=LEADER_ELIZABETH
@@ -20467,7 +20467,6 @@ BeginPlot
 	x=55,y=46
 	TerrainType=TERRAIN_PLAINS
 	PlotType=2
-	StartingPlot
 EndPlot
 BeginPlot
 	x=55,y=47
@@ -22391,6 +22390,7 @@ BeginPlot
 	RiverNSDirection=2
 	TerrainType=TERRAIN_GRASS
 	PlotType=1
+	BonusType=BONUS_COPPER
 EndPlot
 BeginPlot
 	x=60,y=59
@@ -23137,11 +23137,15 @@ BeginPlot
 	x=62,y=57
 	TerrainType=TERRAIN_COAST
 	PlotType=3
+	BonusType=BONUS_FISH
 EndPlot
 BeginPlot
 	x=62,y=58
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
+	StartingPlot
+	isNOfRiver
+	RiverWEDirection=1
 EndPlot
 BeginPlot
 	x=62,y=59

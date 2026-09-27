@@ -41,7 +41,7 @@ def build_wbsave():
     with open(SOURCE_MAP, "r", encoding="utf-8", errors="ignore") as f:
         content = f.read()
 
-    # 1. Update Team 3 (Replace Greece's fishing/hunting with Taiwan's agriculture/mining)
+    # 1. Update Teams (Team 3: Taiwan, Team 11: Viking)
     team_blocks = re.split(r"(BeginTeam\s+.*?EndTeam)", content, flags=re.DOTALL)
     team_idx = 0
     new_blocks = []
@@ -51,6 +51,11 @@ def build_wbsave():
                 block = ("BeginTeam\n"
                          "\tTech=TECH_AGRICULTURE\n"
                          "\tTech=TECH_MINING\n"
+                         "EndTeam")
+            elif team_idx == 11:
+                block = ("BeginTeam\n"
+                         "\tTech=TECH_FISHING\n"
+                         "\tTech=TECH_HUNTING\n"
                          "EndTeam")
             team_idx += 1
         new_blocks.append(block)
@@ -71,7 +76,22 @@ def build_wbsave():
                     "EndPlayer")
     content = content.replace(player_3_orig.group(0), player_3_new)
 
-    # 3. Update Plots
+    # 3. Update Player 11 (Replace Isabella/Spain with Ragnar/Viking in Scandinavia)
+    player_11_orig = re.search(r"BeginPlayer\s+LeaderType=LEADER_ISABELLA\s+CivType=CIVILIZATION_SPAIN.*?EndPlayer", content, re.DOTALL)
+    if not player_11_orig:
+        raise ValueError("Could not find Player 11 (LEADER_ISABELLA) in WBSave")
+
+    player_11_new = ("BeginPlayer\n"
+                     "\tLeaderType=LEADER_RAGNAR\n"
+                     "\tCivType=CIVILIZATION_VIKING\n"
+                     "\tTeam=11\n"
+                     "\tPlayableCiv=1\n"
+                     "\tStartingX=62, StartingY=58\n"
+                     "\tHandicap=HANDICAP_NOBLE\n"
+                     "EndPlayer")
+    content = content.replace(player_11_orig.group(0), player_11_new)
+
+    # 4. Update Plots
     plot_header_pos = content.find("BeginPlot")
     header_part = content[:plot_header_pos]
     plots_part = content[plot_header_pos:]
@@ -90,6 +110,28 @@ def build_wbsave():
         # (67, 43): Greece old start - remove StartingPlot
         if x == 67 and y == 43:
             lines = [l for l in lines if l.strip() != "StartingPlot"]
+
+        # (55, 46): Spain old start - remove StartingPlot
+        elif x == 55 and y == 46:
+            lines = [l for l in lines if l.strip() != "StartingPlot"]
+
+        # (62, 58): Viking Scandinavia Capital (Uppsala / Lake Malaren isthmus)
+        elif x == 62 and y == 58:
+            if not any(l.strip() == "StartingPlot" for l in lines):
+                lines.insert(-1, "\tStartingPlot")
+            if not any("isNOfRiver" in l for l in lines):
+                lines.insert(-1, "\tisNOfRiver")
+                lines.insert(-1, "\tRiverWEDirection=1")
+
+        # (62, 57): Kattegat / Skagerrak Fjord Fish for Viking Capital
+        elif x == 62 and y == 57:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_FISH")
+
+        # (60, 58): Great Copper Mountain of Falun (Stora Kopparberg)
+        elif x == 60 and y == 58:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_COPPER")
 
         # (118, 16): Taiwan Australia Capital (Sydney basin)
         elif x == 118 and y == 16:
@@ -208,7 +250,7 @@ def build_py_script(plots):
     py_content = f'''#
 #   FILE:    The Earth.py
 #   PURPOSE: Historically Researched 124x68 Earth Map for Civilization IV BTS
-#            Features 18 Real-World Civilizations with Taiwan Civilization located in Australia
+#            Features 18 Real-World Civilizations with Taiwan in Australia and Vikings in Scandinavia
 #
 from CvPythonExtensions import *
 import CvUtil
@@ -394,7 +436,7 @@ def assignStartingPlots():
         "CIVILIZATION_OTTOMAN": (70, 44),
         "CIVILIZATION_PORTUGAL": (52, 45),
         "CIVILIZATION_SUMERIA": (80, 39),
-        "CIVILIZATION_VIKING": (65, 59),
+        "CIVILIZATION_VIKING": (62, 58),
         "CIVILIZATION_ZULU": (67, 12),
     }}
 
@@ -418,7 +460,7 @@ def assignStartingPlots():
     fallback_plots = [
         (118, 16), (102, 47), (69, 37), (90, 40), (61, 46),
         (73, 54), (28, 45), (58, 51), (99, 51), (82, 40),
-        (56, 53), (55, 46), (62, 52), (113, 45), (55, 34),
+        (56, 53), (62, 58), (62, 52), (113, 45), (55, 34),
         (30, 23), (19, 37), (75, 35)
     ]
     for pPlayer in unassigned_players:
