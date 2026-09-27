@@ -2,7 +2,7 @@ import os, struct, io, time
 import numpy as np
 import trimesh
 import fast_simplification
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 time.clock = time.perf_counter
 from pyffi.formats.nif import NifFormat
@@ -12,7 +12,7 @@ STEAM_VANILLA_DIR = r"C:\Program Files (x86)\Steam\steamapps\common\Sid Meier's 
 YUSHAN_DIR = r'patch\PatchFiles\Beyond the Sword\Assets\Art\Units\Taiwan_Yushan'
 STEAM_YUSHAN_DIR = r"C:\Program Files (x86)\Steam\steamapps\common\Sid Meier's Civilization IV Beyond the Sword\Beyond the Sword\Assets\Art\Units\Taiwan_Yushan"
 
-print('=== 1. Generating Authentic Balanced 1024x1024 Naval Camouflage Texture ===')
+print('=== 1. Generating High-Definition Authentically Detailed Warship Texture ===')
 scene = trimesh.load(GLB_PATH)
 geom = list(scene.geometry.values())[0]
 raw_tex = geom.visual.material.baseColorTexture.convert('RGB')
@@ -21,23 +21,67 @@ arr_raw = np.array(raw_tex, dtype=np.float32)
 # Smooth tone mapping: gentle gamma with zero blown-out clipping
 gamma = 0.82
 boosted = 255.0 * np.power(arr_raw / 255.0, gamma)
-boosted = np.clip(boosted * 1.08, 0, 215) # Cap at 215 so NO pixels blow out to white!
+boosted = np.clip(boosted * 1.08, 0, 215).astype(np.uint8)
+tex = Image.fromarray(boosted)
 
-# Add opaque alpha channel
-h, w, _ = boosted.shape
-tex_rgba = np.zeros((h, w, 4), dtype=np.uint8)
-tex_rgba[:, :, :3] = boosted.astype(np.uint8)
-tex_rgba[:, :, 3] = 255
+# Unsharp mask to make plating lines and mechanical vents pop
+tex_sharp = tex.filter(ImageFilter.UnsharpMask(radius=2, percent=140, threshold=3))
+draw = ImageDraw.Draw(tex_sharp)
 
-dds_img = Image.fromarray(tex_rgba, 'RGBA')
+# 1. Flight Deck: U=[324, 490], V=[795, 961]
+# Non-skid dark grey deck surface
+deck_box = [324, 795, 490, 961]
+deck_arr = np.array(tex_sharp.crop(deck_box)).astype(float) * 0.76
+tex_sharp.paste(Image.fromarray(deck_arr.astype(np.uint8)), (324, 795))
+
+# White perimeter border
+draw.rectangle([330, 801, 484, 955], outline=(235, 235, 240), width=2)
+# White helicopter landing circle
+cx, cy = 407, 878
+r = 38
+draw.ellipse([cx - r, cy - r, cx + r, cy + r], outline=(240, 240, 245), width=3)
+# 'H' inside landing circle
+draw.line([cx - 15, cy - 18, cx - 15, cy + 18], fill=(240, 240, 245), width=3)
+draw.line([cx + 15, cy - 18, cx + 15, cy + 18], fill=(240, 240, 245), width=3)
+draw.line([cx - 15, cy, cx + 15, cy], fill=(240, 240, 245), width=3)
+
+# Centerline dashed tramline
+for y in range(805, 950, 14):
+    draw.line([cx, y, cx, y + 8], fill=(240, 240, 245), width=2)
+
+# 2. Crisp ROC Navy '1401' Hull Numbers
+try:
+    font = ImageFont.truetype('arialbd.ttf', 20)
+except:
+    font = ImageFont.load_default()
+
+# Port Bow: X=35, Y=135
+draw.text((37, 137), '1401', fill=(15, 18, 22), font=font)
+draw.text((35, 135), '1401', fill=(245, 245, 250), font=font)
+
+# Starboard Bow: X=615, Y=310
+draw.text((617, 312), '1401', fill=(15, 18, 22), font=font)
+draw.text((615, 310), '1401', fill=(245, 245, 250), font=font)
+
+# 3. Tinted Command Bridge Windows (Comp 89): X=[20, 150], Y=[815, 825]
+for wx in range(25, 145, 12):
+    draw.rectangle([wx, 818, wx + 8, 824], fill=(20, 28, 38), outline=(10, 15, 20), width=1)
+
+# Convert to RGBA DDS
+tex_rgba = np.array(tex_sharp)
+h, w, _ = tex_rgba.shape
+final_rgba = np.zeros((h, w, 4), dtype=np.uint8)
+final_rgba[:, :, :3] = tex_rgba
+final_rgba[:, :, 3] = 255
+dds_img = Image.fromarray(final_rgba, 'RGBA')
+
 repo_dds_path = os.path.join(YUSHAN_DIR, 'Missle_Cruiser_256.dds')
 steam_dds_path = os.path.join(STEAM_YUSHAN_DIR, 'Missle_Cruiser_256.dds')
-
 dds_img.save(repo_dds_path)
 dds_img.save(steam_dds_path)
-print(f'Saved balanced naval texture to Repo and Steam: {repo_dds_path} (0% clipped white!)')
+print(f'Saved enhanced high-definition texture to {repo_dds_path} and Steam!')
 
-print('\n=== 2. Loading GLB & Splitting into Contiguous UV Islands ===')
+print('\n=== 2. Loading GLB & Splitting into Contiguous UV Islands (High Fidelity) ===')
 components = geom.split(only_watertight=False)
 print(f'Original mesh: {len(geom.vertices)} vertices, {len(geom.faces)} faces across {len(components)} UV islands')
 
@@ -48,15 +92,13 @@ for idx, comp in enumerate(components):
     cuv = comp.visual.uv
     nf = len(cf)
     
-    if nf <= 14:
-        # Small thin details (antennas, railings, masts, fittings):
-        # Keep 100% intact, DO NOT duplicate geometry to prevent Z-fighting and inverted normals!
+    if nf <= 16:
+        # Small thin details (antennas, railings, masts, fittings): Keep 100% intact!
         simplified_pieces.append((cv, cf, cuv))
         continue
         
-    # Main hull and superstructure surfaces:
-    # Component-wise simplification guarantees zero edge collapse across UV seams!
-    target = max(8, int(nf * 0.11))
+    # Main hull and superstructure surfaces (higher ratio = double geometric detail!)
+    target = max(14, int(nf * 0.22))
     pts_s, tris_s = fast_simplification.simplify(cv, cf, target_count=target)
     
     # Barycentric interpolation within THIS UV island only
@@ -101,7 +143,7 @@ all_uv = np.vstack(all_uv)
 
 N = len(all_v)
 M = len(all_f)
-print(f'Combined clean mesh: {N} vertices, {M} triangles')
+print(f'Combined high-fidelity mesh: {N} vertices, {M} triangles')
 
 print('\n=== 3. Transforming Coordinates & Aligning Outward Normals ===')
 scale_beam, scale_length, scale_height = 115.0, 190.0, 185.0
@@ -202,20 +244,19 @@ def build_nif(template_path, out_path):
             p.ambient_color.r = 0.65
             p.ambient_color.g = 0.65
             p.ambient_color.b = 0.65
-            p.diffuse_color.r = 0.85
-            p.diffuse_color.g = 0.85
-            p.diffuse_color.b = 0.85
-            p.specular_color.r = 0.22 # Reduced from 1.0 to eliminate harsh white glare!
+            p.diffuse_color.r = 0.88
+            p.diffuse_color.g = 0.88
+            p.diffuse_color.b = 0.88
+            p.specular_color.r = 0.22
             p.specular_color.g = 0.22
             p.specular_color.b = 0.22
             p.emissive_color.r = 0.0
             p.emissive_color.g = 0.0
             p.emissive_color.b = 0.0
-            p.glossiness = 20.0 # Tighter subtle metallic sheen
+            p.glossiness = 20.0
             p.alpha = 1.0
             
         elif type(p).__name__ == 'NiTexturingProperty':
-            # Disable glow (removes 64x64 metal streak noise) and decal_0 (removes random burn decals)
             p.has_glow_texture = False
             p.has_decal_0_texture = False
             

@@ -79,7 +79,7 @@ def render_view(R, scale, cx, cy, w=800, h=600, draw_water=True, title='', subti
         # Sample texture color at triangle center
         tri_uv = np.mean(uvs[f], axis=0)
         tu = int(np.clip(tri_uv[0], 0, 0.999) * tex_w)
-        tv = int(np.clip(1.0 - tri_uv[1], 0, 0.999) * tex_h)
+        tv = int(np.clip(tri_uv[1], 0, 0.999) * tex_h)
         b, g, r = tex_cv[tv, tu].astype(float)
         
         # Apply directional lighting
@@ -223,7 +223,7 @@ html_content = '''<!DOCTYPE html>
         for (let i = 0; i < verts.length; i++) {
             positions.push(verts[i][0], verts[i][2], -verts[i][1]);
             normList.push(normals[i][0], normals[i][2], -normals[i][1]);
-            uvList.push(uvs[i][0], 1.0 - uvs[i][1]);
+            uvList.push(uvs[i][0], uvs[i][1]);
         }
         const flatIndices = [];
         for (let i = 0; i < indices.length; i++) {

@@ -6096,8 +6096,8 @@
 <UnitArtInfo>
 			<Type>ART_DEF_UNIT_TAIWAN_YUSHAN_LPD</Type>
 			<Button>Art/Interface/Buttons/Units/yushan_transport.dds</Button>
-			<fScale>0.6</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
+			<fScale>0.82</fScale>
+			<fInterfaceScale>1.2</fInterfaceScale>
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
 			<NIF>Art/Units/Taiwan_Yushan/Missile_Cruiser.nif</NIF>
