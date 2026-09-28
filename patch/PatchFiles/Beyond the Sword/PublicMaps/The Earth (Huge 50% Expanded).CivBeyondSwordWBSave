@@ -11879,6 +11879,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=46,y=14
+	BonusType=BONUS_HORSE
 	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
@@ -12066,7 +12067,8 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=83,y=14
-	TerrainType=TERRAIN_GRASS
+	BonusType=BONUS_WINE
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
@@ -12689,6 +12691,7 @@ BeginPlot
 	x=45,y=15
 	isWOfRiver
 	RiverNSDirection=2
+	BonusType=BONUS_WHEAT
 	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
@@ -12704,11 +12707,13 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=47,y=15
+	BonusType=BONUS_COW
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=48,y=15
+	BonusType=BONUS_COW
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
@@ -12909,6 +12914,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=87,y=15
+	BonusType=BONUS_SHEEP
 	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
@@ -13487,6 +13493,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=43,y=16
+	BonusType=BONUS_WINE
 	TerrainType=TERRAIN_PLAINS
 	PlotType=1
 EndPlot
@@ -15904,6 +15911,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=41,y=19
+	BonusType=BONUS_COPPER
 	TerrainType=TERRAIN_DESERT
 	PlotType=2
 EndPlot
@@ -16182,6 +16190,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=93,y=19
+	BonusType=BONUS_COW
 	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
@@ -17019,13 +17028,16 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=95,y=20
+	FeatureType=FEATURE_FOREST, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
-	PlotType=1
+	PlotType=2
 EndPlot
 BeginPlot
 	x=96,y=20
+	BonusType=BONUS_SPICES
+	FeatureType=FEATURE_FOREST, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
-	PlotType=1
+	PlotType=2
 EndPlot
 BeginPlot
 	x=97,y=20
@@ -17779,8 +17791,9 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=84,y=21
+	BonusType=BONUS_COPPER
 	TerrainType=TERRAIN_PLAINS
-	PlotType=2
+	PlotType=1
 EndPlot
 BeginPlot
 	x=85,y=21
@@ -17835,8 +17848,9 @@ BeginPlot
 	x=94,y=21
 	isNOfRiver
 	RiverWEDirection=3
+	BonusType=BONUS_BANANA
 	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
-	TerrainType=TERRAIN_PLAINS
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
@@ -20075,6 +20089,7 @@ BeginPlot
 	x=51,y=24
 	isNOfRiver
 	RiverWEDirection=3
+	BonusType=BONUS_SPICES
 	FeatureType=FEATURE_FOREST, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
@@ -22199,6 +22214,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=140,y=26
+	BonusType=BONUS_BANANA
 	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
@@ -23421,6 +23437,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=53,y=28
+	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
@@ -23428,6 +23445,8 @@ BeginPlot
 	x=54,y=28
 	isWOfRiver
 	RiverNSDirection=0
+	BonusType=BONUS_SUGAR
+	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
@@ -23910,6 +23929,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=145,y=28
+	BonusType=BONUS_SPICES
 	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
@@ -24296,7 +24316,9 @@ BeginPlot
 	x=56,y=29
 	isNOfRiver
 	RiverWEDirection=1
-	TerrainType=TERRAIN_PLAINS
+	BonusType=BONUS_SUGAR
+	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
@@ -24423,6 +24445,7 @@ BeginPlot
 	x=80,y=29
 	isNOfRiver
 	RiverWEDirection=3
+	BonusType=BONUS_BANANA
 	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
@@ -24685,6 +24708,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=130,y=29
+	BonusType=BONUS_RICE
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
@@ -25847,6 +25871,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=38,y=31
+	BonusType=BONUS_BANANA
 	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
@@ -25871,6 +25896,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=42,y=31
+	BonusType=BONUS_SPICES
 	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
@@ -26350,6 +26376,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=129,y=31
+	BonusType=BONUS_RICE
 	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
@@ -26741,6 +26768,7 @@ BeginPlot
 	x=43,y=32
 	isNOfRiver
 	RiverWEDirection=1
+	BonusType=BONUS_OIL
 	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
@@ -26946,6 +26974,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=79,y=32
+	BonusType=BONUS_OIL
 	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
@@ -28103,6 +28132,7 @@ BeginPlot
 	x=133,y=33
 	isNOfRiver
 	RiverWEDirection=3
+	BonusType=BONUS_RICE
 	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
@@ -28632,9 +28662,9 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=74,y=34
-	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
-	TerrainType=TERRAIN_GRASS
-	PlotType=2
+	BonusType=BONUS_GOLD
+	TerrainType=TERRAIN_PLAINS
+	PlotType=1
 EndPlot
 BeginPlot
 	x=75,y=34
@@ -29728,6 +29758,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=118,y=35
+	BonusType=BONUS_SPICES
 	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
@@ -29765,6 +29796,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=125,y=35
+	BonusType=BONUS_RICE
 	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
@@ -32302,6 +32334,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=135,y=38
+	BonusType=BONUS_SUGAR
 	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
@@ -33140,11 +33173,13 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=134,y=39
+	BonusType=BONUS_FISH
 	TerrainType=TERRAIN_COAST
 	PlotType=3
 EndPlot
 BeginPlot
 	x=135,y=39
+	BonusType=BONUS_RICE
 	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
@@ -33887,6 +33922,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=116,y=40
+	BonusType=BONUS_RICE
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
@@ -34732,6 +34768,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=118,y=41
+	BonusType=BONUS_COAL
 	TerrainType=TERRAIN_GRASS
 	PlotType=1
 EndPlot
@@ -35471,7 +35508,8 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=101,y=42
-	TerrainType=TERRAIN_DESERT
+	BonusType=BONUS_WHEAT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
@@ -37219,6 +37257,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=118,y=44
+	BonusType=BONUS_RICE
 	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
@@ -39047,8 +39086,8 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=140,y=46
-	TerrainType=TERRAIN_GRASS
-	PlotType=1
+	TerrainType=TERRAIN_COAST
+	PlotType=3
 EndPlot
 BeginPlot
 	x=141,y=46
@@ -40141,12 +40180,13 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=25,y=48
-	TerrainType=TERRAIN_PLAINS
+	BonusType=BONUS_OIL
+	TerrainType=TERRAIN_DESERT
 	PlotType=2
 EndPlot
 BeginPlot
 	x=26,y=48
-	TerrainType=TERRAIN_PLAINS
+	TerrainType=TERRAIN_DESERT
 	PlotType=2
 EndPlot
 BeginPlot
@@ -41014,6 +41054,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=27,y=49
+	BonusType=BONUS_COW
 	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
@@ -43488,6 +43529,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=17,y=52
+	BonusType=BONUS_WINE
 	TerrainType=TERRAIN_PLAINS
 	PlotType=1
 EndPlot
@@ -43532,6 +43574,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=25,y=52
+	BonusType=BONUS_HORSE
 	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
@@ -44392,6 +44435,7 @@ BeginPlot
 	x=27,y=53
 	isNOfRiver
 	RiverWEDirection=1
+	BonusType=BONUS_WHEAT
 	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
@@ -47007,6 +47051,7 @@ BeginPlot
 	x=25,y=56
 	isWOfRiver
 	RiverNSDirection=2
+	BonusType=BONUS_WHEAT
 	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
@@ -49258,7 +49303,8 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=134,y=58
-	TerrainType=TERRAIN_GRASS
+	BonusType=BONUS_OIL
+	TerrainType=TERRAIN_TUNDRA
 	PlotType=2
 EndPlot
 BeginPlot
@@ -50394,6 +50440,7 @@ BeginPlot
 	x=24,y=60
 	isNOfRiver
 	RiverWEDirection=1
+	BonusType=BONUS_WHEAT
 	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
@@ -56151,7 +56198,8 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=103,y=66
-	TerrainType=TERRAIN_PLAINS
+	BonusType=BONUS_OIL
+	TerrainType=TERRAIN_TUNDRA
 	PlotType=2
 EndPlot
 BeginPlot

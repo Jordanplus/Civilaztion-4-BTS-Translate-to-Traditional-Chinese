@@ -36,6 +36,70 @@ BONUS_LIST = [
     'BONUS_SUGAR', 'BONUS_RICE', 'BONUS_BANANA', 'BONUS_SILK'
 ]
 
+GLOBAL_REAL_RESOURCE_ADDITIONS = {
+    # 1. 台灣 (Taiwan)
+    (106, 33): ("BONUS_RICE", 2, "TERRAIN_GRASS", "FEATURE_JUNGLE", "Taiwan Chianan Plain Ponlai Rice"),
+    (106, 32): ("BONUS_SUGAR", 2, "TERRAIN_GRASS", "FEATURE_JUNGLE", "Taiwan Sugar Cane Industry"),
+    (105, 33): ("BONUS_FISH", 3, "TERRAIN_COAST", None, "Taiwan Strait / Kuroshio Coastal Fishery"),
+
+    # 2. 南美洲 - 阿根廷潘帕斯與智利
+    (35, 13): ("BONUS_WHEAT", 2, "TERRAIN_PLAINS", None, "Argentina Pampas Wheat (Buenos Aires)"),
+    (37, 13): ("BONUS_COW", 2, "TERRAIN_GRASS", None, "Argentina Pampas Beef Cattle"),
+    (38, 13): ("BONUS_COW", 2, "TERRAIN_GRASS", None, "Uruguay / Rio de la Plata Pasture Cattle"),
+    (36, 12): ("BONUS_HORSE", 2, "TERRAIN_PLAINS", None, "Argentina Gaucho Pampas Horses"),
+    (34, 14): ("BONUS_WINE", 1, "TERRAIN_PLAINS", None, "Argentina Mendoza / Chile Maipo Valley Wine"),
+    (32, 16): ("BONUS_COPPER", 2, "TERRAIN_DESERT", None, "Chile Atacama Chuquicamata Copper"),
+
+    # 3. 南美洲 - 巴西、哥倫比亞、委內瑞拉
+    (42, 24): ("BONUS_SUGAR", 2, "TERRAIN_GRASS", "FEATURE_JUNGLE", "Brazil Northeast Salvador Sugar"),
+    (44, 25): ("BONUS_SUGAR", 2, "TERRAIN_GRASS", "FEATURE_JUNGLE", "Brazil Pernambuco Sugar"),
+    (40, 20): ("BONUS_SPICES", 2, "TERRAIN_GRASS", "FEATURE_FOREST", "Brazil Sao Paulo / Minas Gerais Coffee"),
+    (30, 26): ("BONUS_BANANA", 2, "TERRAIN_GRASS", "FEATURE_JUNGLE", "Ecuador / Colombia Banana"),
+    (33, 26): ("BONUS_SPICES", 2, "TERRAIN_GRASS", "FEATURE_JUNGLE", "Colombia Arabica Coffee"),
+    (34, 27): ("BONUS_OIL", 2, "TERRAIN_GRASS", "FEATURE_JUNGLE", "Venezuela Maracaibo / Orinoco Oil"),
+
+    # 4. 撒哈拉以南非洲 - 西非
+    (58, 29): ("BONUS_GOLD", 1, "TERRAIN_PLAINS", None, "Ghana Gold Coast"),
+    (62, 27): ("BONUS_OIL", 2, "TERRAIN_GRASS", "FEATURE_JUNGLE", "Nigeria Niger Delta Oil"),
+    (63, 25): ("BONUS_BANANA", 2, "TERRAIN_GRASS", "FEATURE_JUNGLE", "West Africa Guinea Plantain / Banana"),
+
+    # 5. 撒哈拉以南非洲 - 東非與南非
+    (73, 16): ("BONUS_COW", 2, "TERRAIN_PLAINS", None, "East Africa Serengeti / Tanzania Cattle"),
+    (75, 17): ("BONUS_SPICES", 2, "TERRAIN_GRASS", "FEATURE_FOREST", "Ethiopia / Kenya Coffee & Tea"),
+    (74, 18): ("BONUS_BANANA", 2, "TERRAIN_GRASS", "FEATURE_JUNGLE", "East Africa Great Lakes Uganda Banana"),
+    (65, 12): ("BONUS_WINE", 2, "TERRAIN_PLAINS", None, "South Africa Stellenbosch Wine"),
+    (68, 13): ("BONUS_SHEEP", 2, "TERRAIN_PLAINS", None, "South Africa Karoo Merino Sheep"),
+    (66, 18): ("BONUS_COPPER", 1, "TERRAIN_PLAINS", None, "Zambia / Katanga Copperbelt"),
+
+    # 6. 南亞 - 印度次大陸
+    (93, 37): ("BONUS_RICE", 2, "TERRAIN_GRASS", "FEATURE_JUNGLE", "India Ganges Basin / Bengal Rice Bowl"),
+    (91, 34): ("BONUS_RICE", 2, "TERRAIN_GRASS", None, "South India Krishna / Deccan Rice"),
+    (93, 35): ("BONUS_COAL", 1, "TERRAIN_GRASS", None, "India Jharkhand Damodar Valley Coal"),
+    (93, 30): ("BONUS_SPICES", 2, "TERRAIN_GRASS", "FEATURE_JUNGLE", "South India Kerala Black Pepper & Spices"),
+
+    # 7. 東南亞 - 中南半島與印尼群島
+    (102, 25): ("BONUS_RICE", 2, "TERRAIN_GRASS", None, "Vietnam Mekong Delta Rice (Saigon)"),
+    (101, 26): ("BONUS_RICE", 2, "TERRAIN_GRASS", "FEATURE_JUNGLE", "Thailand Chao Phraya Rice (Bangkok)"),
+    (98, 30): ("BONUS_RICE", 2, "TERRAIN_GRASS", "FEATURE_JUNGLE", "Myanmar Irrawaddy Delta Rice"),
+    (104, 28): ("BONUS_RICE", 2, "TERRAIN_GRASS", "FEATURE_JUNGLE", "Vietnam Red River Delta Rice (Hanoi)"),
+    (114, 24): ("BONUS_SPICES", 2, "TERRAIN_GRASS", "FEATURE_JUNGLE", "Indonesia Moluccas Spice Islands (Cloves & Nutmeg)"),
+    (110, 22): ("BONUS_BANANA", 2, "TERRAIN_GRASS", "FEATURE_JUNGLE", "Borneo / Indonesia Tropical Fruits"),
+
+    # 8. 北美洲 - 美加中西部與加州
+    (21, 45): ("BONUS_WHEAT", 2, "TERRAIN_PLAINS", None, "US Midwest Kansas / Nebraska Breadbasket Wheat"),
+    (20, 48): ("BONUS_WHEAT", 2, "TERRAIN_PLAINS", None, "US North Dakota Spring Wheat"),
+    (19, 51): ("BONUS_WHEAT", 2, "TERRAIN_PLAINS", None, "Canada Saskatchewan Prairie Wheat"),
+    (21, 42): ("BONUS_COW", 2, "TERRAIN_PLAINS", None, "US Texas Longhorns Beef Cattle"),
+    (20, 44): ("BONUS_HORSE", 2, "TERRAIN_PLAINS", None, "US Great Plains Mustangs"),
+    (13, 44): ("BONUS_WINE", 1, "TERRAIN_PLAINS", None, "US California Napa Valley Wine"),
+    (20, 41): ("BONUS_OIL", 2, "TERRAIN_DESERT", None, "US Texas Permian Basin / Gulf Coast Oil"),
+
+    # 9. 歐亞其他核心代表性資源
+    (81, 56): ("BONUS_OIL", 2, "TERRAIN_TUNDRA", None, "West Siberia Tyumen Oil Field"),
+    (79, 36): ("BONUS_WHEAT", 2, "TERRAIN_PLAINS", None, "Mesopotamia Fertile Crescent Wheat (Euphrates)"),
+    (105, 49): ("BONUS_OIL", 2, "TERRAIN_TUNDRA", None, "China Northeast Daqing Oil Field"),
+}
+
 def build_wbsave():
     print(f"Reading base map: {SOURCE_MAP}")
     with open(SOURCE_MAP, "r", encoding="utf-8", errors="ignore") as f:
@@ -335,6 +399,24 @@ def build_wbsave():
         elif x == 66 and y == 48:
             lines = [l for l in lines if not l.strip().startswith("BonusType=")]
             lines.insert(-1, "\tBonusType=BONUS_GOLD")
+
+        # Global realistic resource overhaul additions
+        if (x, y) in GLOBAL_REAL_RESOURCE_ADDITIONS:
+            bon_name, req_pt, req_terr, req_feat, _ = GLOBAL_REAL_RESOURCE_ADDITIONS[(x, y)]
+            if req_pt is not None:
+                lines = [(f"\tPlotType={req_pt}" if l.strip().startswith("PlotType=") else l) for l in lines]
+            if req_terr is not None:
+                lines = [(f"\tTerrainType={req_terr}" if l.strip().startswith("TerrainType=") else l) for l in lines]
+            if req_feat is not None:
+                if any(l.strip().startswith("FeatureType=") for l in lines):
+                    lines = [(f"\tFeatureType={req_feat}, FeatureVariety=0" if l.strip().startswith("FeatureType=") else l) for l in lines]
+                else:
+                    lines.insert(-1, f"\tFeatureType={req_feat}, FeatureVariety=0")
+            elif req_feat is None:
+                lines = [l for l in lines if not l.strip().startswith("FeatureType=")]
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            if bon_name:
+                lines.insert(-1, f"\tBonusType={bon_name}")
 
         modified_plots.append("\n".join(lines))
 

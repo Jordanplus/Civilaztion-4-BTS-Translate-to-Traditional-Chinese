@@ -118,16 +118,25 @@ def build_expanded_map():
             tgt_grid[(cx, 61)]["pt"] = "3"
             tgt_grid[(cx, 61)]["tt"] = "TERRAIN_COAST"
 
-    # Taiwan Strait: ensure water between mainland China (X: 137) and Taiwan island (X: 140, Y: 47)
-    tgt_grid[(140, 47)]["pt"] = "2" # Taiwan island
-    tgt_grid[(140, 47)]["tt"] = "TERRAIN_GRASS"
-    tgt_grid[(140, 46)]["pt"] = "1" # Taiwan Central Mountain Range
-    tgt_grid[(140, 46)]["tt"] = "TERRAIN_GRASS"
+    # Tsushima / Korea Strait: ensure water between Korea (X: 137) and Japan (X: 140)
     for ty in range(45, 49):
-        tgt_grid[(138, ty)]["pt"] = "3" # Taiwan Strait
+        tgt_grid[(138, ty)]["pt"] = "3"
         tgt_grid[(138, ty)]["tt"] = "TERRAIN_COAST"
         tgt_grid[(139, ty)]["pt"] = "3"
         tgt_grid[(139, ty)]["tt"] = "TERRAIN_COAST"
+
+    # Taiwan Strait & Taiwan Island:
+    tgt_grid[(135, 39)]["pt"] = "2" # Taiwan plain
+    tgt_grid[(135, 39)]["tt"] = "TERRAIN_GRASS"
+    tgt_grid[(135, 39)]["f"] = "FeatureType=FEATURE_JUNGLE, FeatureVariety=0"
+    tgt_grid[(135, 38)]["pt"] = "2" # Taiwan plain
+    tgt_grid[(135, 38)]["tt"] = "TERRAIN_GRASS"
+    tgt_grid[(135, 38)]["f"] = "FeatureType=FEATURE_JUNGLE, FeatureVariety=0"
+    # Taiwan Strait between mainland China (X: 130-132) and Taiwan (X: 135)
+    for ty in range(37, 41):
+        for tx in [133, 134]:
+            tgt_grid[(tx, ty)]["pt"] = "3"
+            tgt_grid[(tx, ty)]["tt"] = "TERRAIN_COAST"
 
     # 4. Map Starting Plots
     # 18 Civilizations mapping
