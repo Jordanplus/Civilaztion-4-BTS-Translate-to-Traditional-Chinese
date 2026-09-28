@@ -220,6 +220,61 @@ def build_wbsave():
             lines = [l for l in lines if not l.strip().startswith("BonusType=")]
             lines.insert(-1, "\tBonusType=BONUS_GEMS")
 
+        # (115, 16): Australia New South Wales / Murray Basin Waler Horses
+        elif x == 115 and y == 16:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_HORSE")
+
+        # (105, 13): Australia Western Australia Wheatbelt
+        elif x == 105 and y == 13:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_WHEAT")
+
+        # (106, 12): Australia Great Southern Merino Sheep
+        elif x == 106 and y == 12:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_SHEEP")
+
+        # (115, 19): Australia Queensland Darling Downs Beef Cattle
+        elif x == 115 and y == 19:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_COW")
+
+        # (114, 10): Australia Victoria Western District Merino Sheep
+        elif x == 114 and y == 10:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_SHEEP")
+
+        # (114, 11): Australia South Australia Barossa Valley Wine
+        elif x == 114 and y == 11:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_WINE")
+
+        # (121, 6): New Zealand South Island Canterbury Plains Sheep
+        elif x == 121 and y == 6:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_SHEEP")
+
+        # (122, 10): New Zealand North Island Waikato Dairy Cattle
+        elif x == 122 and y == 10:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_COW")
+
+        # (122, 8): New Zealand Marlborough Sauvignon Blanc Wine
+        elif x == 122 and y == 8:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_WINE")
+
+        # (122, 7): New Zealand Otago Gold Rush (Arrowtown)
+        elif x == 122 and y == 7:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_GOLD")
+
+        # (121, 11): New Zealand Auckland / Hauraki Gulf Coastal Fish
+        elif x == 121 and y == 11:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_FISH")
+
         # (54, 32): Mali Bambuk / Bure Gold Field (Mansa Musa)
         elif x == 54 and y == 32:
             lines = [l for l in lines if not l.strip().startswith("BonusType=")]
