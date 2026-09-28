@@ -38053,6 +38053,7 @@ BeginPlot
 	x=102,y=12
 	TerrainType=TERRAIN_COAST
 	PlotType=3
+	BonusType=BONUS_FISH
 EndPlot
 BeginPlot
 	x=102,y=13
@@ -39216,7 +39217,6 @@ BeginPlot
 	x=105,y=12
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
-	BonusType=BONUS_FISH
 EndPlot
 BeginPlot
 	x=105,y=13

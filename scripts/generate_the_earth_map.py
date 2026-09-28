@@ -195,8 +195,8 @@ def build_wbsave():
             lines = [l for l in lines if not l.strip().startswith("BonusType=")]
             lines.insert(-1, "\tBonusType=BONUS_FISH")
 
-        # (105, 12): Perth Coast Fish
-        elif x == 105 and y == 12:
+        # (102, 12): Perth Coast Fish (West Coast Indian Ocean)
+        elif x == 102 and y == 12:
             lines = [l for l in lines if not l.strip().startswith("BonusType=")]
             lines.insert(-1, "\tBonusType=BONUS_FISH")
 
