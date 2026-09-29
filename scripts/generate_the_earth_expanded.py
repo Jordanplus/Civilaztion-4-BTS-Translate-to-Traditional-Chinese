@@ -458,27 +458,42 @@ def assignStartingPlots():
     cy_map = CyMap()
 
     civ_coords = {{
-        "CIVILIZATION_EGYPT": (88, 44),
-        "CIVILIZATION_INDIA": (115, 47),
-        "CIVILIZATION_CHINA": (130, 55),
         "CIVILIZATION_TAIWAN": (150, 19),
-        "CIVILIZATION_ROME": (78, 54),
-        "CIVILIZATION_PERSIA": (104, 47),
+        "CIVILIZATION_CHINA": (130, 55),
         "CIVILIZATION_JAPAN": (144, 53),
+        "CIVILIZATION_INDIA": (115, 47),
+        "CIVILIZATION_EGYPT": (88, 44),
+        "CIVILIZATION_ROME": (78, 54),
         "CIVILIZATION_GERMANY": (79, 61),
-        "CIVILIZATION_MONGOL": (126, 60),
         "CIVILIZATION_FRANCE": (74, 60),
-        "CIVILIZATION_ARABIA": (96, 41),
-        "CIVILIZATION_VIKING": (79, 68),
         "CIVILIZATION_ENGLAND": (71, 62),
+        "CIVILIZATION_SPAIN": (70, 54),
         "CIVILIZATION_RUSSIA": (93, 64),
+        "CIVILIZATION_PERSIA": (104, 47),
+        "CIVILIZATION_ARABIA": (96, 41),
+        "CIVILIZATION_MONGOL": (126, 60),
         "CIVILIZATION_MALI": (70, 40),
-        "CIVILIZATION_INCA": (38, 27),
-        "CIVILIZATION_AZTEC": (24, 44),
         "CIVILIZATION_AMERICA": (36, 53),
+        "CIVILIZATION_AZTEC": (24, 44),
+        "CIVILIZATION_INCA": (38, 27),
+        "CIVILIZATION_BABYLON": (101, 48),
+        "CIVILIZATION_BYZANTIUM": (88, 53),
+        "CIVILIZATION_CARTHAGE": (75, 47),
+        "CIVILIZATION_CELT": (70, 66),
+        "CIVILIZATION_ETHIOPIA": (94, 35),
+        "CIVILIZATION_KHMER": (125, 41),
+        "CIVILIZATION_KOREA": (138, 56),
+        "CIVILIZATION_MAYA": (23, 43),
+        "CIVILIZATION_NATIVE_AMERICA": (27, 58),
+        "CIVILIZATION_NETHERLANDS": (75, 62),
+        "CIVILIZATION_OTTOMAN": (89, 52),
+        "CIVILIZATION_PORTUGAL": (67, 52),
+        "CIVILIZATION_SUMERIA": (101, 47),
+        "CIVILIZATION_VIKING": (79, 68),
+        "CIVILIZATION_ZULU": (85, 14),
     }}
 
-    assigned_plots = set()
+    assigned_plots = []
     unassigned_players = []
 
     for i in range(gc.getMAX_CIV_PLAYERS()):
@@ -486,19 +501,21 @@ def assignStartingPlots():
         if pPlayer.isAlive():
             iCiv = pPlayer.getCivilizationType()
             civ_info = gc.getCivilizationInfo(iCiv)
-            civ_type = civ_info.getType() if civ_info else ""
+            civ_type = ""
+            if civ_info:
+                civ_type = civ_info.getType()
             if civ_type in civ_coords and civ_coords[civ_type] not in assigned_plots:
                 x, y = civ_coords[civ_type]
                 pPlot = cy_map.plot(x, y)
                 pPlayer.setStartingPlot(pPlot, True)
-                assigned_plots.add((x, y))
+                assigned_plots.append((x, y))
             else:
                 unassigned_players.append(pPlayer)
 
     fallback_plots = [
         (150, 19), (130, 55), (88, 44), (115, 47), (78, 54),
         (93, 64), (36, 53), (74, 60), (126, 60), (104, 47),
-        (71, 62), (70, 40), (79, 61), (144, 53), (70, 40),
+        (71, 62), (79, 68), (79, 61), (144, 53), (70, 40),
         (38, 27), (24, 44), (96, 41)
     ]
     for pPlayer in unassigned_players:
@@ -506,7 +523,7 @@ def assignStartingPlots():
             if (x, y) not in assigned_plots:
                 pPlot = cy_map.plot(x, y)
                 pPlayer.setStartingPlot(pPlot, True)
-                assigned_plots.add((x, y))
+                assigned_plots.append((x, y))
                 break
 
 def findStartingPlot(argsList):
