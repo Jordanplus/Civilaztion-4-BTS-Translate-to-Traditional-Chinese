@@ -4705,7 +4705,7 @@
 					<BuildingType>BUILDING_TAIWAN_CONVENIENCE_STORE</BuildingType>
 				</Building>
 				<Building>
-					<BuildingClassType>BUILDINGCLASS_LABORATORY</BuildingClassType>
+					<BuildingClassType>BUILDINGCLASS_FACTORY</BuildingClassType>
 					<BuildingType>BUILDING_TAIWAN_SCIENCE_PARK</BuildingType>
 				</Building>
 				<Building>
