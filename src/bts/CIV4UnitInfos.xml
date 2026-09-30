@@ -23563,7 +23563,7 @@
 			<FeatureImpassables/>
 			<TerrainPassableTechs/>
 			<FeaturePassableTechs/>
-			<iCombat>48</iCombat>
+			<iCombat>55</iCombat>
 			<iCombatLimit>100</iCombatLimit>
 			<iAirCombat>0</iAirCombat>
 			<iAirCombatLimit>0</iAirCombatLimit>
@@ -23603,7 +23603,7 @@
 			<iCultureGarrison>16</iCultureGarrison>
 			<iExtraCost>0</iExtraCost>
 			<iAsset>6</iAsset>
-			<iPower>40</iPower>
+			<iPower>55</iPower>
 			<UnitMeshGroups>
 				<iGroupSize>1</iGroupSize>
 				<fMaxSpeed>1.75</fMaxSpeed>
@@ -24293,7 +24293,7 @@
 			<bFound>0</bFound>
 			<bGoldenAge>0</bGoldenAge>
 			<bInvisible>0</bInvisible>
-			<bFirstStrikeImmune>0</bFirstStrikeImmune>
+			<bFirstStrikeImmune>1</bFirstStrikeImmune>
 			<bNoDefensiveBonus>0</bNoDefensiveBonus>
 			<bIgnoreBuildingDefense>1</bIgnoreBuildingDefense>
 			<bCanMoveImpassable>1</bCanMoveImpassable>
@@ -24387,8 +24387,8 @@
 			<iAirCombatLimit>0</iAirCombatLimit>
 			<iXPValueAttack>4</iXPValueAttack>
 			<iXPValueDefense>2</iXPValueDefense>
-			<iFirstStrikes>1</iFirstStrikes>
-			<iChanceFirstStrikes>1</iChanceFirstStrikes>
+			<iFirstStrikes>2</iFirstStrikes>
+			<iChanceFirstStrikes>2</iChanceFirstStrikes>
 			<iInterceptionProbability>0</iInterceptionProbability>
 			<iEvasionProbability>0</iEvasionProbability>
 			<iWithdrawalProb>50</iWithdrawalProb>
@@ -24758,7 +24758,12 @@
 			<UnitClassDefenseMods/>
 			<UnitCombatMods/>
 			<UnitCombatCollateralImmunes/>
-			<DomainMods/>
+			<DomainMods>
+				<DomainMod>
+					<DomainType>DOMAIN_LAND</DomainType>
+					<iDomainMod>25</iDomainMod>
+				</DomainMod>
+			</DomainMods>
 			<BonusProductionModifiers/>
 			<iBombRate>0</iBombRate>
 			<iBombardRate>0</iBombardRate>
