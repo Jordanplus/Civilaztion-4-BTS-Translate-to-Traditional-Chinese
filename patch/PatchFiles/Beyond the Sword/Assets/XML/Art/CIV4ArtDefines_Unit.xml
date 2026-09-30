@@ -2349,9 +2349,9 @@
 			<fInterfaceScale>1.3</fInterfaceScale>
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
-			<NIF>Art/Units/Taiwan_Yushan/Transport.nif</NIF>
+			<NIF>Art/Units/Transport/Transport.nif</NIF>
 			<KFM>Art/Units/Transport/Transport.kfm</KFM>
-			<SHADERNIF>Art/Units/Taiwan_Yushan/Transport_FX.nif</SHADERNIF>
+			<SHADERNIF>Art/Units/Transport/Transport_FX.nif</SHADERNIF>
 			<ShadowDef>
 				<ShadowNIF>Art/Units/01_UnitShadows/TransportShadow.nif</ShadowNIF>
 				<ShadowAttachNode>BIP Pelvis</ShadowAttachNode>

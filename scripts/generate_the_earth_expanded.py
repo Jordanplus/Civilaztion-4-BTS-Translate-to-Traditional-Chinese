@@ -138,6 +138,41 @@ def build_expanded_map():
             tgt_grid[(tx, ty)]["pt"] = "3"
             tgt_grid[(tx, ty)]["tt"] = "TERRAIN_COAST"
 
+    # Ocean Barriers on 158x80:
+    # Barrier 1: China/Taiwan to Philippines (Luzon Strait / Bashi Channel / South China Sea)
+    for ty in range(29, 45):
+        if tgt_grid.get((136, ty), {}).get("pt") == "3":
+            tgt_grid[(136, ty)]["tt"] = "TERRAIN_OCEAN"
+    for tx in range(136, 143):
+        for ty in [44, 45]:
+            if tgt_grid.get((tx, ty), {}).get("pt") == "3":
+                tgt_grid[(tx, ty)]["tt"] = "TERRAIN_OCEAN"
+
+    # Barrier 2: Philippines to Indonesia (Celebes Sea & Sulu Sea)
+    for tx in range(136, 155):
+        if tgt_grid.get((tx, 34), {}).get("pt") == "3":
+            tgt_grid[(tx, 34)]["tt"] = "TERRAIN_OCEAN"
+    for ty in range(30, 35):
+        for tx in range(139, 143):
+            if tgt_grid.get((tx, ty), {}).get("pt") == "3":
+                tgt_grid[(tx, ty)]["tt"] = "TERRAIN_OCEAN"
+    for tx in range(136, 144):
+        if tgt_grid.get((tx, 29), {}).get("pt") == "3":
+            tgt_grid[(tx, 29)]["tt"] = "TERRAIN_OCEAN"
+    for ty in [29, 30]:
+        for tx in range(144, 155):
+            if tgt_grid.get((tx, ty), {}).get("pt") == "3":
+                tgt_grid[(tx, ty)]["tt"] = "TERRAIN_OCEAN"
+
+    # Barrier 3: Indonesia / Melanesia / Pacific to Australia (Timor Sea, Arafura Sea, Torres Strait, Coral Sea)
+    for tx in list(range(120, W_TGT)) + list(range(0, 21)):
+        if tgt_grid.get((tx, 27), {}).get("pt") == "3":
+            tgt_grid[(tx, 27)]["tt"] = "TERRAIN_OCEAN"
+    for tx in range(148, W_TGT):
+        for ty in range(24, 28):
+            if tgt_grid.get((tx, ty), {}).get("pt") == "3":
+                tgt_grid[(tx, ty)]["tt"] = "TERRAIN_OCEAN"
+
     # 4. Map Starting Plots
     # 18 Civilizations mapping
     civ_coord_map = {
@@ -192,59 +227,94 @@ def build_expanded_map():
 
     # 6. Map Bonuses
     WATER_BONUSES = {'BONUS_FISH', 'BONUS_CLAM', 'BONUS_CRAB', 'BONUS_WHALE'}
+
+    # Pre-calculate settleable land plots on target grid
+    land_plots = {coord for coord, p in tgt_grid.items() if p["pt"] in ["1", "2"]}
+    bfc_offsets = []
+    for dx in range(-2, 3):
+        for dy in range(-2, 3):
+            if abs(dx) == 2 and abs(dy) == 2: continue
+            bfc_offsets.append((dx, dy))
+
     for sx, sy, b_name in src_bonuses:
         TX = int(round(sx / rx))
         TY = int(round(sy / ry))
         is_water_bonus = b_name in WATER_BONUSES
         
-        # Check target tile compatibility
-        pt = tgt_grid[(TX, TY)]["pt"]
-        if is_water_bonus and pt != "3":
-            # Find nearest water plot
-            found = False
-            for dx in [0, -1, 1, -2, 2]:
-                for dy in [0, -1, 1, -2, 2]:
-                    nx, ny = TX + dx, TY + dy
-                    if tgt_grid.get((nx, ny), {}).get("pt") == "3" and not tgt_grid[(nx, ny)]["b"]:
-                        TX, TY = nx, ny
-                        found = True
-                        break
-                if found: break
-        elif not is_water_bonus and pt == "3" and b_name != "BONUS_OIL":
-            # Find nearest land plot
-            found = False
-            for dx in [0, -1, 1, -2, 2]:
-                for dy in [0, -1, 1, -2, 2]:
-                    nx, ny = TX + dx, TY + dy
-                    if tgt_grid.get((nx, ny), {}).get("pt") in ["1", "2"] and not tgt_grid[(nx, ny)]["b"]:
-                        TX, TY = nx, ny
-                        found = True
-                        break
-                if found: break
+        if is_water_bonus:
+            def is_valid_water_bonus_tile(x, y):
+                if tgt_grid.get((x, y), {}).get("pt") != "3":
+                    return False
+                if tgt_grid[(x, y)]["b"]:
+                    return False
+                return any(((x - dx) % W_TGT, y - dy) in land_plots for dx, dy in bfc_offsets)
 
-        # Peak cannot have bonus
-        if tgt_grid[(TX, TY)]["pt"] == "0":
-            for dx in [0, -1, 1]:
-                for dy in [0, -1, 1]:
-                    nx, ny = TX + dx, TY + dy
-                    if tgt_grid.get((nx, ny), {}).get("pt") in ["1", "2"] and not tgt_grid[(nx, ny)]["b"]:
-                        TX, TY = nx, ny
-                        break
-
-        # If already occupied, shift slightly
-        if tgt_grid[(TX, TY)]["b"]:
-            for dx in [1, -1, 0, 0, 1, -1]:
-                for dy in [0, 0, 1, -1, 1, -1]:
-                    nx, ny = TX + dx, TY + dy
-                    if (nx, ny) in tgt_grid and not tgt_grid[(nx, ny)]["b"]:
-                        n_pt = tgt_grid[(nx, ny)]["pt"]
-                        if (is_water_bonus and n_pt == "3") or (not is_water_bonus and n_pt in ["1", "2"]):
-                            TX, TY = nx, ny
-                            break
-                if not tgt_grid[(TX, TY)]["b"]:
+            best_cand = None
+            min_d2 = 999999
+            for r in range(0, 7):
+                for dx in range(-r, r + 1):
+                    for dy in range(-r, r + 1):
+                        nx, ny = (TX + dx) % W_TGT, TY + dy
+                        if 0 <= ny < H_TGT and is_valid_water_bonus_tile(nx, ny):
+                            d2 = dx * dx + dy * dy
+                            if d2 < min_d2:
+                                min_d2 = d2
+                                best_cand = (nx, ny)
+                if best_cand is not None:
                     break
 
-        tgt_grid[(TX, TY)]["b"] = b_name
+            if best_cand:
+                TX, TY = best_cand
+            else:
+                for r in range(1, 10):
+                    for dx in range(-r, r + 1):
+                        for dy in range(-r, r + 1):
+                            nx, ny = (TX + dx) % W_TGT, TY + dy
+                            if 0 <= ny < H_TGT and tgt_grid.get((nx, ny), {}).get("pt") == "3" and not tgt_grid[(nx, ny)]["b"]:
+                                TX, TY = nx, ny
+                                break
+                        if tgt_grid[(TX, TY)]["pt"] == "3":
+                            break
+
+            tgt_grid[(TX, TY)]["b"] = b_name
+            tgt_grid[(TX, TY)]["tt"] = "TERRAIN_COAST" # Always coastal and workable!
+
+        else:
+            # Check target tile compatibility
+            pt = tgt_grid[(TX, TY)]["pt"]
+            if pt == "3" and b_name != "BONUS_OIL":
+                # Find nearest land plot
+                found = False
+                for dx in [0, -1, 1, -2, 2]:
+                    for dy in [0, -1, 1, -2, 2]:
+                        nx, ny = TX + dx, TY + dy
+                        if tgt_grid.get((nx, ny), {}).get("pt") in ["1", "2"] and not tgt_grid[(nx, ny)]["b"]:
+                            TX, TY = nx, ny
+                            found = True
+                            break
+                    if found: break
+
+            # Peak cannot have bonus
+            if tgt_grid[(TX, TY)]["pt"] == "0":
+                for dx in [0, -1, 1]:
+                    for dy in [0, -1, 1]:
+                        nx, ny = TX + dx, TY + dy
+                        if tgt_grid.get((nx, ny), {}).get("pt") in ["1", "2"] and not tgt_grid[(nx, ny)]["b"]:
+                            TX, TY = nx, ny
+                            break
+
+            # If already occupied, shift slightly
+            if tgt_grid[(TX, TY)]["b"]:
+                for dx in [1, -1, 0, 0, 1, -1]:
+                    for dy in [0, 0, 1, -1, 1, -1]:
+                        nx, ny = TX + dx, TY + dy
+                        if (nx, ny) in tgt_grid and not tgt_grid[(nx, ny)]["b"] and tgt_grid[(nx, ny)]["pt"] in ["1", "2"]:
+                            TX, TY = nx, ny
+                            break
+                    if not tgt_grid[(TX, TY)]["b"]:
+                        break
+
+            tgt_grid[(TX, TY)]["b"] = b_name
 
     # 7. Update Players in header with new StartingX, StartingY
     new_header = header_part

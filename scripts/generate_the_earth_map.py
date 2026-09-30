@@ -418,6 +418,86 @@ def build_wbsave():
             if bon_name:
                 lines.insert(-1, f"\tBonusType={bon_name}")
 
+        # Relocate distant whales to coastal workable plots
+        if (x, y) in [(30, 3), (68, 10), (101, 13), (114, 41), (119, 52)]:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+
+        if (x, y) == (31, 3):  # Falkland / Patagonia Whale
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_WHALE")
+            lines = [("\tTerrainType=TERRAIN_COAST" if l.strip().startswith("TerrainType=") else l) for l in lines]
+
+        elif (x, y) == (67, 11):  # Madagascar Whale
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_WHALE")
+            lines = [("\tTerrainType=TERRAIN_COAST" if l.strip().startswith("TerrainType=") else l) for l in lines]
+
+        elif (x, y) == (102, 13):  # Western Australia Whale
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_WHALE")
+            lines = [("\tTerrainType=TERRAIN_COAST" if l.strip().startswith("TerrainType=") else l) for l in lines]
+
+        elif (x, y) == (113, 41):  # Hokkaido / Japan Whale
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_WHALE")
+            lines = [("\tTerrainType=TERRAIN_COAST" if l.strip().startswith("TerrainType=") else l) for l in lines]
+
+        elif (x, y) == (119, 53):  # Kamchatka / Okhotsk Whale
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_WHALE")
+            lines = [("\tTerrainType=TERRAIN_COAST" if l.strip().startswith("TerrainType=") else l) for l in lines]
+
+        # Torres Strait: separate New Guinea from Cape York Australia with deep ocean
+        if (x, y) in [(114, 21), (115, 21)]:
+            lines = [("\tPlotType=3" if l.strip().startswith("PlotType=") else l) for l in lines]
+            lines = [("\tTerrainType=TERRAIN_OCEAN" if l.strip().startswith("TerrainType=") else l) for l in lines]
+            lines = [l for l in lines if not l.strip().startswith("FeatureType=")]
+
+        # Ocean Barriers: Bashi Channel & Luzon Strait (Taiwan/China to Philippines)
+        if x == 107 and 25 <= y <= 36:
+            if any(l.strip() == "PlotType=3" for l in lines):
+                lines = [("\tTerrainType=TERRAIN_OCEAN" if l.strip().startswith("TerrainType=") else l) for l in lines]
+        if y == 37 and 107 <= x <= 111:
+            if any(l.strip() == "PlotType=3" for l in lines):
+                lines = [("\tTerrainType=TERRAIN_OCEAN" if l.strip().startswith("TerrainType=") else l) for l in lines]
+        if 27 <= y <= 30 and 105 <= x <= 107:
+            if any(l.strip() == "PlotType=3" for l in lines):
+                lines = [("\tTerrainType=TERRAIN_OCEAN" if l.strip().startswith("TerrainType=") else l) for l in lines]
+
+        # Ocean Barriers: Celebes Sea & Sulu Sea (Philippines to Indonesia)
+        if y == 29 and 107 <= x <= 123:
+            if any(l.strip() == "PlotType=3" for l in lines):
+                lines = [("\tTerrainType=TERRAIN_OCEAN" if l.strip().startswith("TerrainType=") else l) for l in lines]
+        if x == 110 and 25 <= y <= 29:
+            if any(l.strip() == "PlotType=3" for l in lines):
+                lines = [("\tTerrainType=TERRAIN_OCEAN" if l.strip().startswith("TerrainType=") else l) for l in lines]
+        if y == 25 and 107 <= x <= 113:
+            if any(l.strip() == "PlotType=3" for l in lines):
+                lines = [("\tTerrainType=TERRAIN_OCEAN" if l.strip().startswith("TerrainType=") else l) for l in lines]
+        if (x, y) in [(108, 25), (109, 25), (111, 25), (112, 25)]:
+            if any(l.strip() == "PlotType=3" for l in lines):
+                lines = [("\tTerrainType=TERRAIN_OCEAN" if l.strip().startswith("TerrainType=") else l) for l in lines]
+
+        # Ocean Barriers: Timor Sea & Arafura Sea & Coral Sea (Indonesia/Pacific to Australia)
+        if y == 23 and ((95 <= x <= 123) or (0 <= x <= 15)):
+            if any(l.strip() == "PlotType=3" for l in lines):
+                lines = [("\tTerrainType=TERRAIN_OCEAN" if l.strip().startswith("TerrainType=") else l) for l in lines]
+        if y == 22 and 104 <= x <= 109:
+            if any(l.strip() == "PlotType=3" for l in lines):
+                lines = [("\tTerrainType=TERRAIN_OCEAN" if l.strip().startswith("TerrainType=") else l) for l in lines]
+        if 20 <= y <= 23 and 118 <= x <= 123:
+            if any(l.strip() == "PlotType=3" for l in lines):
+                lines = [("\tTerrainType=TERRAIN_OCEAN" if l.strip().startswith("TerrainType=") else l) for l in lines]
+
+        # Ensure all water bonuses are on TERRAIN_COAST for workboat access
+        if any(l.strip() in ["BonusType=BONUS_FISH", "BonusType=BONUS_CLAM", "BonusType=BONUS_CRAB", "BonusType=BONUS_WHALE"] for l in lines):
+            if any(l.strip() == "PlotType=3" for l in lines):
+                lines = [("\tTerrainType=TERRAIN_COAST" if l.strip().startswith("TerrainType=") else l) for l in lines]
+
+        # Taiwan Strait workable fishery plots
+        if (x, y) in [(105, 32), (105, 33), (106, 34)]:
+            lines = [("\tTerrainType=TERRAIN_COAST" if l.strip().startswith("TerrainType=") else l) for l in lines]
+
         modified_plots.append("\n".join(lines))
 
     final_wbsave = header_part + "\n".join(modified_plots) + "\n"
