@@ -55,6 +55,7 @@ def build_expanded_map():
     src_grid = {}
     src_bonuses = []
     src_starts = []
+    src_huts = []
 
     for p in plots_raw:
         lines = [l.strip() for l in p.splitlines()]
@@ -66,6 +67,7 @@ def build_expanded_map():
         tt = [l for l in lines if l.startswith("TerrainType=")][0].split("=")[1]
         b = [l for l in lines if l.startswith("BonusType=")]
         f = [l for l in lines if l.startswith("FeatureType=")]
+        imp = [l for l in lines if l.startswith("ImprovementType=")]
         rn = "isNOfRiver" in lines
         rw = "isWOfRiver" in lines
         rwe = [int(l.split("=")[1]) for l in lines if l.startswith("RiverWEDirection=")]
@@ -83,8 +85,10 @@ def build_expanded_map():
             src_bonuses.append((x, y, b[0].split("=")[1]))
         if sp:
             src_starts.append((x, y))
+        if imp:
+            src_huts.append((x, y, imp[0].split("=")[1]))
 
-    print(f"Loaded {len(src_bonuses)} bonuses and {len(src_starts)} starting plots.")
+    print(f"Loaded {len(src_bonuses)} bonuses, {len(src_starts)} starting plots, and {len(src_huts)} tribal villages.")
 
     # 2. Build target 158x80 grid
     tgt_grid = {}
@@ -108,6 +112,7 @@ def build_expanded_map():
                 "rwe": 0,
                 "rns": 0,
                 "b": None,
+                "imp": None,
                 "sp": False
             }
 
@@ -173,6 +178,15 @@ def build_expanded_map():
             if tgt_grid.get((tx, ty), {}).get("pt") == "3":
                 tgt_grid[(tx, ty)]["tt"] = "TERRAIN_OCEAN"
 
+    # Australia Oases on Huge Map:
+    # Central Australia: (139, 20) Uluru / West MacDonnell, (141, 19) Alice Springs / East MacDonnell
+    # Western Australia: (134, 19) Karijini, (136, 19) Millstream Chichester
+    tgt_grid[(134, 19)]["f"] = "FeatureType=FEATURE_OASIS, FeatureVariety=0"
+    tgt_grid[(136, 19)]["f"] = "FeatureType=FEATURE_OASIS, FeatureVariety=0"
+    tgt_grid[(139, 20)]["f"] = "FeatureType=FEATURE_OASIS, FeatureVariety=0"
+    tgt_grid[(141, 19)]["f"] = "FeatureType=FEATURE_OASIS, FeatureVariety=0"
+    tgt_grid[(142, 19)]["f"] = None  # Prevent duplicate adjacent oasis from scaling
+
     # 4. Map Starting Plots
     # 18 Civilizations mapping
     civ_coord_map = {
@@ -183,7 +197,7 @@ def build_expanded_map():
         "CIVILIZATION_ROME": (61, 46),
         "CIVILIZATION_PERSIA": (82, 40),
         "CIVILIZATION_JAPAN": (113, 45),
-        "CIVILIZATION_GERMANY": (62, 52),
+        "CIVILIZATION_GERMANY": (64, 52),
         "CIVILIZATION_MONGOL": (99, 51),
         "CIVILIZATION_FRANCE": (58, 51),
         "CIVILIZATION_ARABIA": (75, 35),
@@ -316,6 +330,25 @@ def build_expanded_map():
 
             tgt_grid[(TX, TY)]["b"] = b_name
 
+    # 6.5 Map Improvements (Tribal Villages / Goody Huts)
+    for sx, sy, imp_name in src_huts:
+        TX = int(round(sx / rx))
+        TY = int(round(sy / ry))
+        if (TX, TY) in tgt_grid:
+            cand = None
+            if tgt_grid[(TX, TY)]["pt"] in ["1", "2"] and not tgt_grid[(TX, TY)]["sp"]:
+                cand = (TX, TY)
+            else:
+                for dx in [0, 1, -1, 2, -2]:
+                    for dy in [0, 1, -1, 2, -2]:
+                        nx, ny = (TX + dx) % W_TGT, TY + dy
+                        if 0 <= ny < H_TGT and tgt_grid.get((nx, ny), {}).get("pt") in ["1", "2"] and not tgt_grid[(nx, ny)]["sp"]:
+                            cand = (nx, ny)
+                            break
+                    if cand: break
+            if cand:
+                tgt_grid[cand]["imp"] = imp_name
+
     # 7. Update Players in header with new StartingX, StartingY
     new_header = header_part
     for civ_name, (tx, ty) in tgt_civ_starts.items():
@@ -357,6 +390,8 @@ def build_expanded_map():
                 lines.append(f"\tBonusType={p['b']}")
             if p["f"]:
                 lines.append(f"\t{p['f']}")
+            if p.get("imp"):
+                lines.append(f"\tImprovementType={p['imp']}")
             lines.append(f"\tTerrainType={p['tt']}")
             lines.append(f"\tPlotType={p['pt']}")
             lines.append("EndPlot")
@@ -521,7 +556,7 @@ def addBonuses():
             pPlot.setBonusType(iBonus)
 
 def addGoodies():
-    return None
+    CyPythonMgr().allowDefaultImpl()
 
 def assignStartingPlots():
     gc = CyGlobalContext()
@@ -534,7 +569,7 @@ def assignStartingPlots():
         "CIVILIZATION_INDIA": (115, 47),
         "CIVILIZATION_EGYPT": (88, 44),
         "CIVILIZATION_ROME": (78, 54),
-        "CIVILIZATION_GERMANY": (79, 61),
+        "CIVILIZATION_GERMANY": (82, 61),
         "CIVILIZATION_FRANCE": (74, 60),
         "CIVILIZATION_ENGLAND": (71, 62),
         "CIVILIZATION_SPAIN": (70, 54),
@@ -585,7 +620,7 @@ def assignStartingPlots():
     fallback_plots = [
         (150, 19), (130, 55), (88, 44), (115, 47), (78, 54),
         (93, 64), (36, 53), (74, 60), (126, 60), (104, 47),
-        (71, 62), (79, 68), (79, 61), (144, 53), (70, 40),
+        (71, 62), (79, 68), (82, 61), (144, 53), (70, 40),
         (38, 27), (24, 44), (96, 41)
     ]
     for pPlayer in unassigned_players:

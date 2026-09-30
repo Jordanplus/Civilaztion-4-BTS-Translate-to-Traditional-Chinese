@@ -100,6 +100,63 @@ GLOBAL_REAL_RESOURCE_ADDITIONS = {
     (105, 49): ("BONUS_OIL", 2, "TERRAIN_TUNDRA", None, "China Northeast Daqing Oil Field"),
 }
 
+ADDITIONAL_GOODY_HUTS = [
+    # 1. 澳洲與紐西蘭原住民部落 (Australia & New Zealand Aboriginal Tribes)
+    (104, 16),  # WA Pilbara desert
+    (105, 14),  # WA Goldfields
+    (109, 15),  # Central Australia Alice Springs
+    (110, 16),  # Central Australia desert
+    (110, 20),  # NT Arnhem Land
+    (114, 18),  # Queensland inland
+    (115, 15),  # NSW Murray Darling basin
+    (116, 8),   # Tasmania
+    (120, 6),   # New Zealand South Island Maori tribe
+    (122, 8),   # New Zealand North Island Maori tribe
+
+    # 2. 北美洲原住民部落 (North America Native Tribes)
+    (22, 46),   # Great Plains Lakota/Sioux
+    (23, 44),   # Missouri / Arkansas
+    (12, 49),   # Pacific Northwest Chinook
+    (15, 55),   # Alaska / Yukon Athabaskan
+    (11, 56),   # Alaska coast Inuit
+    (16, 43),   # Great Basin Shoshone
+    (18, 41),   # American Southwest Pueblo
+    (25, 52),   # Canadian Shield Cree
+    (21, 53),   # Subarctic Canada
+
+    # 3. 南美洲原住民部落 (South America Amazon / Andes / Pampas)
+    (35, 25),   # Amazon Yanomami
+    (33, 23),   # Upper Amazon
+    (34, 11),   # Patagonia Tehuelche
+    (31, 9),    # Tierra del Fuego Selknam
+    (36, 17),   # Gran Chaco Guaraní
+    (39, 19),   # Brazilian Highlands
+
+    # 4. 西伯利亞與中亞 (Siberia, Steppes & Far East)
+    (88, 56),   # Central Siberia Evenk
+    (96, 58),   # Yakutia Sakha
+    (103, 56),  # Lena River
+    (111, 52),  # Amur / Okhotsk
+    (118, 55),  # Kamchatka Koryak
+    (81, 48),   # Kazakh Steppe
+    (86, 48),   # Altai nomadic tribe
+
+    # 5. 非洲原住民部落 (Sub-Saharan Africa)
+    (66, 21),   # Congo Basin Pygmy
+    (64, 23),   # Central Africa
+    (66, 14),   # Kalahari San
+    (67, 13),   # South Africa Xhosa
+    (65, 31),   # Sahel Chad
+    (60, 31),   # West Africa Sahel
+    (74, 16),   # Madagascar Malagasy
+
+    # 6. 東南亞島嶼 (Island Southeast Asia / Pacific)
+    (109, 24),  # Borneo Dayak tribe
+    (116, 24),  # Papua New Guinea highlands
+    (104, 27),  # Sumatra Batak
+    (111, 27),  # Philippines Luzon Igorot
+]
+
 def build_wbsave():
     print(f"Reading base map: {SOURCE_MAP}")
     with open(SOURCE_MAP, "r", encoding="utf-8", errors="ignore") as f:
@@ -120,6 +177,12 @@ def build_wbsave():
                 block = ("BeginTeam\n"
                          "\tTech=TECH_FISHING\n"
                          "\tTech=TECH_HUNTING\n"
+                         "EndTeam")
+            elif team_idx == 17:
+                block = ("BeginTeam\n"
+                         "\tTech=TECH_FISHING\n"
+                         "\tTech=TECH_AGRICULTURE\n"
+                         "\tTech=TECH_MINING\n"
                          "EndTeam")
             team_idx += 1
         new_blocks.append(block)
@@ -154,6 +217,36 @@ def build_wbsave():
                      "\tHandicap=HANDICAP_NOBLE\n"
                      "EndPlayer")
     content = content.replace(player_11_orig.group(0), player_11_new)
+
+    # 4. Update Player 17 (Replace Franklin Roosevelt with George Washington for America)
+    player_17_orig = re.search(r"BeginPlayer\s+LeaderType=LEADER_FRANKLIN_ROOSEVELT\s+CivType=CIVILIZATION_AMERICA.*?EndPlayer", content, re.DOTALL)
+    if not player_17_orig:
+        raise ValueError("Could not find Player 17 (LEADER_FRANKLIN_ROOSEVELT) in WBSave")
+
+    player_17_new = ("BeginPlayer\n"
+                     "\tLeaderType=LEADER_WASHINGTON\n"
+                     "\tCivType=CIVILIZATION_AMERICA\n"
+                     "\tTeam=17\n"
+                     "\tPlayableCiv=1\n"
+                     "\tStartingX=28, StartingY=45\n"
+                     "\tHandicap=HANDICAP_NOBLE\n"
+                     "EndPlayer")
+    content = content.replace(player_17_orig.group(0), player_17_new)
+
+    # 5. Update Player 7 (Replace Frederick with Otto von Bismarck for Germany)
+    player_7_orig = re.search(r"BeginPlayer\s+LeaderType=LEADER_FREDERICK\s+CivType=CIVILIZATION_GERMANY.*?EndPlayer", content, re.DOTALL)
+    if not player_7_orig:
+        raise ValueError("Could not find Player 7 (LEADER_FREDERICK) in WBSave")
+
+    player_7_new = ("BeginPlayer\n"
+                    "\tLeaderType=LEADER_BISMARCK\n"
+                    "\tCivType=CIVILIZATION_GERMANY\n"
+                    "\tTeam=7\n"
+                    "\tPlayableCiv=1\n"
+                    "\tStartingX=64, StartingY=52\n"
+                    "\tHandicap=HANDICAP_NOBLE\n"
+                    "EndPlayer")
+    content = content.replace(player_7_orig.group(0), player_7_new)
 
     # 4. Update Plots
     plot_header_pos = content.find("BeginPlot")
@@ -254,10 +347,14 @@ def build_wbsave():
             lines = [l for l in lines if not l.strip().startswith("BonusType=")]
             lines.insert(-1, "\tBonusType=BONUS_FISH")
 
-        # (118, 20): Brisbane Moreton Bay Fish
-        elif x == 118 and y == 20:
+        # (116, 20): Queensland / Great Barrier Reef Coastal Fish (directly adjacent to Cairns/Townsville coast at 115, 20)
+        elif x == 116 and y == 20:
             lines = [l for l in lines if not l.strip().startswith("BonusType=")]
             lines.insert(-1, "\tBonusType=BONUS_FISH")
+
+        # (118, 20): Clear any distant offshore fish
+        elif x == 118 and y == 20:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
 
         # (102, 12): Perth Coast Fish (West Coast Indian Ocean)
         elif x == 102 and y == 12:
@@ -314,6 +411,16 @@ def build_wbsave():
             lines = [l for l in lines if not l.strip().startswith("BonusType=")]
             lines.insert(-1, "\tBonusType=BONUS_WINE")
 
+        # (109, 17) & (111, 16): Central Australia Oases (MacDonnell Ranges / Alice Springs & Uluru / Palm Valley)
+        elif (x, y) in [(109, 17), (111, 16)]:
+            lines = [l for l in lines if not l.strip().startswith("FeatureType=")]
+            lines.insert(-1, "\tFeatureType=FEATURE_OASIS, FeatureVariety=0")
+
+        # (105, 16) & (107, 16): Western Australia Desert Oases (Pilbara / Goldfields: Karijini & Millstream Chichester)
+        elif (x, y) in [(105, 16), (107, 16)]:
+            lines = [l for l in lines if not l.strip().startswith("FeatureType=")]
+            lines.insert(-1, "\tFeatureType=FEATURE_OASIS, FeatureVariety=0")
+
         # (121, 6): New Zealand South Island Canterbury Plains Sheep
         elif x == 121 and y == 6:
             lines = [l for l in lines if not l.strip().startswith("BonusType=")]
@@ -365,6 +472,17 @@ def build_wbsave():
             lines = [l for l in lines if not l.strip().startswith("BonusType=")]
             lines.insert(-1, "\tBonusType=BONUS_COW")
 
+        # (27, 46): America Appalachia / Pennsylvania Copper (replace redundant coal with strategic defensive copper)
+        elif x == 27 and y == 46:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_COPPER")
+
+        # (26, 48): America Michigan / Lake Superior Native Copper Range
+        elif x == 26 and y == 48:
+            lines = [("\tPlotType=1" if l.strip().startswith("PlotType=") else l) for l in lines]
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_COPPER")
+
         # (67, 47): Europe Romania Ploiești Land Oil Field
         elif x == 67 and y == 47:
             lines = [l for l in lines if not l.strip().startswith("BonusType=")]
@@ -395,10 +513,119 @@ def build_wbsave():
             lines = [l for l in lines if not l.strip().startswith("BonusType=")]
             lines.insert(-1, "\tBonusType=BONUS_SILVER")
 
+        # (64, 51): Central Europe Sudetes / Upper Silesia Iron Basin (lower peak to hill with iron)
+        elif x == 64 and y == 51:
+            lines = [("\tPlotType=1" if l.strip().startswith("PlotType=") else l) for l in lines]
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_IRON")
+
+        # (64, 48): Central Europe Danube / Vienna Pannonian Breadbasket Wheat
+        elif x == 64 and y == 48:
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_WHEAT")
+
         # (66, 48): Eastern Europe Transylvania Roșia Montană Gold Mine
         elif x == 66 and y == 48:
             lines = [l for l in lines if not l.strip().startswith("BonusType=")]
             lines.insert(-1, "\tBonusType=BONUS_GOLD")
+
+        # France - Germany Buffer Zone: expand plains between Paris (58, 51) and Berlin (64, 52)
+        if (x, y) in [(61, 50), (61, 51), (61, 52), (61, 53), (62, 51), (62, 52), (62, 53)]:
+            lines = [("\tPlotType=2" if l.strip().startswith("PlotType=") else l) for l in lines]
+            lines = [("\tTerrainType=TERRAIN_PLAINS" if l.strip().startswith("TerrainType=") else l) for l in lines]
+            lines = [l for l in lines if not l.strip().startswith("FeatureType=")]
+
+        # (62, 52): Remove old Germany StartingPlot
+        if x == 62 and y == 52:
+            lines = [l for l in lines if l.strip() != "StartingPlot"]
+
+        # (64, 52): Germany Capital (Berlin / Brandenburg)
+        elif x == 64 and y == 52:
+            if not any(l.strip() == "StartingPlot" for l in lines):
+                lines.insert(-1, "\tStartingPlot")
+
+        # Isolated Ocean Islands: lower impassable peaks to settleable hills
+        if (x, y) in [(35, 36), (48, 39), (83, 18), (5, 35)]:
+            lines = [("\tPlotType=1" if l.strip().startswith("PlotType=") else l) for l in lines]
+
+        # Coastal sea food additions for isolated ocean islands
+        elif (x, y) in [
+            (1, 19), (1, 27), (8, 18), (16, 22), (22, 16),
+            (36, 36), (45, 46), (47, 36), (48, 38), (49, 40),
+            (56, 19), (80, 24), (80, 30), (84, 18), (89, 29),
+            (116, 33), (123, 21), (123, 32), (6, 35), (118, 28),
+            (121, 25), (33, 38)
+        ]:
+            lines = [("\tPlotType=3" if l.strip().startswith("PlotType=") else l) for l in lines]
+            lines = [("\tTerrainType=TERRAIN_COAST" if l.strip().startswith("TerrainType=") else l) for l in lines]
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_FISH")
+
+        elif (x, y) == (36, 34):  # Barbados Crab
+            lines = [("\tPlotType=3" if l.strip().startswith("PlotType=") else l) for l in lines]
+            lines = [("\tTerrainType=TERRAIN_COAST" if l.strip().startswith("TerrainType=") else l) for l in lines]
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_CRAB")
+
+        elif (x, y) == (32, 39):  # Bahamas Clams
+            lines = [("\tPlotType=3" if l.strip().startswith("PlotType=") else l) for l in lines]
+            lines = [("\tTerrainType=TERRAIN_COAST" if l.strip().startswith("TerrainType=") else l) for l in lines]
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_CLAM")
+
+        elif (x, y) in [(86, 7), (63, 66)]:  # Kerguelen & Svalbard Whales
+            lines = [("\tPlotType=3" if l.strip().startswith("PlotType=") else l) for l in lines]
+            lines = [("\tTerrainType=TERRAIN_COAST" if l.strip().startswith("TerrainType=") else l) for l in lines]
+            lines = [l for l in lines if not l.strip().startswith("BonusType=")]
+            lines.insert(-1, "\tBonusType=BONUS_WHALE")
+
+        # River Corrections & Natural Flow Adjustments
+        # 1. Mississippi River: extend south to Gulf of Mexico (New Orleans 24, 40)
+        if (x, y) in [(24, 43), (24, 42), (24, 41)]:
+            lines = [l for l in lines if not l.strip().startswith("RiverNSDirection=")]
+            if not any("isWOfRiver" in l for l in lines):
+                lines.insert(-1, "\tisWOfRiver")
+            lines.insert(-1, "\tRiverNSDirection=2")
+
+        # 2. Mesopotamia (Tigris / Euphrates): extend south to Persian Gulf
+        elif (x, y) in [(78, 38), (78, 37)]:
+            lines = [l for l in lines if not l.strip().startswith("RiverNSDirection=")]
+            if not any("isWOfRiver" in l for l in lines):
+                lines.insert(-1, "\tisWOfRiver")
+            lines.insert(-1, "\tRiverNSDirection=2")
+        elif x == 78 and y == 36:
+            lines = [l for l in lines if not l.strip().startswith("RiverWEDirection=")]
+            if not any("isNOfRiver" in l for l in lines):
+                lines.insert(-1, "\tisNOfRiver")
+            lines.insert(-1, "\tRiverWEDirection=1")
+        elif (x, y) in [(79, 36), (79, 35)]:
+            lines = [l for l in lines if not l.strip().startswith("RiverNSDirection=")]
+            if not any("isWOfRiver" in l for l in lines):
+                lines.insert(-1, "\tisWOfRiver")
+            lines.insert(-1, "\tRiverNSDirection=2")
+
+        # 3. Rhine River: continuous flow north into North Sea
+        elif (x, y) in [(59, 50), (59, 51), (59, 52), (59, 53)]:
+            lines = [l for l in lines if not l.strip().startswith("RiverNSDirection=")]
+            if not any("isWOfRiver" in l for l in lines):
+                lines.insert(-1, "\tisWOfRiver")
+            lines.insert(-1, "\tRiverNSDirection=0")
+        elif x == 58 and y == 52:
+            lines = [l for l in lines if not "isWOfRiver" in l and not l.strip().startswith("RiverNSDirection=")]
+
+        # 4. Danube River: continuous flow east into Black Sea
+        elif (x, y) in [(61, 50), (62, 50), (63, 50), (64, 50), (65, 50), (66, 50)]:
+            lines = [l for l in lines if not l.strip().startswith("RiverWEDirection=")]
+            if not any("isNOfRiver" in l for l in lines):
+                lines.insert(-1, "\tisNOfRiver")
+            lines.insert(-1, "\tRiverWEDirection=1")
+        elif (x, y) in [(64, 49), (64, 48)]:
+            lines = [l for l in lines if not "isWOfRiver" in l and not l.strip().startswith("RiverNSDirection=")]
+
+        # Tribal Villages (Goody Huts) distribution across unexplored frontiers
+        if (x, y) in ADDITIONAL_GOODY_HUTS:
+            lines = [l for l in lines if not l.strip().startswith("ImprovementType=")]
+            lines.insert(-1, "\tImprovementType=IMPROVEMENT_GOODY_HUT")
 
         # Global realistic resource overhaul additions
         if (x, y) in GLOBAL_REAL_RESOURCE_ADDITIONS:
@@ -679,7 +906,7 @@ def addBonuses():
             pPlot.setBonusType(iBonus)
 
 def addGoodies():
-    return None
+    CyPythonMgr().allowDefaultImpl()
 
 def assignStartingPlots():
     gc = CyGlobalContext()
@@ -692,7 +919,7 @@ def assignStartingPlots():
         "CIVILIZATION_INDIA": (90, 40),
         "CIVILIZATION_EGYPT": (69, 37),
         "CIVILIZATION_ROME": (61, 46),
-        "CIVILIZATION_GERMANY": (62, 52),
+        "CIVILIZATION_GERMANY": (64, 52),
         "CIVILIZATION_FRANCE": (58, 51),
         "CIVILIZATION_ENGLAND": (56, 53),
         "CIVILIZATION_SPAIN": (55, 46),
@@ -743,7 +970,7 @@ def assignStartingPlots():
     fallback_plots = [
         (118, 16), (102, 47), (69, 37), (90, 40), (61, 46),
         (73, 54), (28, 45), (58, 51), (99, 51), (82, 40),
-        (56, 53), (62, 58), (62, 52), (113, 45), (55, 34),
+        (56, 53), (62, 58), (64, 52), (113, 45), (55, 34),
         (30, 23), (19, 37), (75, 35)
     ]
     for pPlayer in unassigned_players:

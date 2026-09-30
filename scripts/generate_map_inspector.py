@@ -40,7 +40,7 @@ CIVS_INFO = {
     (90, 40):  {"name": "印度 (阿育王)", "en": "India (Asoka)", "color": (230, 130, 20), "symbol": "IN"},
     (69, 37):  {"name": "埃及 (哈特謝普蘇特)", "en": "Egypt (Hatshepsut)", "color": (220, 180, 20), "symbol": "EG"},
     (61, 46):  {"name": "羅馬 (凱撒)", "en": "Rome (Caesar)", "color": (130, 20, 120), "symbol": "RO"},
-    (62, 52):  {"name": "德國 (腓特烈)", "en": "Germany (Frederick)", "color": (60, 60, 60), "symbol": "DE"},
+    (64, 52):  {"name": "德國 (俾斯麥)", "en": "Germany (Bismarck)", "color": (60, 60, 60), "symbol": "DE"},
     (58, 51):  {"name": "法國 (路易十四)", "en": "France (Louis XIV)", "color": (30, 70, 180), "symbol": "FR"},
     (56, 53):  {"name": "英國 (伊莉莎白)", "en": "England (Elizabeth)", "color": (180, 20, 20), "symbol": "GB"},
     (62, 58):  {"name": "維京 (朗納爾)", "en": "Viking (Ragnar)", "color": (140, 60, 180), "symbol": "VK"},
@@ -49,7 +49,7 @@ CIVS_INFO = {
     (75, 35):  {"name": "阿拉伯 (薩拉丁)", "en": "Arabia (Saladin)", "color": (20, 140, 40), "symbol": "SA"},
     (99, 51):  {"name": "蒙古 (成吉思汗)", "en": "Mongol (Genghis)", "color": (190, 110, 30), "symbol": "MN"},
     (55, 34):  {"name": "馬利 (曼薩·穆薩)", "en": "Mali (Mansa Musa)", "color": (180, 80, 160), "symbol": "ML"},
-    (28, 45):  {"name": "美國 (羅斯福)", "en": "America (Roosevelt)", "color": (20, 50, 160), "symbol": "US"},
+    (28, 45):  {"name": "美國 (華盛頓)", "en": "America (Washington)", "color": (20, 50, 160), "symbol": "US"},
     (19, 37):  {"name": "阿茲特克 (蒙特祖瑪)", "en": "Aztec (Montezuma)", "color": (30, 150, 80), "symbol": "MX"},
     (30, 23):  {"name": "印加 (瓦伊納·卡帕克)", "en": "Inca (Huayna)", "color": (200, 160, 30), "symbol": "PE"},
 }
@@ -164,14 +164,16 @@ def render_full_map(plots):
                 draw.rectangle([sx + 1, sy + 1, sx + tile_size - 2, sy + tile_size - 2], fill=fc)
             elif p["feature"] == "FEATURE_FLOOD_PLAINS":
                 draw.rectangle([sx + 2, sy + 2, sx + tile_size - 2, sy + tile_size - 2], fill=fc)
+            elif p["feature"] == "FEATURE_OASIS":
+                draw.ellipse([sx + 2, sy + 2, sx + tile_size - 2, sy + tile_size - 2], fill=fc, outline=(100, 240, 200), width=1)
 
         # Rivers
         if p["river_n"]:
-            # North of plot in Civ4 means bottom edge of (x,y) tile, which is sy + tile_size in screen coordinates
-            draw.line([(sx, sy + tile_size), (sx + tile_size, sy + tile_size)], fill=RIVER_COLOR, width=2)
+            # North of plot in Civ4 is the top edge (sy)
+            draw.line([(sx, sy), (sx + tile_size, sy)], fill=RIVER_COLOR, width=2)
         if p["river_w"]:
-            # West of plot in Civ4 means right edge of (x,y) tile, which is sx + tile_size
-            draw.line([(sx + tile_size, sy), (sx + tile_size, sy + tile_size)], fill=RIVER_COLOR, width=2)
+            # West of plot in Civ4 is the left edge (sx)
+            draw.line([(sx, sy), (sx, sy + tile_size)], fill=RIVER_COLOR, width=2)
 
     # Draw grid overlay (very subtle)
     for x in range(0, 125):
@@ -271,12 +273,15 @@ def render_australia_map(plots):
                 fc = FEATURE_COLORS[p["feature"]]
                 if p["feature"] in ["FEATURE_FOREST", "FEATURE_JUNGLE"]:
                     draw.ellipse([sx + 8, sy + 8, sx + tile_size - 8, sy + tile_size - 8], fill=fc)
+                elif p["feature"] == "FEATURE_OASIS":
+                    draw.ellipse([sx + 6, sy + 6, sx + tile_size - 6, sy + tile_size - 6], fill=(43, 153, 128), outline=(100, 240, 200), width=2)
+                    draw.text((sx + 14, sy + 18), "綠洲", font=font_res, fill=(240, 255, 255))
 
             # Rivers
             if p["river_n"]:
-                draw.line([(sx, sy + tile_size), (sx + tile_size, sy + tile_size)], fill=RIVER_COLOR, width=5)
+                draw.line([(sx, sy), (sx + tile_size, sy)], fill=RIVER_COLOR, width=5)
             if p["river_w"]:
-                draw.line([(sx + tile_size, sy), (sx + tile_size, sy + tile_size)], fill=RIVER_COLOR, width=5)
+                draw.line([(sx, sy), (sx, sy + tile_size)], fill=RIVER_COLOR, width=5)
 
             # Coordinate text (faint)
             draw.text((sx + 3, sy + 2), f"{x},{y}", font=font_res, fill=(255, 255, 255, 120))
@@ -315,7 +320,7 @@ def render_australia_map(plots):
     draw.text((32, 28), "澳洲大陸地理物產與台灣文明開局特寫", font=font_lg, fill=(255, 215, 0))
     draw.text((32, 60), "• 預設領袖：蔡英文（保國＋理財＋魅力超群）", font=font_md, fill=(255, 255, 255))
     draw.text((32, 84), "• 首都雙漁產：雪梨深海魚 (119,16) ＋ 雪梨生蠔 (119,17)", font=font_md, fill=(100, 220, 255))
-    draw.text((32, 108), "• 內陸物產：小麥、乳牛、美麗諾綿羊、大分水嶺煤/銀/金礦", font=font_md, fill=(255, 210, 120))
+    draw.text((32, 108), "• 內陸物產：澳洲中部/西部綠洲 (糧+3/金+2)、小麥、乳牛、金鐵油", font=font_md, fill=(255, 210, 120))
 
     img.save(PREVIEW_AUS_PNG)
     print(f"Saved Australia preview to: {PREVIEW_AUS_PNG}")
@@ -371,9 +376,9 @@ def render_scandinavia_map(plots):
 
             # Rivers
             if p["river_n"]:
-                draw.line([(sx, sy + tile_size), (sx + tile_size, sy + tile_size)], fill=RIVER_COLOR, width=5)
+                draw.line([(sx, sy), (sx + tile_size, sy)], fill=RIVER_COLOR, width=5)
             if p["river_w"]:
-                draw.line([(sx + tile_size, sy), (sx + tile_size, sy + tile_size)], fill=RIVER_COLOR, width=5)
+                draw.line([(sx, sy), (sx, sy + tile_size)], fill=RIVER_COLOR, width=5)
 
             # Coordinate text (faint)
             draw.text((sx + 3, sy + 2), f"{x},{y}", font=font_res, fill=(255, 255, 255, 100))
@@ -502,7 +507,7 @@ def generate_interactive_html(plots):
     <button class="civ-btn" onclick="panTo(90, 40)">🇮🇳 印度 (阿育王) <span>(90, 40)</span></button>
     <button class="civ-btn" onclick="panTo(69, 37)">🇪🇬 埃及 (哈特謝普蘇特) <span>(69, 37)</span></button>
     <button class="civ-btn" onclick="panTo(61, 46)">🏛️ 羅馬 (凱撒) <span>(61, 46)</span></button>
-    <button class="civ-btn" onclick="panTo(62, 52)">🇩🇪 德國 (腓特烈) <span>(62, 52)</span></button>
+    <button class="civ-btn" onclick="panTo(64, 52)">🇩🇪 德國 (俾斯麥) <span>(64, 52)</span></button>
     <button class="civ-btn" onclick="panTo(58, 51)">🇫🇷 法國 (路易十四) <span>(58, 51)</span></button>
     <button class="civ-btn" onclick="panTo(56, 53)">🇬🇧 英國 (伊莉莎白) <span>(56, 53)</span></button>
     <button class="civ-btn" onclick="panTo(55, 46)">🇪🇸 西班牙 (伊莎貝拉) <span>(55, 46)</span></button>
@@ -511,7 +516,7 @@ def generate_interactive_html(plots):
     <button class="civ-btn" onclick="panTo(75, 35)">🇸🇦 阿拉伯 (薩拉丁) <span>(75, 35)</span></button>
     <button class="civ-btn" onclick="panTo(99, 51)">🇲🇳 蒙古 (成吉思汗) <span>(99, 51)</span></button>
     <button class="civ-btn" onclick="panTo(55, 34)">🇲🇱 馬利 (曼薩·穆薩) <span>(55, 34)</span></button>
-    <button class="civ-btn" onclick="panTo(28, 45)">🇺🇸 美國 (羅斯福) <span>(28, 45)</span></button>
+    <button class="civ-btn" onclick="panTo(28, 45)">🇺🇸 美國 (華盛頓) <span>(28, 45)</span></button>
     <button class="civ-btn" onclick="panTo(19, 37)">🇲🇽 阿茲特克 (蒙特祖瑪) <span>(19, 37)</span></button>
     <button class="civ-btn" onclick="panTo(30, 23)">🇵🇪 印加 (瓦伊納·卡帕克) <span>(30, 23)</span></button>
 
@@ -624,6 +629,13 @@ function draw() {{
           ctx.beginPath();
           ctx.arc(sx + scale/2, sy + scale/2, scale * 0.35, 0, Math.PI * 2);
           ctx.fill();
+        }} else if (p.ft === "FEATURE_OASIS") {{
+          ctx.beginPath();
+          ctx.arc(sx + scale/2, sy + scale/2, scale * 0.38, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = "#64f0c8";
+          ctx.lineWidth = Math.max(1, scale * 0.08);
+          ctx.stroke();
         }}
       }}
 
@@ -632,16 +644,16 @@ function draw() {{
         ctx.strokeStyle = "#48b5f2";
         ctx.lineWidth = Math.max(2, scale * 0.12);
         ctx.beginPath();
-        ctx.moveTo(sx, sy + scale);
-        ctx.lineTo(sx + scale, sy + scale);
+        ctx.moveTo(sx, sy);
+        ctx.lineTo(sx + scale, sy);
         ctx.stroke();
       }}
       if (p.rw) {{
         ctx.strokeStyle = "#48b5f2";
         ctx.lineWidth = Math.max(2, scale * 0.12);
         ctx.beginPath();
-        ctx.moveTo(sx + scale, sy);
-        ctx.lineTo(sx + scale, sy + scale);
+        ctx.moveTo(sx, sy);
+        ctx.lineTo(sx, sy + scale);
         ctx.stroke();
       }}
 
