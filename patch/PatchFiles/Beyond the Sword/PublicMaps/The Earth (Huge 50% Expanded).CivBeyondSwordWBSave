@@ -21451,18 +21451,21 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=145,y=25
-	TerrainType=TERRAIN_OCEAN
-	PlotType=3
+	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
+	TerrainType=TERRAIN_GRASS
+	PlotType=2
 EndPlot
 BeginPlot
 	x=146,y=25
-	TerrainType=TERRAIN_OCEAN
-	PlotType=3
+	FeatureType=FEATURE_FOREST, FeatureVariety=0
+	TerrainType=TERRAIN_GRASS
+	PlotType=2
 EndPlot
 BeginPlot
 	x=147,y=25
-	TerrainType=TERRAIN_OCEAN
-	PlotType=3
+	FeatureType=FEATURE_FOREST, FeatureVariety=0
+	TerrainType=TERRAIN_GRASS
+	PlotType=2
 EndPlot
 BeginPlot
 	x=148,y=25

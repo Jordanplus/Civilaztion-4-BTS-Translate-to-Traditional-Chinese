@@ -674,12 +674,6 @@ def build_wbsave():
             lines.insert(-1, "\tBonusType=BONUS_WHALE")
             lines = [("\tTerrainType=TERRAIN_COAST" if l.strip().startswith("TerrainType=") else l) for l in lines]
 
-        # Torres Strait: separate New Guinea from Cape York Australia with deep ocean
-        if (x, y) in [(114, 21), (115, 21)]:
-            lines = [("\tPlotType=3" if l.strip().startswith("PlotType=") else l) for l in lines]
-            lines = [("\tTerrainType=TERRAIN_OCEAN" if l.strip().startswith("TerrainType=") else l) for l in lines]
-            lines = [l for l in lines if not l.strip().startswith("FeatureType=")]
-
         # Ocean Barriers: Bashi Channel & Luzon Strait (Taiwan/China to Philippines)
         if x == 107 and 25 <= y <= 36:
             if any(l.strip() == "PlotType=3" for l in lines):
