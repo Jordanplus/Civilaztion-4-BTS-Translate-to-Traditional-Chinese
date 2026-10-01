@@ -1,4 +1,4 @@
-﻿# 文明帝國 IV：超越刀鋒 繁體中文一鍵安裝核心腳本
+# 文明帝國 IV：超越刀鋒 繁體中文一鍵安裝核心腳本
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $Host.UI.RawUI.WindowTitle = "文明帝國 IV：超越刀鋒 繁體中文化補丁"
 
@@ -194,6 +194,10 @@ foreach ($ini in $iniCandidates) {
         $content = Get-Content -Path $ini -Raw -ErrorAction SilentlyContinue
         if ($content -and $content -match 'Language\s*=') {
             $content = [System.Text.RegularExpressions.Regex]::Replace($content, 'Language\s*=\s*\d+', 'Language = 1')
+            if ($content -match 'MemSaver\s*=\s*1') {
+                $content = [System.Text.RegularExpressions.Regex]::Replace($content, 'MemSaver\s*=\s*1', 'MemSaver = 0')
+                Write-Host "  [✓] 已自動修正 MemSaver = 0（允許正常切換視窗與 Alt+Tab）" -ForegroundColor Green
+            }
             Set-Content -Path $ini -Value $content -NoNewline
             Write-Host "  [✓] 已設定使用者語系 (Language = 1)：$ini" -ForegroundColor Green
         }

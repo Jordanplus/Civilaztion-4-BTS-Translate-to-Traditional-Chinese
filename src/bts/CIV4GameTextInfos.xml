@@ -11308,12 +11308,12 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_BORDERS_EXPANDED</Tag>
-		<English>%s1_CityName&#30340;&#37002;&#30028;&#25844;&#20805;&#22871;&#20214;&#20102;!</English>
-		<French>%s1_CityName&#30340;&#37002;&#30028;&#25844;&#20805;&#22871;&#20214;&#20102;!</French>
+		<English>%s1_CityName&#30340;&#37002;&#30028;&#25844;&#24373;&#20102;!</English>
+		<French>%s1_CityName&#30340;&#37002;&#30028;&#25844;&#24373;&#20102;!</French>
 		<German/>
 		<Italian/>
 		<Spanish/>
-		<Chinese>%s1_CityName&#30340;&#37002;&#30028;&#25844;&#20805;&#22871;&#20214;&#20102;!</Chinese>
+		<Chinese>%s1_CityName&#30340;&#37002;&#30028;&#25844;&#24373;&#20102;!</Chinese>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_CULTURE_LEVEL</Tag>

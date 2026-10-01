@@ -17,6 +17,8 @@ tags_to_check = {
     'TXT_KEY_CIV_KOREA_DESC': '韓國文明',
     'TXT_KEY_CIV_KOREA_SHORT_DESC': '韓國',
     'TXT_KEY_UNIT_TAIWAN_INDIGENOUS_HUNTER': '原住民獵人',
+    'TXT_KEY_MISC_BORDERS_EXPANDED': '%s1_CityName的邊界擴張了!',
+    'TXT_KEY_MISSION_SPREAD_CORPORATION': '拓展公司業務',
 }
 
 def main():
