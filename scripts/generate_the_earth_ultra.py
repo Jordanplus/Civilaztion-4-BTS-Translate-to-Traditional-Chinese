@@ -605,6 +605,84 @@ def build_ultra_map():
                 if not has_land:
                     p["tt"] = "TERRAIN_OCEAN"
 
+    # 7.9 Strict Strategic Ocean Barriers (大航海時代前跨洋深海屏障體系，確保早期船隻無法跨洲偷渡)
+    # 1. Australia / Oceania Isolation Barrier (澳洲與印尼/新幾內亞跨大洋隔離：帝汶海、托雷斯海峽深海槽)
+    for x in list(range(140, W_TGT)) + list(range(0, 25)):
+        for y in [27, 28]:
+            p = tgt_grid.get((x, y))
+            if p and p["pt"] == "3" and not p["b"]:
+                p["tt"] = "TERRAIN_OCEAN"
+
+    # 2. Indonesia to Philippines Barrier (西里伯斯海與密克羅尼西亞深海隔斷)
+    for x in range(150, 178):
+        for y in [32, 33]:
+            p = tgt_grid.get((x, y))
+            if p and p["pt"] == "3" and not p["b"]:
+                p["tt"] = "TERRAIN_OCEAN"
+
+    # 3. Philippines to Taiwan Barrier (巴士海峽/呂宋海峽深海隔斷)
+    for x in range(150, 164):
+        for y in [39, 40]:
+            p = tgt_grid.get((x, y))
+            if p and p["pt"] == "3" and not p["b"]:
+                p["tt"] = "TERRAIN_OCEAN"
+
+    # 4. Taiwan to Mainland China Trench (台灣海峽深水隔離，除澎湖 152, 44 與沿海一例外)
+    for tx in [151, 153]:
+        for ty in range(41, 48):
+            p = tgt_grid.get((tx, ty))
+            if p and p["pt"] == "3" and not p["b"]:
+                p["tt"] = "TERRAIN_OCEAN"
+
+    # 5. Southeast Asia Mainland to Borneo Barrier (南海深海盆地：越南/泰國至婆羅洲隔斷)
+    for x in range(145, 156):
+        for y in [34, 35]:
+            p = tgt_grid.get((x, y))
+            if p and p["pt"] == "3" and not p["b"]:
+                p["tt"] = "TERRAIN_OCEAN"
+
+    # 6. North America to Greenland Barrier (戴維斯海峽深海隔斷：巴芬島/拉布拉多至格陵蘭)
+    for x in range(53, 62):
+        for y in range(71, 80):
+            p = tgt_grid.get((x, y))
+            if p and p["pt"] == "3" and not p["b"]:
+                p["tt"] = "TERRAIN_OCEAN"
+
+    # 7. Greenland to Iceland Barrier (丹麥海峽深海隔斷：格陵蘭至冰島)
+    for x in range(67, 72):
+        for y in range(78, 86):
+            p = tgt_grid.get((x, y))
+            if p and p["pt"] == "3" and not p["b"]:
+                p["tt"] = "TERRAIN_OCEAN"
+
+    # 8. Africa to Madagascar Barrier (莫三比克海峽縱向深海槽)
+    for y in range(17, 30):
+        for x in range(107, 112):
+            p = tgt_grid.get((x, y))
+            if p and p["pt"] == "3" and not p["b"]:
+                p["tt"] = "TERRAIN_OCEAN"
+
+    # 9. Asia to America Bering Strait Barrier (白令海峽深海隔斷)
+    for x in [178, 179, 0, 1]:
+        for y in [76, 77]:
+            p = tgt_grid.get((x, y))
+            if p and p["pt"] == "3" and not p["b"]:
+                p["tt"] = "TERRAIN_OCEAN"
+
+    # 10. Japan to Korea Tsushima Strait Trench (對馬海峽深水隔斷)
+    for ty in range(60, 64):
+        for tx in [159, 160]:
+            p = tgt_grid.get((tx, ty))
+            if p and p["pt"] == "3" and not p["b"]:
+                p["tt"] = "TERRAIN_OCEAN"
+
+    # 11. Australia to New Zealand Tasman Sea (塔斯曼海廣闊深海隔斷)
+    for x in range(172, 176):
+        for y in range(11, 20):
+            p = tgt_grid.get((x, y))
+            if p and p["pt"] == "3" and not p["b"]:
+                p["tt"] = "TERRAIN_OCEAN"
+
     # 8. Apply Tribal Villages (Goody Huts)
     for hx, hy in GOODY_HUTS_180:
         if 0 <= hx < W_TGT and 0 <= hy < H_TGT:
