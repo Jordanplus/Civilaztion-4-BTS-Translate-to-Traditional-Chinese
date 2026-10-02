@@ -14095,6 +14095,8 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=164,y=14
+	isWOfRiver
+	RiverNSDirection=2
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
@@ -16851,6 +16853,8 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=164,y=17
+	isWOfRiver
+	RiverNSDirection=2
 	TerrainType=TERRAIN_GRASS
 	PlotType=1
 EndPlot
@@ -17769,6 +17773,8 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=164,y=18
+	isNOfRiver
+	RiverWEDirection=1
 	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
@@ -23443,6 +23449,8 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=171,y=24
+	isWOfRiver
+	RiverNSDirection=0
 	BonusType=BONUS_SUGAR
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
@@ -24399,13 +24407,17 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=170,y=25
-	TerrainType=TERRAIN_COAST
-	PlotType=3
+	TerrainType=TERRAIN_GRASS
+	PlotType=2
 EndPlot
 BeginPlot
 	x=171,y=25
-	TerrainType=TERRAIN_COAST
-	PlotType=3
+	isNOfRiver
+	RiverWEDirection=1
+	isWOfRiver
+	RiverNSDirection=0
+	TerrainType=TERRAIN_GRASS
+	PlotType=2
 EndPlot
 BeginPlot
 	x=172,y=25
@@ -25345,12 +25357,12 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=171,y=26
-	TerrainType=TERRAIN_OCEAN
+	TerrainType=TERRAIN_COAST
 	PlotType=3
 EndPlot
 BeginPlot
 	x=172,y=26
-	TerrainType=TERRAIN_OCEAN
+	TerrainType=TERRAIN_COAST
 	PlotType=3
 EndPlot
 BeginPlot

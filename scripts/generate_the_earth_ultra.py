@@ -315,6 +315,14 @@ def build_ultra_map():
                 if p["tt"] == "TERRAIN_DESERT":
                     p["tt"] = "TERRAIN_GRASS" if Y <= 17 else "TERRAIN_PLAINS"
 
+    # 2.8 Australia East Grassland Expansion (原定台北/雪梨正上方 170, 24 與 171, 24 之上方新增兩格草原)
+    tgt_grid[(170, 25)]["pt"] = "2"
+    tgt_grid[(170, 25)]["tt"] = "TERRAIN_GRASS"
+    tgt_grid[(170, 25)]["f"] = None
+    tgt_grid[(171, 25)]["pt"] = "2"
+    tgt_grid[(171, 25)]["tt"] = "TERRAIN_GRASS"
+    tgt_grid[(171, 25)]["f"] = None
+
     # 3. Topographical Sculpting: Taiwan Island & Straits
     # Clear Taiwan Strait: X: 151..153, Y: 41..47 except Penghu (152, 44)
     for ty in range(41, 48):
@@ -458,6 +466,27 @@ def build_ultra_map():
     tgt_grid[(171, 21)]["rwe"] = 1
     tgt_grid[(171, 21)]["rw"] = True
     tgt_grid[(171, 21)]["rns"] = 0
+
+    # 4. Australia Southeast Murray / Melbourne River (澳洲右下偏中河流向右移一格至 X=164 並向下入海)
+    tgt_grid[(162, 15)]["rw"] = False
+    tgt_grid[(162, 16)]["rw"] = False
+    for r_y in range(14, 18):
+        tgt_grid[(164, r_y)]["rw"] = True
+        tgt_grid[(164, r_y)]["rns"] = 2  # 向南奔流注入巴斯海峽海洋
+    tgt_grid[(164, 18)]["rn"] = True
+    tgt_grid[(164, 18)]["rwe"] = 1  # 內陸水系匯入
+
+    # 5. Australia East Brisbane / Fitzroy River (原台北/雪梨正上方甘蔗與新增兩格草原 170, 25 與 171, 25 之河流延伸北流入海)
+    tgt_grid[(171, 22)]["rw"] = True
+    tgt_grid[(171, 22)]["rns"] = 0
+    tgt_grid[(171, 23)]["rw"] = True
+    tgt_grid[(171, 23)]["rns"] = 0
+    tgt_grid[(171, 24)]["rw"] = True
+    tgt_grid[(171, 24)]["rns"] = 0
+    tgt_grid[(171, 25)]["rw"] = True
+    tgt_grid[(171, 25)]["rns"] = 0  # 北流穿過兩格新草原
+    tgt_grid[(171, 25)]["rn"] = True
+    tgt_grid[(171, 25)]["rwe"] = 1  # 於 Y=25 北側直接流入珊瑚海海洋
 
     # 4.8 Canyon Peak-Trapped River Relief (消除被兩座絕壁山峰夾住的河流，微調一側為壯麗峽谷丘陵)
     for (x, y), p in tgt_grid.items():
