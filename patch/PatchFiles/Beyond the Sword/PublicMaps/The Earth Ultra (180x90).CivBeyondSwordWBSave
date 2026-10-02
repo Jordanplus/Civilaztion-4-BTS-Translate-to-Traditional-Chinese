@@ -24407,6 +24407,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=170,y=25
+	BonusType=BONUS_BANANA
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
@@ -24416,11 +24417,13 @@ BeginPlot
 	RiverWEDirection=1
 	isWOfRiver
 	RiverNSDirection=0
+	BonusType=BONUS_GOLD
 	TerrainType=TERRAIN_GRASS
-	PlotType=2
+	PlotType=1
 EndPlot
 BeginPlot
 	x=172,y=25
+	BonusType=BONUS_CRAB
 	TerrainType=TERRAIN_COAST
 	PlotType=3
 EndPlot
