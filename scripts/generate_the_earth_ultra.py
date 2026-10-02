@@ -44,26 +44,19 @@ BONUS_LIST = [
 # Format: (X, Y): (BonusType, PlotType, TerrainType, FeatureType, Name)
 # PlotType: 1=Hills, 2=Land, 3=Ocean/Coast
 ULTRA_GLOBAL_RESOURCES = {
-    # ==================== 1. TAIWAN & SURROUNDING SEAS (台灣與周邊海域) ====================
-    (154, 45): (None, "2", "TERRAIN_GRASS", None, "Taiwan Taipei Capital Site"),
+    # ==================== 1. TAIWAN & SURROUNDING SEAS (台灣與周邊海域 - 合理真實分配) ====================
+    (154, 45): (None, "2", "TERRAIN_GRASS", None, "Taiwan Taipei Site"),
     (155, 45): ("BONUS_GOLD", "1", "TERRAIN_GRASS", "FeatureType=FEATURE_FOREST, FeatureVariety=0", "Taiwan Jinguashi Gold Mine"),
     (154, 44): ("BONUS_RICE", "2", "TERRAIN_GRASS", None, "Taiwan Chianan Plain Ponlai Rice"),
-    (155, 44): ("BONUS_MARBLE", "1", "TERRAIN_GRASS", "FeatureType=FEATURE_FOREST, FeatureVariety=1", "Taiwan Central Range / Yushan Marble & Jade"),
+    (155, 44): (None, "1", "TERRAIN_GRASS", "FeatureType=FEATURE_FOREST, FeatureVariety=1", "Taiwan Central Range / Yushan"),
     (154, 43): ("BONUS_SUGAR", "2", "TERRAIN_GRASS", "FeatureType=FEATURE_JUNGLE, FeatureVariety=0", "Taiwan Kaohsiung / Tainan Cane Sugar"),
-    (155, 43): ("BONUS_IRON", "1", "TERRAIN_GRASS", "FeatureType=FEATURE_FOREST, FeatureVariety=0", "Taiwan Taitung / Hualien Strategic Iron"),
-    (154, 42): ("BONUS_SPICES", "2", "TERRAIN_GRASS", "FeatureType=FEATURE_FOREST, FeatureVariety=0", "Taiwan Hengchun / Pingtung Tea & Tropical Spices"),
-    (152, 44): ("BONUS_STONE", "1", "TERRAIN_PLAINS", None, "Taiwan Penghu Basalt & Coral Stone"),
-    # Taiwan Marine Resources
+    (155, 43): (None, "1", "TERRAIN_GRASS", "FeatureType=FEATURE_FOREST, FeatureVariety=0", "Taiwan Taitung / Hualien Hills"),
+    (154, 42): (None, "2", "TERRAIN_GRASS", "FeatureType=FEATURE_FOREST, FeatureVariety=0", "Taiwan Hengchun Peninsula"),
+    (152, 44): (None, "1", "TERRAIN_PLAINS", None, "Taiwan Penghu Islands"),
+    # Taiwan Marine Resources (合理真實分配)
     (154, 46): ("BONUS_FISH", "3", "TERRAIN_COAST", None, "Taiwan North Coast Fugui Fishery"),
-    (153, 46): ("BONUS_FISH", "3", "TERRAIN_COAST", None, "Pengchia Islet North Offshore Fishery"),
-    (156, 45): ("BONUS_CLAM", "3", "TERRAIN_COAST", None, "Taiwan Northeast Coast Guishan Clams"),
     (153, 44): ("BONUS_FISH", "3", "TERRAIN_COAST", None, "Taiwan Strait Kuroshio Current Fishery"),
-    (151, 44): ("BONUS_FISH", "3", "TERRAIN_COAST", None, "Taiwan Strait Black Ditch Fishery"),
     (153, 43): ("BONUS_CRAB", "3", "TERRAIN_COAST", None, "Taiwan Kaohsiung Offshore Crab"),
-    (152, 43): ("BONUS_CLAM", "3", "TERRAIN_COAST", None, "Taiwan Shoal Clams & Oysters"),
-    (154, 41): ("BONUS_FISH", "3", "TERRAIN_COAST", None, "Bashi Channel Orchid Island Fishery"),
-    (155, 42): ("BONUS_FISH", "3", "TERRAIN_COAST", None, "Taitung Offshore Fishery"),
-    (156, 43): ("BONUS_WHALE", "3", "TERRAIN_COAST", None, "East Taiwan Pacific Sperm Whales"),
     (153, 45): ("BONUS_OIL", "3", "TERRAIN_COAST", None, "Taiwan Hsinchu Offshore Gas & Oil Field"),
 
     # ==================== 2. EAST ASIA & JAPAN (東亞與日本) ====================
@@ -98,12 +91,23 @@ ULTRA_GLOBAL_RESOURCES = {
     (165, 33): ("BONUS_SPICES", "2", "TERRAIN_GRASS", "FeatureType=FEATURE_JUNGLE, FeatureVariety=0", "Indonesia Moluccas Spice Islands (Nutmeg & Cloves)"),
     (150, 29): ("BONUS_OIL", "2", "TERRAIN_GRASS", "FeatureType=FEATURE_JUNGLE, FeatureVariety=0", "Indonesia Sumatra Minas Oil Field"),
     (154, 29): ("BONUS_RICE", "2", "TERRAIN_GRASS", None, "Indonesia Java Rice Heartland"),
-    # Australia
-    (151, 21): ("BONUS_IRON", "1", "TERRAIN_PLAINS", None, "Australia WA Pilbara Giant Iron Range"),
-    (153, 19): ("BONUS_GOLD", "1", "TERRAIN_DESERT", None, "Australia WA Kalgoorlie Super Pit Gold"),
-    (166, 24): ("BONUS_COAL", "2", "TERRAIN_PLAINS", None, "Australia Queensland Bowen Basin Coal"),
+    # Australia (台灣文明大洋洲發祥地與各州資源)
+    (171, 21): (None, "2", "TERRAIN_GRASS", None, "Australia Sydney Starting Plot"),
+    (172, 21): ("BONUS_CLAM", "3", "TERRAIN_COAST", None, "Sydney Harbour Rock Oysters"),
+    (172, 20): ("BONUS_FISH", "3", "TERRAIN_COAST", None, "Sydney Offshore Fishery"),
+    (170, 21): ("BONUS_COAL", "1", "TERRAIN_GRASS", None, "Lithgow / Blue Mountains Coal"),
+    (170, 22): ("BONUS_IRON", "1", "TERRAIN_GRASS", None, "Blue Mountains Iron Ore"),
     (167, 19): ("BONUS_SHEEP", "2", "TERRAIN_GRASS", None, "Australia NSW Murray-Darling Merino Wool"),
     (164, 16): ("BONUS_WHEAT", "2", "TERRAIN_PLAINS", None, "Australia Victoria Wheat Belt"),
+    (165, 16): ("BONUS_COW", "2", "TERRAIN_GRASS", None, "Victoria / Gippsland Dairy Cattle"),
+    (171, 24): ("BONUS_SUGAR", "2", "TERRAIN_GRASS", None, "Queensland Sugar Cane (Brisbane)"),
+    (166, 24): ("BONUS_COAL", "2", "TERRAIN_PLAINS", None, "Australia Queensland Bowen Basin Coal"),
+    (153, 19): ("BONUS_GOLD", "1", "TERRAIN_PLAINS", None, "Australia WA Kalgoorlie Super Pit Gold"),
+    (151, 21): ("BONUS_IRON", "1", "TERRAIN_PLAINS", None, "Australia WA Pilbara Giant Iron Range"),
+    (150, 16): ("BONUS_WHEAT", "2", "TERRAIN_PLAINS", None, "WA Wheatbelt (Perth)"),
+    (149, 17): ("BONUS_WINE", "1", "TERRAIN_PLAINS", None, "Swan Valley Wine (Perth)"),
+    (160, 21): ("BONUS_OIL", "2", "TERRAIN_PLAINS", None, "Cooper Basin Oil Field"),
+    (168, 14): ("BONUS_OIL", "3", "TERRAIN_COAST", None, "Bass Strait Offshore Oil"),
     (169, 10): ("BONUS_FISH", "3", "TERRAIN_COAST", None, "Australia Tasmania Southern Ocean Fishery"),
     (174, 9):  ("BONUS_SHEEP", "1", "TERRAIN_GRASS", None, "New Zealand South Island Pasture Sheep"),
     (177, 12): ("BONUS_FISH", "3", "TERRAIN_COAST", None, "New Zealand North Island Coastal Fishery"),
@@ -209,7 +213,6 @@ ISLAND_SEAFOOD_OVERHAUL = [
     (178, 33, "BONUS_FISH", (177, 33)),  # Fiji
     (168, 44, "BONUS_FISH", (167, 44)),  # Guam / Marianas
     (43, 37, "BONUS_FISH", (42, 37)),    # Galapagos Islands
-    (152, 44, "BONUS_FISH", (151, 44)),  # Penghu Channel Fishery (water plot next to Penghu)
 ]
 
 # Island Land Resources (placed directly on island hills/land)
@@ -298,6 +301,20 @@ def build_ultra_map():
                 "sp": False
             }
 
+    # 2.5 Australia Desert Reduction (縮減最左邊西澳與下方南澳沙漠，利於建城開拓)
+    for Y in range(12, 27):
+        for X in range(148, 175):
+            p = tgt_grid.get((X, Y))
+            if not p or p["pt"] == "3": continue
+            # 1. West Australia (Left edge: X: 149..155, Y: 18..25)
+            if 149 <= X <= 155 and 18 <= Y <= 25:
+                if p["tt"] == "TERRAIN_DESERT":
+                    p["tt"] = "TERRAIN_GRASS" if X <= 151 else "TERRAIN_PLAINS"
+            # 2. South Australia (Bottom: X: 154..166, Y: 16..19)
+            if 154 <= X <= 166 and 16 <= Y <= 19:
+                if p["tt"] == "TERRAIN_DESERT":
+                    p["tt"] = "TERRAIN_GRASS" if Y <= 17 else "TERRAIN_PLAINS"
+
     # 3. Topographical Sculpting: Taiwan Island & Straits
     # Clear Taiwan Strait: X: 151..153, Y: 41..47 except Penghu (152, 44)
     for ty in range(41, 48):
@@ -366,32 +383,22 @@ def build_ultra_map():
                     tgt_grid[(TX, TY)]["rw"] = True
                     tgt_grid[(TX, TY)]["rns"] = p["rns"]
 
-    # 4.5 Add Realistic Taiwan River Networks (Fresh Water for every Taiwan plot)
+    # 4.5 Add Realistic Taiwan River Networks (Tamsui & Choshui Rivers)
     # 1. Tamsui & Keelung Rivers (淡水河水系：流經台北 154, 45 與基隆 155, 45 北流入海)
     tgt_grid[(155, 45)]["rw"] = True
     tgt_grid[(155, 45)]["rns"] = 0  # 基隆河/新店溪匯流
     tgt_grid[(154, 45)]["rn"] = True
     tgt_grid[(154, 45)]["rwe"] = 1  # 台北淡水河出海口
 
-    # 2. Choshui River (濁水溪：橫貫中央山脈 155, 44 與台中/彰化 154, 44 西流入海)
+    # 2. Choshui River (濁水溪：橫貫中央山脈 155, 44 與中南部 154, 44 西流入海)
     tgt_grid[(155, 44)]["rw"] = True
     tgt_grid[(155, 44)]["rns"] = 2
     tgt_grid[(154, 44)]["rn"] = True
     tgt_grid[(154, 44)]["rwe"] = 1  # 濁水溪西流入台灣海峽
 
-    # 3. Gaoping River (高屏溪：流經高雄 154, 43 與恆春 154, 42 南流入海)
-    tgt_grid[(155, 43)]["rw"] = True
-    tgt_grid[(155, 43)]["rns"] = 2
-    tgt_grid[(154, 43)]["rn"] = True
-    tgt_grid[(154, 43)]["rwe"] = 1  # 西南部入海
-    tgt_grid[(154, 42)]["rn"] = True
-    tgt_grid[(154, 42)]["rwe"] = 1  # 恆春半島淡水河流
-
-    # 4. Lanyang & Hualien Rivers (東台灣蘭陽溪與花蓮溪東流入太平洋)
-    tgt_grid[(155, 45)]["rn"] = True
-    tgt_grid[(155, 45)]["rwe"] = 3  # 蘭陽溪東流入海
-    tgt_grid[(155, 43)]["rn"] = True
-    tgt_grid[(155, 43)]["rwe"] = 3  # 花蓮溪東流入海
+    # 3. Australia Sydney River (雪梨霍克斯伯里河水系，提供開局淡水)
+    tgt_grid[(171, 21)]["rn"] = True
+    tgt_grid[(171, 21)]["rwe"] = 1
 
     # 5. Base Resource Scaling
     WATER_BONUSES = {'BONUS_FISH', 'BONUS_CLAM', 'BONUS_CRAB', 'BONUS_WHALE'}
@@ -458,7 +465,7 @@ def build_ultra_map():
         "CIVILIZATION_EGYPT": (100, 49),
         "CIVILIZATION_INDIA": (131, 53),
         "CIVILIZATION_CHINA": (148, 62),
-        "CIVILIZATION_TAIWAN": (154, 45),   # Taiwan Capital Taipei!
+        "CIVILIZATION_TAIWAN": (171, 21),   # Taiwan Capital (Australia Sydney)
         "CIVILIZATION_ROME": (89, 61),
         "CIVILIZATION_PERSIA": (119, 53),
         "CIVILIZATION_JAPAN": (164, 60),
@@ -693,7 +700,7 @@ def assignStartingPlots():
     cy_map = CyMap()
 
     civ_coords = {{
-        "CIVILIZATION_TAIWAN": {repr(tgt_civ_starts.get("CIVILIZATION_TAIWAN", (154, 45)))},
+        "CIVILIZATION_TAIWAN": {repr(tgt_civ_starts.get("CIVILIZATION_TAIWAN", (171, 21)))},
         "CIVILIZATION_CHINA": {repr(tgt_civ_starts.get("CIVILIZATION_CHINA", (148, 62)))},
         "CIVILIZATION_JAPAN": {repr(tgt_civ_starts.get("CIVILIZATION_JAPAN", (164, 60)))},
         "CIVILIZATION_INDIA": {repr(tgt_civ_starts.get("CIVILIZATION_INDIA", (131, 53)))},

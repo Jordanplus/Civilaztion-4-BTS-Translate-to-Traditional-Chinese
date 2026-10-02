@@ -106,7 +106,7 @@ BeginPlayer
 	CivType=CIVILIZATION_TAIWAN
 	Team=3
 	PlayableCiv=1
-	StartingX=154, StartingY=45
+	StartingX=171, StartingY=21
 	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
@@ -14112,8 +14112,9 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=168,y=14
-	TerrainType=TERRAIN_GRASS
-	PlotType=0
+	BonusType=BONUS_OIL
+	TerrainType=TERRAIN_COAST
+	PlotType=3
 EndPlot
 BeginPlot
 	x=169,y=14
@@ -15841,8 +15842,9 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=150,y=16
+	BonusType=BONUS_WHEAT
 	FeatureType=FEATURE_FOREST, FeatureVariety=0
-	TerrainType=TERRAIN_GRASS
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
@@ -15904,12 +15906,12 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=162,y=16
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=163,y=16
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
@@ -15922,7 +15924,8 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=165,y=16
-	TerrainType=TERRAIN_PLAINS
+	BonusType=BONUS_COW
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
@@ -16769,8 +16772,9 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=149,y=17
-	TerrainType=TERRAIN_COAST
-	PlotType=3
+	BonusType=BONUS_WINE
+	TerrainType=TERRAIN_PLAINS
+	PlotType=1
 EndPlot
 BeginPlot
 	x=150,y=17
@@ -16795,57 +16799,57 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=154,y=17
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=155,y=17
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=156,y=17
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=157,y=17
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=158,y=17
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=159,y=17
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=160,y=17
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=161,y=17
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=162,y=17
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=163,y=17
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=164,y=17
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=1
 EndPlot
 BeginPlot
@@ -17698,53 +17702,53 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=152,y=18
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=153,y=18
 	ImprovementType=IMPROVEMENT_GOODY_HUT
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=154,y=18
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=155,y=18
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=156,y=18
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=157,y=18
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=158,y=18
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=159,y=18
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=160,y=18
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=161,y=18
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
@@ -17759,7 +17763,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=164,y=18
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
@@ -18620,54 +18624,54 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=152,y=19
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=153,y=19
 	BonusType=BONUS_GOLD
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=1
 EndPlot
 BeginPlot
 	x=154,y=19
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=155,y=19
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=156,y=19
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=157,y=19
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=158,y=19
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=159,y=19
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=160,y=19
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=161,y=19
 	BonusType=BONUS_GEMS
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
@@ -18682,7 +18686,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=164,y=19
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
@@ -19534,37 +19538,37 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=149,y=20
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=150,y=20
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=151,y=20
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=152,y=20
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=153,y=20
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=154,y=20
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=155,y=20
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
@@ -19659,9 +19663,10 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=172,y=20
+	BonusType=BONUS_FISH
 	FeatureType=FEATURE_FOREST, FeatureVariety=1
-	TerrainType=TERRAIN_GRASS
-	PlotType=1
+	TerrainType=TERRAIN_COAST
+	PlotType=3
 EndPlot
 BeginPlot
 	x=173,y=20
@@ -20470,12 +20475,12 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=149,y=21
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=150,y=21
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
@@ -20487,25 +20492,25 @@ EndPlot
 BeginPlot
 	x=152,y=21
 	FeatureType=FEATURE_OASIS, FeatureVariety=0
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=153,y=21
 	FeatureType=FEATURE_OASIS, FeatureVariety=0
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=154,y=21
 	BonusType=BONUS_GOLD
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=1
 EndPlot
 BeginPlot
 	x=155,y=21
 	FeatureType=FEATURE_OASIS, FeatureVariety=0
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
@@ -20533,7 +20538,7 @@ BeginPlot
 	x=160,y=21
 	BonusType=BONUS_OIL
 	ImprovementType=IMPROVEMENT_GOODY_HUT
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
@@ -20593,6 +20598,7 @@ BeginPlot
 	x=170,y=21
 	isNOfRiver
 	RiverWEDirection=1
+	BonusType=BONUS_COAL
 	TerrainType=TERRAIN_GRASS
 	PlotType=1
 EndPlot
@@ -20600,15 +20606,17 @@ BeginPlot
 	x=171,y=21
 	isNOfRiver
 	RiverWEDirection=1
+	StartingPlot
 	FeatureType=FEATURE_FOREST, FeatureVariety=1
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=172,y=21
+	BonusType=BONUS_CLAM
 	FeatureType=FEATURE_FOREST, FeatureVariety=1
-	TerrainType=TERRAIN_GRASS
-	PlotType=2
+	TerrainType=TERRAIN_COAST
+	PlotType=3
 EndPlot
 BeginPlot
 	x=173,y=21
@@ -21421,39 +21429,39 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=149,y=22
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=150,y=22
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=151,y=22
 	ImprovementType=IMPROVEMENT_GOODY_HUT
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=152,y=22
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=153,y=22
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=154,y=22
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=0
 EndPlot
 BeginPlot
 	x=155,y=22
 	BonusType=BONUS_IRON
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=1
 EndPlot
 BeginPlot
@@ -21529,8 +21537,9 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=170,y=22
+	BonusType=BONUS_IRON
 	FeatureType=FEATURE_FOREST, FeatureVariety=0
-	TerrainType=TERRAIN_PLAINS
+	TerrainType=TERRAIN_GRASS
 	PlotType=1
 EndPlot
 BeginPlot
@@ -22348,37 +22357,37 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=149,y=23
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=150,y=23
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=151,y=23
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=152,y=23
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=153,y=23
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=154,y=23
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=0
 EndPlot
 BeginPlot
 	x=155,y=23
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=1
 EndPlot
 BeginPlot
@@ -23296,22 +23305,22 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=152,y=24
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=153,y=24
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=154,y=24
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=155,y=24
-	TerrainType=TERRAIN_DESERT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
@@ -23396,8 +23405,9 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=171,y=24
-	TerrainType=TERRAIN_COAST
-	PlotType=3
+	BonusType=BONUS_SUGAR
+	TerrainType=TERRAIN_GRASS
+	PlotType=2
 EndPlot
 BeginPlot
 	x=172,y=24
@@ -39545,7 +39555,6 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=154,y=41
-	BonusType=BONUS_FISH
 	TerrainType=TERRAIN_COAST
 	PlotType=3
 EndPlot
@@ -40502,17 +40511,13 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=154,y=42
-	isNOfRiver
-	RiverWEDirection=1
-	BonusType=BONUS_SPICES
 	FeatureType=FEATURE_FOREST, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=155,y=42
-	BonusType=BONUS_FISH
-	TerrainType=TERRAIN_COAST
+	TerrainType=TERRAIN_OCEAN
 	PlotType=3
 EndPlot
 BeginPlot
@@ -41418,7 +41423,6 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=152,y=43
-	BonusType=BONUS_CLAM
 	TerrainType=TERRAIN_COAST
 	PlotType=3
 EndPlot
@@ -41430,8 +41434,6 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=154,y=43
-	isNOfRiver
-	RiverWEDirection=1
 	BonusType=BONUS_SUGAR
 	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
@@ -41439,19 +41441,13 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=155,y=43
-	isNOfRiver
-	RiverWEDirection=3
-	isWOfRiver
-	RiverNSDirection=2
-	BonusType=BONUS_IRON
 	FeatureType=FEATURE_FOREST, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=1
 EndPlot
 BeginPlot
 	x=156,y=43
-	BonusType=BONUS_WHALE
-	TerrainType=TERRAIN_COAST
+	TerrainType=TERRAIN_OCEAN
 	PlotType=3
 EndPlot
 BeginPlot
@@ -42374,13 +42370,11 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=151,y=44
-	BonusType=BONUS_FISH
 	TerrainType=TERRAIN_COAST
 	PlotType=3
 EndPlot
 BeginPlot
 	x=152,y=44
-	BonusType=BONUS_STONE
 	TerrainType=TERRAIN_PLAINS
 	PlotType=1
 EndPlot
@@ -42403,7 +42397,6 @@ BeginPlot
 	x=155,y=44
 	isWOfRiver
 	RiverNSDirection=2
-	BonusType=BONUS_MARBLE
 	FeatureType=FEATURE_FOREST, FeatureVariety=1
 	TerrainType=TERRAIN_GRASS
 	PlotType=1
@@ -43353,14 +43346,11 @@ BeginPlot
 	x=154,y=45
 	isNOfRiver
 	RiverWEDirection=1
-	StartingPlot
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
 BeginPlot
 	x=155,y=45
-	isNOfRiver
-	RiverWEDirection=3
 	isWOfRiver
 	RiverNSDirection=0
 	BonusType=BONUS_GOLD
@@ -43370,8 +43360,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=156,y=45
-	BonusType=BONUS_CLAM
-	TerrainType=TERRAIN_COAST
+	TerrainType=TERRAIN_OCEAN
 	PlotType=3
 EndPlot
 BeginPlot
@@ -44312,7 +44301,6 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=153,y=46
-	BonusType=BONUS_FISH
 	TerrainType=TERRAIN_COAST
 	PlotType=3
 EndPlot

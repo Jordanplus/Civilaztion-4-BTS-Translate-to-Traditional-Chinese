@@ -8,6 +8,7 @@ WBSAVE_PATH = os.path.join(ROOT, "patch", "PatchFiles", "Beyond the Sword", "Pub
 
 HTML_INSPECTOR = os.path.join(ROOT, "inspect_the_earth_ultra.html")
 PREVIEW_TAIWAN_PNG = os.path.join(ROOT, "the_earth_ultra_taiwan_preview.png")
+PREVIEW_AUSTRALIA_PNG = os.path.join(ROOT, "the_earth_ultra_australia_preview.png")
 
 FONT_PATH = r"C:\Windows\Fonts\msyh.ttc"
 
@@ -32,7 +33,7 @@ FEATURE_COLORS = {
 RIVER_COLOR = (72, 181, 242)
 
 CIVS_INFO = {
-    (154, 45): {"name": "台灣 (蔡英文 - 台北首都)", "en": "Taiwan (Taipei)", "color": (30, 100, 240), "symbol": "TW"},
+    (171, 21): {"name": "台灣 (蔡英文 - 澳洲雪梨)", "en": "Taiwan (Sydney)", "color": (30, 100, 240), "symbol": "TW"},
     (148, 62): {"name": "中國 (秦始皇 - 長安洛陽)", "en": "China (Qin)", "color": (220, 30, 30), "symbol": "CN"},
     (164, 60): {"name": "日本 (德川家康 - 京都東京)", "en": "Japan (Tokugawa)", "color": (200, 20, 50), "symbol": "JP"},
     (131, 53): {"name": "印度 (阿育王 - 德里)", "en": "India (Asoka)", "color": (240, 140, 20), "symbol": "IN"},
@@ -188,6 +189,78 @@ def render_taiwan_png(plots):
 
     img.save(PREVIEW_TAIWAN_PNG)
     print(f"Saved Taiwan preview to: {PREVIEW_TAIWAN_PNG}")
+
+def render_australia_png(plots):
+    print("Rendering high-res Australia preview PNG...")
+    # Region around Australia: X in [146..178], Y in [8..28]
+    min_x, max_x = 146, 178
+    min_y, max_y = 8, 28
+    w = max_x - min_x + 1
+    h = max_y - min_y + 1
+    tile_size = 48
+
+    img = Image.new("RGB", (w * tile_size, h * tile_size), (10, 20, 40))
+    draw = ImageDraw.Draw(img)
+
+    try:
+        font_large = ImageFont.truetype(FONT_PATH, 14)
+        font_small = ImageFont.truetype(FONT_PATH, 10)
+        font_bold = ImageFont.truetype(FONT_PATH, 16)
+    except Exception:
+        font_large = ImageFont.load_default()
+        font_small = font_large
+        font_bold = font_large
+
+    for Y in range(min_y, max_y + 1):
+        for X in range(min_x, max_x + 1):
+            p = plots.get((X, Y))
+            if not p: continue
+
+            # Civ4 y=0 is south, image y=0 is top
+            px = (X - min_x) * tile_size
+            py = (max_y - Y) * tile_size
+
+            # Base color
+            base_col = TERRAIN_COLORS.get(p["tt"], (50, 50, 50))
+            if p["pt"] == 0:  # Peak
+                base_col = (180, 180, 190)
+            elif p["pt"] == 1: # Hills
+                base_col = (int(base_col[0] * 0.8), int(base_col[1] * 0.8), int(base_col[2] * 0.8))
+
+            draw.rectangle([px, py, px + tile_size - 1, py + tile_size - 1], fill=base_col)
+
+            # Feature overlay
+            if p["ft"] in FEATURE_COLORS:
+                fc = FEATURE_COLORS[p["ft"]]
+                draw.rectangle([px + 3, py + 3, px + tile_size - 4, py + tile_size - 4], outline=fc, width=2)
+
+            # Rivers
+            if p["rn"]:
+                draw.line([px, py, px + tile_size, py], fill=RIVER_COLOR, width=3)
+            if p["rw"]:
+                draw.line([px, py, px, py + tile_size], fill=RIVER_COLOR, width=3)
+
+            # Grid border
+            draw.rectangle([px, py, px + tile_size - 1, py + tile_size - 1], outline=(40, 60, 80), width=1)
+
+            # Coordinates label
+            draw.text((px + 3, py + 3), f"{X},{Y}", fill=(200, 200, 200, 160), font=font_small)
+
+            # Starting plot marker
+            if (X, Y) in CIVS_INFO:
+                cinfo = CIVS_INFO[(X, Y)]
+                draw.ellipse([px + 10, py + 10, px + tile_size - 10, py + tile_size - 10], fill=cinfo["color"], outline=(255, 255, 255), width=2)
+                draw.text((px + 14, py + 14), cinfo["symbol"], fill=(255, 255, 255), font=font_bold)
+                draw.text((px + 3, py + tile_size - 16), cinfo["name"].split(" ")[0], fill=(255, 255, 0), font=font_large)
+
+            # Resource marker
+            elif p["res"] and p["res"] in RESOURCE_LABELS:
+                zh, en, col = RESOURCE_LABELS[p["res"]]
+                draw.rounded_rectangle([px + 4, py + 16, px + tile_size - 4, py + tile_size - 4], radius=3, fill=col, outline=(255, 255, 255))
+                draw.text((px + 6, py + 20), zh, fill=(0, 0, 0) if sum(col) > 400 else (255, 255, 255), font=font_large)
+
+    img.save(PREVIEW_AUSTRALIA_PNG)
+    print(f"Saved Australia preview to: {PREVIEW_AUSTRALIA_PNG}")
 
 def generate_html(plots):
     print("Generating interactive HTML inspector for 180x90 Ultra Earth...")
@@ -387,6 +460,7 @@ def generate_html(plots):
   </h1>
   <div id="toolbar">
     <button class="tool-btn primary" onclick="focusTaiwan()">🇹🇼 聚焦台灣特寫 (Taiwan Close-Up)</button>
+    <button class="tool-btn primary" onclick="focusAustralia()">🦘 澳洲大陸特寫 (Australia Close-Up)</button>
     <button class="tool-btn" onclick="focusEastAsia()">東亞 (East Asia)</button>
     <button class="tool-btn" onclick="focusEurope()">歐洲 (Europe)</button>
     <button class="tool-btn" onclick="focusAmericas()">美洲 (Americas)</button>
@@ -401,8 +475,9 @@ def generate_html(plots):
   <canvas id="mapCanvas"></canvas>
   <div id="tooltip"></div>
   <div id="sidebar">
-    <h3>🇹🇼 台灣專屬導航</h3>
-    <button class="civ-btn tw" onclick="focusTaiwan()">🇹🇼 台灣 (台北首都發祥) <span>(154, 45)</span></button>
+    <h3>🇹🇼 台灣與澳洲導航</h3>
+    <button class="civ-btn tw" onclick="focusTaiwan()">🇹🇼 台灣島 (精簡自然資源) <span>(154, 44)</span></button>
+    <button class="civ-btn tw" onclick="focusAustralia()">🦘 台灣發祥地 (澳洲雪梨) <span>(171, 21)</span></button>
 
     <h3 style="margin-top: 15px;">📍 18 大文明起始點</h3>
     <button class="civ-btn" onclick="panTo(148, 62)">🇨🇳 中國 (秦始皇) <span>(148, 62)</span></button>
@@ -497,6 +572,10 @@ function panTo(x, y, customScale = 28) {{
 
 function focusTaiwan() {{
   panTo(154, 44, 48); // Large zoom onto Taiwan Island!
+}}
+
+function focusAustralia() {{
+  panTo(162, 20, 24); // Focus on Australia & Sydney!
 }}
 
 function focusEastAsia() {{
@@ -701,5 +780,6 @@ resetView();
 if __name__ == "__main__":
     plots = parse_wbsave()
     render_taiwan_png(plots)
+    render_australia_png(plots)
     generate_html(plots)
     print("Map review assets successfully built!")
