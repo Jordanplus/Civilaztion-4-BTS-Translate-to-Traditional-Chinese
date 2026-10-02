@@ -9,6 +9,8 @@ WBSAVE_PATH = os.path.join(ROOT, "patch", "PatchFiles", "Beyond the Sword", "Pub
 HTML_INSPECTOR = os.path.join(ROOT, "inspect_the_earth_ultra.html")
 PREVIEW_TAIWAN_PNG = os.path.join(ROOT, "the_earth_ultra_taiwan_preview.png")
 PREVIEW_AUSTRALIA_PNG = os.path.join(ROOT, "the_earth_ultra_australia_preview.png")
+PREVIEW_JAPAN_PNG = os.path.join(ROOT, "the_earth_ultra_japan_preview.png")
+PREVIEW_CHINA_PNG = os.path.join(ROOT, "the_earth_ultra_china_preview.png")
 
 FONT_PATH = r"C:\Windows\Fonts\msyh.ttc"
 
@@ -262,6 +264,128 @@ def render_australia_png(plots):
     img.save(PREVIEW_AUSTRALIA_PNG)
     print(f"Saved Australia preview to: {PREVIEW_AUSTRALIA_PNG}")
 
+def render_japan_png(plots):
+    print("Rendering high-res Japan preview PNG...")
+    min_x, max_x = 158, 168
+    min_y, max_y = 52, 64
+    w = max_x - min_x + 1
+    h = max_y - min_y + 1
+    tile_size = 56
+
+    img = Image.new("RGB", (w * tile_size, h * tile_size), (10, 20, 40))
+    draw = ImageDraw.Draw(img)
+
+    try:
+        font_large = ImageFont.truetype(FONT_PATH, 14)
+        font_small = ImageFont.truetype(FONT_PATH, 10)
+        font_bold = ImageFont.truetype(FONT_PATH, 16)
+    except Exception:
+        font_large = ImageFont.load_default()
+        font_small = font_large
+        font_bold = font_large
+
+    for Y in range(min_y, max_y + 1):
+        for X in range(min_x, max_x + 1):
+            p = plots.get((X, Y))
+            if not p: continue
+
+            px = (X - min_x) * tile_size
+            py = (max_y - Y) * tile_size
+
+            base_col = TERRAIN_COLORS.get(p["tt"], (50, 50, 50))
+            if p["pt"] == 0:
+                base_col = (180, 180, 190)
+            elif p["pt"] == 1:
+                base_col = (int(base_col[0] * 0.8), int(base_col[1] * 0.8), int(base_col[2] * 0.8))
+
+            draw.rectangle([px, py, px + tile_size - 1, py + tile_size - 1], fill=base_col)
+
+            if p["ft"] in FEATURE_COLORS:
+                fc = FEATURE_COLORS[p["ft"]]
+                draw.rectangle([px + 3, py + 3, px + tile_size - 4, py + tile_size - 4], outline=fc, width=2)
+
+            if p["rn"]:
+                draw.line([px, py, px + tile_size, py], fill=RIVER_COLOR, width=3)
+            if p["rw"]:
+                draw.line([px, py, px, py + tile_size], fill=RIVER_COLOR, width=3)
+
+            draw.rectangle([px, py, px + tile_size - 1, py + tile_size - 1], outline=(40, 60, 80), width=1)
+            draw.text((px + 3, py + 3), f"{X},{Y}", fill=(200, 200, 200, 160), font=font_small)
+
+            if (X, Y) in CIVS_INFO:
+                cinfo = CIVS_INFO[(X, Y)]
+                draw.ellipse([px + 12, py + 12, px + tile_size - 12, py + tile_size - 12], fill=cinfo["color"], outline=(255, 255, 255), width=2)
+                draw.text((px + 17, py + 17), cinfo["symbol"], fill=(255, 255, 255), font=font_bold)
+                draw.text((px + 3, py + tile_size - 16), cinfo["name"].split(" ")[0], fill=(255, 255, 0), font=font_large)
+            elif p["res"] and p["res"] in RESOURCE_LABELS:
+                zh, en, col = RESOURCE_LABELS[p["res"]]
+                draw.rounded_rectangle([px + 4, py + 18, px + tile_size - 4, py + tile_size - 4], radius=3, fill=col, outline=(255, 255, 255))
+                draw.text((px + 7, py + 22), zh, fill=(0, 0, 0) if sum(col) > 400 else (255, 255, 255), font=font_large)
+
+    img.save(PREVIEW_JAPAN_PNG)
+    print(f"Saved Japan preview to: {PREVIEW_JAPAN_PNG}")
+
+def render_china_png(plots):
+    print("Rendering high-res China preview PNG...")
+    min_x, max_x = 138, 156
+    min_y, max_y = 44, 65
+    w = max_x - min_x + 1
+    h = max_y - min_y + 1
+    tile_size = 46
+
+    img = Image.new("RGB", (w * tile_size, h * tile_size), (10, 20, 40))
+    draw = ImageDraw.Draw(img)
+
+    try:
+        font_large = ImageFont.truetype(FONT_PATH, 13)
+        font_small = ImageFont.truetype(FONT_PATH, 9)
+        font_bold = ImageFont.truetype(FONT_PATH, 15)
+    except Exception:
+        font_large = ImageFont.load_default()
+        font_small = font_large
+        font_bold = font_large
+
+    for Y in range(min_y, max_y + 1):
+        for X in range(min_x, max_x + 1):
+            p = plots.get((X, Y))
+            if not p: continue
+
+            px = (X - min_x) * tile_size
+            py = (max_y - Y) * tile_size
+
+            base_col = TERRAIN_COLORS.get(p["tt"], (50, 50, 50))
+            if p["pt"] == 0:
+                base_col = (180, 180, 190)
+            elif p["pt"] == 1:
+                base_col = (int(base_col[0] * 0.8), int(base_col[1] * 0.8), int(base_col[2] * 0.8))
+
+            draw.rectangle([px, py, px + tile_size - 1, py + tile_size - 1], fill=base_col)
+
+            if p["ft"] in FEATURE_COLORS:
+                fc = FEATURE_COLORS[p["ft"]]
+                draw.rectangle([px + 3, py + 3, px + tile_size - 4, py + tile_size - 4], outline=fc, width=2)
+
+            if p["rn"]:
+                draw.line([px, py, px + tile_size, py], fill=RIVER_COLOR, width=3)
+            if p["rw"]:
+                draw.line([px, py, px, py + tile_size], fill=RIVER_COLOR, width=3)
+
+            draw.rectangle([px, py, px + tile_size - 1, py + tile_size - 1], outline=(40, 60, 80), width=1)
+            draw.text((px + 2, py + 2), f"{X},{Y}", fill=(200, 200, 200, 160), font=font_small)
+
+            if (X, Y) in CIVS_INFO:
+                cinfo = CIVS_INFO[(X, Y)]
+                draw.ellipse([px + 9, py + 9, px + tile_size - 9, py + tile_size - 9], fill=cinfo["color"], outline=(255, 255, 255), width=2)
+                draw.text((px + 13, py + 13), cinfo["symbol"], fill=(255, 255, 255), font=font_bold)
+                draw.text((px + 3, py + tile_size - 15), cinfo["name"].split(" ")[0], fill=(255, 255, 0), font=font_large)
+            elif p["res"] and p["res"] in RESOURCE_LABELS:
+                zh, en, col = RESOURCE_LABELS[p["res"]]
+                draw.rounded_rectangle([px + 3, py + 15, px + tile_size - 3, py + tile_size - 3], radius=3, fill=col, outline=(255, 255, 255))
+                draw.text((px + 5, py + 18), zh, fill=(0, 0, 0) if sum(col) > 400 else (255, 255, 255), font=font_large)
+
+    img.save(PREVIEW_CHINA_PNG)
+    print(f"Saved China preview to: {PREVIEW_CHINA_PNG}")
+
 def generate_html(plots):
     print("Generating interactive HTML inspector for 180x90 Ultra Earth...")
     json_plots = []
@@ -461,6 +585,8 @@ def generate_html(plots):
   <div id="toolbar">
     <button class="tool-btn primary" onclick="focusTaiwan()">🇹🇼 聚焦台灣特寫 (Taiwan Close-Up)</button>
     <button class="tool-btn primary" onclick="focusAustralia()">🦘 澳洲大陸特寫 (Australia Close-Up)</button>
+    <button class="tool-btn primary" onclick="focusJapan()">🇯🇵 日本列島特寫 (Japan)</button>
+    <button class="tool-btn primary" onclick="focusChina()">🇨🇳 中原華夏特寫 (China)</button>
     <button class="tool-btn" onclick="focusEastAsia()">東亞 (East Asia)</button>
     <button class="tool-btn" onclick="focusEurope()">歐洲 (Europe)</button>
     <button class="tool-btn" onclick="focusAmericas()">美洲 (Americas)</button>
@@ -576,6 +702,14 @@ function focusTaiwan() {{
 
 function focusAustralia() {{
   panTo(162, 20, 24); // Focus on Australia & Sydney!
+}}
+
+function focusJapan() {{
+  panTo(163, 58, 38); // Focus on Japanese archipelago!
+}}
+
+function focusChina() {{
+  panTo(147, 56, 26); // Focus on China Heartland!
 }}
 
 function focusEastAsia() {{
@@ -781,5 +915,7 @@ if __name__ == "__main__":
     plots = parse_wbsave()
     render_taiwan_png(plots)
     render_australia_png(plots)
+    render_japan_png(plots)
+    render_china_png(plots)
     generate_html(plots)
     print("Map review assets successfully built!")

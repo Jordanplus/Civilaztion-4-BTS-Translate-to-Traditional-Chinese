@@ -45392,6 +45392,7 @@ BeginPlot
 	x=147,y=47
 	isWOfRiver
 	RiverNSDirection=2
+	BonusType=BONUS_RICE
 	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
@@ -46062,6 +46063,7 @@ BeginPlot
 	x=97,y=48
 	isNOfRiver
 	RiverWEDirection=1
+	BonusType=BONUS_WHEAT
 	FeatureType=FEATURE_FLOOD_PLAINS, FeatureVariety=0
 	TerrainType=TERRAIN_DESERT
 	PlotType=2
@@ -49250,6 +49252,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=150,y=51
+	BonusType=BONUS_RICE
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
@@ -51164,6 +51167,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=141,y=53
+	BonusType=BONUS_RICE
 	FeatureType=FEATURE_JUNGLE, FeatureVariety=0
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
@@ -51284,6 +51288,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=160,y=53
+	BonusType=BONUS_PIG
 	TerrainType=TERRAIN_GRASS
 	PlotType=2
 EndPlot
@@ -53237,13 +53242,15 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=162,y=55
-	TerrainType=TERRAIN_PLAINS
-	PlotType=0
+	BonusType=BONUS_RICE
+	TerrainType=TERRAIN_GRASS
+	PlotType=2
 EndPlot
 BeginPlot
 	x=163,y=55
-	TerrainType=TERRAIN_PLAINS
-	PlotType=0
+	BonusType=BONUS_SPICES
+	TerrainType=TERRAIN_GRASS
+	PlotType=1
 EndPlot
 BeginPlot
 	x=164,y=55
@@ -54227,8 +54234,9 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=162,y=56
-	TerrainType=TERRAIN_PLAINS
-	PlotType=0
+	BonusType=BONUS_SILVER
+	TerrainType=TERRAIN_GRASS
+	PlotType=1
 EndPlot
 BeginPlot
 	x=163,y=56
@@ -57028,9 +57036,9 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=145,y=59
-	FeatureType=FEATURE_FOREST, FeatureVariety=0
+	BonusType=BONUS_WHEAT
 	TerrainType=TERRAIN_PLAINS
-	PlotType=1
+	PlotType=2
 EndPlot
 BeginPlot
 	x=146,y=59
@@ -57055,6 +57063,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=150,y=59
+	BonusType=BONUS_WHEAT
 	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
@@ -59059,8 +59068,8 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=149,y=61
-	FeatureType=FEATURE_FOREST, FeatureVariety=1
-	TerrainType=TERRAIN_GRASS
+	BonusType=BONUS_WHEAT
+	TerrainType=TERRAIN_PLAINS
 	PlotType=2
 EndPlot
 BeginPlot
@@ -61075,6 +61084,7 @@ BeginPlot
 EndPlot
 BeginPlot
 	x=158,y=63
+	BonusType=BONUS_IRON
 	FeatureType=FEATURE_FOREST, FeatureVariety=1
 	TerrainType=TERRAIN_GRASS
 	PlotType=1

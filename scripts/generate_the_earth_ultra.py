@@ -66,8 +66,16 @@ ULTRA_GLOBAL_RESOURCES = {
     (167, 65): ("BONUS_FISH", "3", "TERRAIN_COAST", None, "Japan Sanriku / Nemuro Pacific Fishery"),
     (163, 59): ("BONUS_CLAM", "3", "TERRAIN_COAST", None, "Japan Seto Inland Sea Clams"),
     (162, 57): ("BONUS_COAL", "1", "TERRAIN_GRASS", None, "Japan Kyushu Chikuho Coal Mine"),
+    # Japan Central Honshu Peak De-isolation (高山降階解鎖通道與歷史資源配置)
+    (163, 56): (None, "0", "TERRAIN_PLAINS", None, "Japan Mount Fuji (Sacred Peak)"),
+    (162, 56): ("BONUS_SILVER", "1", "TERRAIN_GRASS", None, "Japan Iwami / Ikuno Historic Silver Mine"),
+    (162, 55): ("BONUS_RICE", "2", "TERRAIN_GRASS", "", "Japan Kansai / Kyoto Rice Heartland"),
+    (163, 55): ("BONUS_SPICES", "1", "TERRAIN_GRASS", None, "Japan Shizuoka / Uji Green Tea & Spices"),
+    (160, 53): ("BONUS_PIG", "2", "TERRAIN_GRASS", None, "Japan Kyushu Kagoshima Kurobuta Pork"),
+    # Korea
     (158, 64): ("BONUS_COAL", "1", "TERRAIN_PLAINS", None, "Korea Pyongyang Anthracite Coal"),
     (157, 65): ("BONUS_IRON", "1", "TERRAIN_GRASS", "FeatureType=FEATURE_FOREST, FeatureVariety=0", "Korea Musan Iron Ore"),
+    (158, 63): ("BONUS_IRON", "1", "TERRAIN_GRASS", "FeatureType=FEATURE_FOREST, FeatureVariety=1", "Korea Hamgyong Musan Iron Mine"),
     (158, 62): ("BONUS_RICE", "2", "TERRAIN_GRASS", None, "Korea Honam Plain Rice"),
 
     # ==================== 3. MAINLAND CHINA (中國大陸) ====================
@@ -80,6 +88,14 @@ ULTRA_GLOBAL_RESOURCES = {
     (134, 57): ("BONUS_GEMS", "1", "TERRAIN_DESERT", None, "China Xinjiang Hotan Jade"),
     (133, 62): ("BONUS_OIL", "2", "TERRAIN_DESERT", None, "China Xinjiang Tarim Basin Oil Field"),
     (147, 50): ("BONUS_SUGAR", "2", "TERRAIN_GRASS", "FeatureType=FEATURE_JUNGLE, FeatureVariety=0", "China Pearl River Delta Sugar & Fruit"),
+    # China Wheat Heartland (黃河流域、華北平原與中原小麥糧倉體系)
+    (149, 61): ("BONUS_WHEAT", "2", "TERRAIN_PLAINS", "", "China Hebei / North China Plain Winter Wheat"),
+    (150, 59): ("BONUS_WHEAT", "2", "TERRAIN_PLAINS", None, "China Central Plains Henan Wheat Heartland"),
+    (145, 59): ("BONUS_WHEAT", "2", "TERRAIN_PLAINS", "", "China Shaanxi Guanzhong Plain Wheat"),
+    # China Rice Bowls (天府之國、鄱陽湖與嶺南珠三角水稻)
+    (147, 47): ("BONUS_RICE", "2", "TERRAIN_GRASS", "FeatureType=FEATURE_JUNGLE, FeatureVariety=0", "China Pearl River Delta Lingnan Double-Crop Rice"),
+    (150, 51): ("BONUS_RICE", "2", "TERRAIN_GRASS", None, "China Poyang Lake Basin Rice Heartland"),
+    (141, 53): ("BONUS_RICE", "2", "TERRAIN_GRASS", "FeatureType=FEATURE_JUNGLE, FeatureVariety=0", "China Chengdu Plain Dujiangyan Heavenly Rice Bowl"),
 
     # ==================== 4. SOUTHEAST ASIA & OCEANIA (東南亞與大洋洲) ====================
     (148, 38): ("BONUS_RICE", "2", "TERRAIN_GRASS", None, "Vietnam Mekong Delta Rice (Saigon)"),
@@ -176,6 +192,7 @@ ULTRA_GLOBAL_RESOURCES = {
 
     # ==================== 9. AFRICA (非洲) ====================
     (100, 48): ("BONUS_WHEAT", "2", "TERRAIN_DESERT", "FeatureType=FEATURE_FLOOD_PLAINS, FeatureVariety=0", "Egypt Nile Delta Wheat"),
+    (97, 48):  ("BONUS_WHEAT", "2", "TERRAIN_DESERT", "FeatureType=FEATURE_FLOOD_PLAINS, FeatureVariety=0", "Egypt Nile Delta Ancient Mediterranean Breadbasket Wheat"),
     (79, 56):  ("BONUS_COPPER", "1", "TERRAIN_DESERT", None, "Morocco Atlas Mountains Copper"),
     (84, 40):  ("BONUS_GOLD", "1", "TERRAIN_PLAINS", None, "Ghana Gold Coast Ashanti Mines"),
     (90, 37):  ("BONUS_OIL", "2", "TERRAIN_GRASS", "FeatureType=FEATURE_JUNGLE, FeatureVariety=0", "Nigeria Niger Delta Oil"),
