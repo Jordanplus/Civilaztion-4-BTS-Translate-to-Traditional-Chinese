@@ -107,7 +107,7 @@ ULTRA_GLOBAL_RESOURCES = {
     (150, 16): ("BONUS_WHEAT", "2", "TERRAIN_PLAINS", None, "WA Wheatbelt (Perth)"),
     (149, 17): ("BONUS_WINE", "1", "TERRAIN_PLAINS", None, "Swan Valley Wine (Perth)"),
     (160, 21): ("BONUS_OIL", "2", "TERRAIN_PLAINS", None, "Cooper Basin Oil Field"),
-    (168, 14): ("BONUS_OIL", "3", "TERRAIN_COAST", None, "Bass Strait Offshore Oil"),
+    (168, 12): ("BONUS_OIL", "3", "TERRAIN_COAST", None, "Bass Strait Offshore Oil"),
     (169, 10): ("BONUS_FISH", "3", "TERRAIN_COAST", None, "Australia Tasmania Southern Ocean Fishery"),
     (174, 9):  ("BONUS_SHEEP", "1", "TERRAIN_GRASS", None, "New Zealand South Island Pasture Sheep"),
     (177, 12): ("BONUS_FISH", "3", "TERRAIN_COAST", None, "New Zealand North Island Coastal Fishery"),
@@ -155,7 +155,7 @@ ULTRA_GLOBAL_RESOURCES = {
     (89, 64):  ("BONUS_WHEAT", "2", "TERRAIN_GRASS", None, "Italy Po Valley Breadbasket Wheat"),
     (90, 62):  ("BONUS_MARBLE", "1", "TERRAIN_GRASS", None, "Italy Carrara Marble"),
     (91, 82):  ("BONUS_IRON", "1", "TERRAIN_TUNDRA", None, "Sweden Kiruna Giant Magnetite Iron"),
-    (87, 78):  ("BONUS_FISH", "3", "TERRAIN_COAST", None, "Norway Bergen Cod Fishery"),
+    (84, 80):  ("BONUS_FISH", "3", "TERRAIN_COAST", None, "Norway Bergen Cod Fishery"),
     (103, 65): ("BONUS_WHEAT", "2", "TERRAIN_PLAINS", None, "Ukraine Dnieper Chornozem Black Soil Wheat"),
     (105, 65): ("BONUS_COAL", "2", "TERRAIN_PLAINS", None, "Ukraine Donbas Coal Basin"),
     (104, 64): ("BONUS_IRON", "1", "TERRAIN_PLAINS", None, "Ukraine Kryvyi Rih Iron Ore"),
@@ -347,11 +347,14 @@ def build_ultra_map():
             tgt_grid[(tx, 69)]["tt"] = "TERRAIN_COAST"
             tgt_grid[(tx, 69)]["f"] = None
 
-    # Strait of Gibraltar:
-    tgt_grid[(79, 59)]["pt"] = "3"
-    tgt_grid[(79, 59)]["tt"] = "TERRAIN_COAST"
-    tgt_grid[(80, 59)]["pt"] = "3"
-    tgt_grid[(80, 59)]["tt"] = "TERRAIN_COAST"
+    # Bosphorus & Dardanelles (Connect Aegean Sea to Black Sea - Open Istanbul waterway)
+    tgt_grid[(100, 60)]["pt"] = "3"
+    tgt_grid[(100, 60)]["tt"] = "TERRAIN_COAST"
+    tgt_grid[(100, 60)]["f"] = None
+
+    # Strait of Hormuz (Clear passage into Persian Gulf)
+    tgt_grid[(118, 50)]["pt"] = "3"
+    tgt_grid[(118, 50)]["tt"] = "TERRAIN_COAST"
 
     # Ocean Barrier: Taiwan/China to Philippines
     for tx in range(152, 162):
@@ -370,20 +373,74 @@ def build_ultra_map():
         if tgt_grid[(tx, 27)]["pt"] == "3":
             tgt_grid[(tx, 27)]["tt"] = "TERRAIN_OCEAN"
 
-    # 4. Map Rivers
-    for (sx, sy), p in src_grid.items():
-        if p["rn"] or p["rw"]:
-            TX = int(round(sx / rx))
-            TY = int(round(sy / ry))
-            if (TX, TY) in tgt_grid:
-                if p["rn"]:
-                    tgt_grid[(TX, TY)]["rn"] = True
-                    tgt_grid[(TX, TY)]["rwe"] = p["rwe"]
-                if p["rw"]:
-                    tgt_grid[(TX, TY)]["rw"] = True
-                    tgt_grid[(TX, TY)]["rns"] = p["rns"]
+    # 4. Map Rivers (Vertex-Preserving River Mapping: Continuous Flows Without Gaps)
+    def map_vx(vx):
+        return int(round(vx * W_TGT / W_SRC))
 
-    # 4.5 Add Realistic Taiwan River Networks (Tamsui & Choshui Rivers)
+    def map_vy(vy):
+        return int(round(vy * H_TGT / H_SRC))
+
+    for p in tgt_grid.values():
+        p["rn"] = False
+        p["rw"] = False
+        p["rwe"] = 0
+        p["rns"] = 0
+
+    for (sx, sy), sp in src_grid.items():
+        if sp["rn"]:
+            # Horizontal segment on North edge of (sx, sy): vertices (sx, sy+1) -> (sx+1, sy+1)
+            tx1 = map_vx(sx)
+            tx2 = map_vx(sx + 1)
+            ty = map_vy(sy + 1)
+            py = ty - 1
+            if 0 <= py < H_TGT:
+                for px in range(tx1, tx2):
+                    tgt_grid[(px % W_TGT, py)]["rn"] = True
+                    tgt_grid[(px % W_TGT, py)]["rwe"] = sp["rwe"]
+        if sp["rw"]:
+            # Vertical segment on West edge of (sx, sy): vertices (sx, sy) -> (sx, sy+1)
+            tx = map_vx(sx)
+            ty1 = map_vy(sy)
+            ty2 = map_vy(sy + 1)
+            px = tx % W_TGT
+            for py in range(ty1, ty2):
+                if 0 <= py < H_TGT:
+                    tgt_grid[(px, py)]["rw"] = True
+                    tgt_grid[(px, py)]["rns"] = sp["rns"]
+
+    # 4.2 Major World Rivers Flow & Estuary Healing (尼羅河、長江、黃河、密西西比河等完整貫通)
+    # 1. Nile River (Lake Victoria to Alexandria / Mediterranean)
+    for ny in range(41, 50):
+        tgt_grid[(100, ny)]["rw"] = True
+        tgt_grid[(100, ny)]["rns"] = 0  # Northbound flow to Mediterranean
+    tgt_grid[(100, 48)]["rn"] = True
+    tgt_grid[(100, 48)]["rwe"] = 1  # Delta fork
+
+    # 2. Yangtze River (Sichuan Basin to East China Sea / Shanghai)
+    for nx in range(141, 149):
+        tgt_grid[(nx, 57)]["rn"] = True
+        tgt_grid[(nx, 57)]["rwe"] = 1  # Eastbound flow
+    tgt_grid[(148, 57)]["rw"] = True
+    tgt_grid[(148, 57)]["rns"] = 2
+
+    # 3. Yellow River (Qinghai / Ordos to Bohai Sea)
+    for nx in range(143, 148):
+        tgt_grid[(nx, 61)]["rn"] = True
+        tgt_grid[(nx, 61)]["rwe"] = 1
+    tgt_grid[(147, 61)]["rw"] = True
+    tgt_grid[(147, 61)]["rns"] = 0
+
+    # 4. Danube River (Central Europe to Black Sea)
+    for nx in range(91, 100):
+        tgt_grid[(nx, 63)]["rn"] = True
+        tgt_grid[(nx, 63)]["rwe"] = 1
+
+    # 5. Mississippi River (North America Heartland to Gulf of Mexico)
+    for ny in range(56, 64):
+        tgt_grid[(34, ny)]["rw"] = True
+        tgt_grid[(34, ny)]["rns"] = 2  # Southbound flow into Gulf of Mexico
+
+    # 4.5 Add Realistic Taiwan & Australia River Networks
     # 1. Tamsui & Keelung Rivers (淡水河水系：流經台北 154, 45 與基隆 155, 45 北流入海)
     tgt_grid[(155, 45)]["rw"] = True
     tgt_grid[(155, 45)]["rns"] = 0  # 基隆河/新店溪匯流
@@ -396,9 +453,22 @@ def build_ultra_map():
     tgt_grid[(154, 44)]["rn"] = True
     tgt_grid[(154, 44)]["rwe"] = 1  # 濁水溪西流入台灣海峽
 
-    # 3. Australia Sydney River (雪梨霍克斯伯里河水系，提供開局淡水)
+    # 3. Australia Sydney Hawkesbury River (雪梨霍克斯伯里河水系，提供開局淡水)
     tgt_grid[(171, 21)]["rn"] = True
     tgt_grid[(171, 21)]["rwe"] = 1
+    tgt_grid[(171, 21)]["rw"] = True
+    tgt_grid[(171, 21)]["rns"] = 0
+
+    # 4.8 Canyon Peak-Trapped River Relief (消除被兩座絕壁山峰夾住的河流，微調一側為壯麗峽谷丘陵)
+    for (x, y), p in tgt_grid.items():
+        if p["rn"]:
+            p_north = tgt_grid.get((x, y + 1))
+            if p_north and p["pt"] == "0" and p_north["pt"] == "0":
+                p["pt"] = "1"
+        if p["rw"]:
+            p_west = tgt_grid.get(((x - 1) % W_TGT, y))
+            if p_west and p["pt"] == "0" and p_west["pt"] == "0":
+                p_west["pt"] = "1"
 
     # 5. Base Resource Scaling
     WATER_BONUSES = {'BONUS_FISH', 'BONUS_CLAM', 'BONUS_CRAB', 'BONUS_WHALE'}
@@ -453,6 +523,58 @@ def build_ultra_map():
             tgt_grid[(lx, ly)]["pt"] = req_pt
             tgt_grid[(lx, ly)]["tt"] = req_terr
             tgt_grid[(lx, ly)]["b"] = b_type
+
+    # 7.8 Cartographic Oceanography & Coastline Smoothing (製圖學大陸棚平滑與海岸深淺層次修復)
+    # Pass 1: Eliminate 1-tile isolated inland water puddles (surrounded by 8 land plots)
+    for y in range(H_TGT):
+        for x in range(W_TGT):
+            p = tgt_grid[(x, y)]
+            if p["pt"] == "3":
+                land_neighbors = 0
+                for dx in [-1, 0, 1]:
+                    for dy in [-1, 0, 1]:
+                        if dx == 0 and dy == 0: continue
+                        nx, ny = (x + dx) % W_TGT, y + dy
+                        if 0 <= ny < H_TGT and tgt_grid[(nx, ny)]["pt"] in ["0", "1", "2"]:
+                            land_neighbors += 1
+                if land_neighbors == 8:
+                    p["pt"] = "2"
+                    p["tt"] = "TERRAIN_PLAINS"
+                    if p["b"] in WATER_BONUSES:
+                        p["b"] = None
+
+    # Pass 2: Continental Shelf Smoothing (Ensure ALL water plots adjacent to land are TERRAIN_COAST)
+    for y in range(H_TGT):
+        for x in range(W_TGT):
+            p = tgt_grid[(x, y)]
+            if p["pt"] == "3":
+                adj_land = False
+                for dx in [-1, 0, 1]:
+                    for dy in [-1, 0, 1]:
+                        if dx == 0 and dy == 0: continue
+                        nx, ny = (x + dx) % W_TGT, y + dy
+                        if 0 <= ny < H_TGT and tgt_grid[(nx, ny)]["pt"] in ["0", "1", "2"]:
+                            adj_land = True
+                            break
+                    if adj_land: break
+                if adj_land:
+                    p["tt"] = "TERRAIN_COAST"
+
+    # Pass 3: Deep Ocean Cleanup (Eliminate floating shallow coast in deep ocean with no land within 2 tiles)
+    for y in range(H_TGT):
+        for x in range(W_TGT):
+            p = tgt_grid[(x, y)]
+            if p["pt"] == "3" and p["tt"] == "TERRAIN_COAST" and not p["b"]:
+                has_land = False
+                for dx in range(-2, 3):
+                    for dy in range(-2, 3):
+                        nx, ny = (x + dx) % W_TGT, y + dy
+                        if 0 <= ny < H_TGT and tgt_grid[(nx, ny)]["pt"] in ["0", "1", "2"]:
+                            has_land = True
+                            break
+                    if has_land: break
+                if not has_land:
+                    p["tt"] = "TERRAIN_OCEAN"
 
     # 8. Apply Tribal Villages (Goody Huts)
     for hx, hy in GOODY_HUTS_180:
