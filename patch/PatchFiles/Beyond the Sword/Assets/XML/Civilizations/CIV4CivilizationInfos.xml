@@ -91,6 +91,10 @@
 					<UnitClassType>UNITCLASS_MARINE</UnitClassType>
 					<UnitType>UNIT_AMERICAN_NAVY_SEAL</UnitType>
 				</Unit>
+				<Unit>
+					<UnitClassType>UNITCLASS_JET_FIGHTER</UnitClassType>
+					<UnitType>UNIT_AMERICAN_YF23</UnitType>
+				</Unit>
 			</Units>
 			<FreeUnitClasses>
 				<FreeUnitClass>
@@ -4680,24 +4684,29 @@
 			<bAIPlayable>1</bAIPlayable>
 			<Cities>
 				<City>TXT_KEY_CITY_NAME_TAIPEI</City>
-				<City>TXT_KEY_CITY_NAME_KAOHSIUNG</City>
-				<City>TXT_KEY_CITY_NAME_TAICHUNG</City>
-				<City>TXT_KEY_CITY_NAME_TAINAN</City>
-				<City>TXT_KEY_CITY_NAME_TAOYUAN</City>
-				<City>TXT_KEY_CITY_NAME_HSINCHU</City>
 				<City>TXT_KEY_CITY_NAME_KEELUNG</City>
-				<City>TXT_KEY_CITY_NAME_CHIAYI</City>
-				<City>TXT_KEY_CITY_NAME_CHANGHUA</City>
-				<City>TXT_KEY_CITY_NAME_PINGTUNG</City>
+				<City>TXT_KEY_CITY_NAME_NEW_TAIPEI</City>
+				<City>TXT_KEY_CITY_NAME_TAMSUI</City>
+				<City>TXT_KEY_CITY_NAME_TAOYUAN</City>
 				<City>TXT_KEY_CITY_NAME_YILAN</City>
-				<City>TXT_KEY_CITY_NAME_HUALIEN</City>
-				<City>TXT_KEY_CITY_NAME_TAITUNG</City>
-				<City>TXT_KEY_CITY_NAME_PENGHU</City>
+				<City>TXT_KEY_CITY_NAME_HSINCHU</City>
 				<City>TXT_KEY_CITY_NAME_MIAOLI</City>
+				<City>TXT_KEY_CITY_NAME_HUALIEN</City>
+				<City>TXT_KEY_CITY_NAME_TAICHUNG</City>
+				<City>TXT_KEY_CITY_NAME_CHANGHUA</City>
+				<City>TXT_KEY_CITY_NAME_LUKANG</City>
 				<City>TXT_KEY_CITY_NAME_NANTOU</City>
 				<City>TXT_KEY_CITY_NAME_YUNLIN</City>
-				<City>TXT_KEY_CITY_NAME_KINMEN</City>
+				<City>TXT_KEY_CITY_NAME_CHIAYI</City>
 				<City>TXT_KEY_CITY_NAME_MATSU</City>
+				<City>TXT_KEY_CITY_NAME_TAINAN</City>
+				<City>TXT_KEY_CITY_NAME_ANPING</City>
+				<City>TXT_KEY_CITY_NAME_TAITUNG</City>
+				<City>TXT_KEY_CITY_NAME_PENGHU</City>
+				<City>TXT_KEY_CITY_NAME_KAOHSIUNG</City>
+				<City>TXT_KEY_CITY_NAME_PINGTUNG</City>
+				<City>TXT_KEY_CITY_NAME_HENGCHUN</City>
+				<City>TXT_KEY_CITY_NAME_KINMEN</City>
 			</Cities>
 			<Buildings>
 				<Building>

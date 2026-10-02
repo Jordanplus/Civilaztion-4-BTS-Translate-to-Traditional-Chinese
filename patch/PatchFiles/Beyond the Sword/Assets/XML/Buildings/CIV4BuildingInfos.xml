@@ -29054,8 +29054,8 @@
 				<iCommerce>1000</iCommerce>
 			</CommerceChangeDoubleTimes>
 			<CommerceModifiers>
-				<iCommerce>5</iCommerce>
-				<iCommerce>0</iCommerce>
+				<iCommerce>10</iCommerce>
+				<iCommerce>10</iCommerce>
 				<iCommerce>25</iCommerce>
 			</CommerceModifiers>
 			<GlobalCommerceModifiers/>
@@ -29101,6 +29101,10 @@
 				</Flavor>
 				<Flavor>
 					<FlavorType>FLAVOR_GOLD</FlavorType>
+					<iFlavor>10</iFlavor>
+				</Flavor>
+				<Flavor>
+					<FlavorType>FLAVOR_SCIENCE</FlavorType>
 					<iFlavor>5</iFlavor>
 				</Flavor>
 			</Flavors>

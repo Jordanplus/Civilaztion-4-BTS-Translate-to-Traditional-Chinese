@@ -6016,9 +6016,9 @@
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
-			<NIF>Art/Units/Taiwan_IDF/JetFighter.nif</NIF>
+			<NIF>Art/Units/Taiwan_IDF/AIDCfck.nif</NIF>
 			<KFM>Art/Units/JetFighter/JetFighter.kfm</KFM>
-			<SHADERNIF>Art/Units/Taiwan_IDF/JetFighter_FX.nif</SHADERNIF>
+			<SHADERNIF>Art/Units/Taiwan_IDF/AIDCfck_FX.nif</SHADERNIF>
 			<ShadowDef>
 				<ShadowNIF>Art/Units/01_UnitShadows/JetFighterShadow.nif</ShadowNIF>
 				<ShadowAttachNode>BIP Pelvis</ShadowAttachNode>
@@ -6071,7 +6071,7 @@
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
 			<NIF>Art/Units/Taiwan_HaiKun/Submarine.nif</NIF>
-			<KFM>Art/Units/Submarine/Submarine.kfm</KFM>
+			<KFM>Art/Units/Taiwan_HaiKun/submarine.kfm</KFM>
 			<SHADERNIF>Art/Units/Taiwan_HaiKun/Submarine_FX.nif</SHADERNIF>
 			<ShadowDef>
 				<ShadowNIF>Art/Units/01_UnitShadows/BattleshipShadow.nif</ShadowNIF>
@@ -6096,13 +6096,13 @@
 <UnitArtInfo>
 			<Type>ART_DEF_UNIT_TAIWAN_YUSHAN_LPD</Type>
 			<Button>Art/Interface/Buttons/Units/yushan_transport.dds</Button>
-			<fScale>0.92</fScale>
-			<fInterfaceScale>1.3</fInterfaceScale>
+			<fScale>1.1</fScale>
+			<fInterfaceScale>1.1</fInterfaceScale>
 			<bActAsLand>0</bActAsLand>
 			<bActAsAir>0</bActAsAir>
-			<NIF>Art/Units/Taiwan_Yushan/Transport.nif</NIF>
+			<NIF>Art/Units/Taiwan_Yushan/SanAntonio.nif</NIF>
 			<KFM>Art/Units/Transport/Transport.kfm</KFM>
-			<SHADERNIF>Art/Units/Taiwan_Yushan/Transport_FX.nif</SHADERNIF>
+			<SHADERNIF>Art/Units/Taiwan_Yushan/SanAntonio_FX.nif</SHADERNIF>
 			<ShadowDef>
 				<ShadowNIF>Art/Units/01_UnitShadows/TransportShadow.nif</ShadowNIF>
 				<ShadowAttachNode>BIP Pelvis</ShadowAttachNode>
@@ -6219,5 +6219,67 @@
 				<AudioRunTypeEnd/>
 			</AudioRunSounds>
 		</UnitArtInfo>
+		<UnitArtInfo>
+			<Type>ART_DEF_UNIT_AMERICAN_YF23</Type>
+			<Button>Art/Interface/Buttons/Units/american_yf23.dds</Button>
+			<fScale>0.48</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<bActAsLand>0</bActAsLand>
+			<bActAsAir>0</bActAsAir>
+			<NIF>Art/Units/American_YF23/f23.nif</NIF>
+			<KFM>Art/Units/JetFighter/JetFighter.kfm</KFM>
+			<SHADERNIF>Art/Units/American_YF23/f23.nif</SHADERNIF>
+			<ShadowDef>
+				<ShadowNIF>Art/Units/01_UnitShadows/JetFighterShadow.nif</ShadowNIF>
+				<ShadowAttachNode>BIP Pelvis</ShadowAttachNode>
+				<fShadowScale>0.75</fShadowScale>
+			</ShadowDef>
+			<iDamageStates>4</iDamageStates>
+			<fBattleDistance>0.35</fBattleDistance>
+			<fRangedDeathTime>0.31</fRangedDeathTime>
+			<bSmoothMove>1</bSmoothMove>
+			<fBankRate>0.35</fBankRate>
+			<bActAsRanged>0</bActAsRanged>
+			<TrainSound>AS2D_UNIT_BUILD_UNIT</TrainSound>
+			<AudioRunSounds>
+				<AudioRunTypeLoop/>
+				<AudioRunTypeEnd/>
+			</AudioRunSounds>
+			<PatrolSound>AS3D_UN_JET_PATROL</PatrolSound>
+			<SelectionSound>AS3D_UN_JET_COMMAND_PATROL</SelectionSound>
+			<ActionSound>AS3D_UN_JET_COMMAND_PATROL</ActionSound>
+		</UnitArtInfo>
+			<UnitArtInfo>
+			<Type>ART_DEF_UNIT_AMERICAN_YF23</Type>
+			<Button>Art/Interface/Buttons/Units/american_yf23.dds</Button>
+			<fScale>0.48</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<bActAsLand>0</bActAsLand>
+			<bActAsAir>0</bActAsAir>
+			<NIF>Art/Units/American_YF23/f23.nif</NIF>
+			<KFM>Art/Units/JetFighter/JetFighter.kfm</KFM>
+			<SHADERNIF>Art/Units/American_YF23/f23.nif</SHADERNIF>
+			<ShadowDef>
+				<ShadowNIF>Art/Units/01_UnitShadows/JetFighterShadow.nif</ShadowNIF>
+				<ShadowAttachNode>BIP Pelvis</ShadowAttachNode>
+				<fShadowScale>0.75</fShadowScale>
+			</ShadowDef>
+			<iDamageStates>4</iDamageStates>
+			<fBattleDistance>0.35</fBattleDistance>
+			<fRangedDeathTime>0.31</fRangedDeathTime>
+			<bSmoothMove>1</bSmoothMove>
+			<fBankRate>0.35</fBankRate>
+			<bActAsRanged>0</bActAsRanged>
+			<TrainSound>AS2D_UNIT_BUILD_UNIT</TrainSound>
+			<AudioRunSounds>
+				<AudioRunTypeLoop/>
+				<AudioRunTypeEnd/>
+			</AudioRunSounds>
+			<PatrolSound>AS3D_UN_JET_PATROL</PatrolSound>
+			<SelectionSound>AS3D_UN_JET_COMMAND_PATROL</SelectionSound>
+			<ActionSound>AS3D_UN_JET_COMMAND_PATROL</ActionSound>
+		</UnitArtInfo>
 	</UnitArtInfos>
 </Civ4ArtDefines>
+
+
